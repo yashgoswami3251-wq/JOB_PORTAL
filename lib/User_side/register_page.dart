@@ -53,10 +53,6 @@ class _RegisterPageState extends State<RegisterPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
-            // ============================================================
-            // TOP HEADER
-            // ============================================================
-
             Container(
               width: double.infinity,
               padding: const EdgeInsets.fromLTRB(
@@ -131,9 +127,6 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
 
-            // ============================================================
-            // REGISTER FORM
-            // ============================================================
 
             Padding(
               padding: const EdgeInsets.fromLTRB(
@@ -147,9 +140,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
 
-                  // ======================================================
-                  // TITLE
-                  // ======================================================
 
                   const Text(
                     "Create an account",
@@ -171,10 +161,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
 
                   const SizedBox(height: 14),
-
-                  // ======================================================
-                  // ROLE SELECTOR
-                  // ======================================================
 
                   Container(
                     height: 36,
@@ -199,10 +185,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
                   const SizedBox(height: 13),
 
-                  // ======================================================
-                  // FULL NAME
-                  // ======================================================
-
                   _fieldLabel("Full Name"),
 
                   const SizedBox(height: 5),
@@ -214,10 +196,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
 
                   const SizedBox(height: 9),
-
-                  // ======================================================
-                  // EMAIL
-                  // ======================================================
 
                   _fieldLabel("Email Address"),
 
@@ -232,10 +210,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
                   const SizedBox(height: 9),
 
-                  // ======================================================
-                  // PHONE
-                  // ======================================================
-
                   _fieldLabel("Phone Number"),
 
                   const SizedBox(height: 5),
@@ -249,9 +223,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
                   const SizedBox(height: 9),
 
-                  // ======================================================
-                  // PASSWORD
-                  // ======================================================
 
                   _fieldLabel("Password"),
 
@@ -272,9 +243,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
                   const SizedBox(height: 9),
 
-                  // ======================================================
-                  // CONFIRM PASSWORD
-                  // ======================================================
 
                   _fieldLabel("Confirm Password"),
 
@@ -294,10 +262,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
 
                   const SizedBox(height: 11),
-
-                  // ======================================================
-                  // TERMS
-                  // ======================================================
 
                   Row(
                     children: [
@@ -389,10 +353,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
                   const SizedBox(height: 12),
 
-                  // ======================================================
-                  // REGISTER BUTTON
-                  // ======================================================
-
                   SizedBox(
                     width: double.infinity,
                     height: 40,
@@ -470,9 +430,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
                   const SizedBox(height: 10),
 
-                  // ======================================================
-                  // LOGIN
-                  // ======================================================
 
                   Center(
                     child: Wrap(
@@ -514,9 +471,6 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  // ============================================================
-  // ROLE BUTTON
-  // ============================================================
 
   Widget _roleButton(
       String title,
@@ -580,9 +534,6 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  // ============================================================
-  // FIELD LABEL
-  // ============================================================
 
   Widget _fieldLabel(
       String text,
@@ -598,9 +549,6 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  // ============================================================
-  // NORMAL TEXT FIELD
-  // ============================================================
 
   Widget _textField({
     required TextEditingController controller,
@@ -670,9 +618,6 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  // ============================================================
-  // PASSWORD FIELD
-  // ============================================================
 
   Widget _passwordField({
     required TextEditingController controller,
