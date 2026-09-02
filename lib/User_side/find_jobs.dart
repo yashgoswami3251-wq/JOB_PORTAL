@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'job_details_page.dart';
 
 class findjobes extends StatefulWidget {
-  const findjobes({super.key});
+  final VoidCallback onApply;
+
+  const findjobes({
+    super.key,
+    required this.onApply,
+  });
 
   @override
   State<findjobes> createState() => _FindJobsPageState();
@@ -13,10 +19,17 @@ class _FindJobsPageState extends State<findjobes> {
   final TextEditingController searchController =
   TextEditingController();
 
-  final Color backgroundColor = const Color(0xFFFFFCF7);
-  final Color navyColor = const Color(0xFF17233B);
-  final Color blueColor = const Color(0xFF2864E8);
-  final Color borderColor = const Color(0xFFE1E5EB);
+  final Color backgroundColor =
+  const Color(0xFFFFFCF7);
+
+  final Color navyColor =
+  const Color(0xFF17233B);
+
+  final Color blueColor =
+  const Color(0xFF2864E8);
+
+  final Color borderColor =
+  const Color(0xFFE1E5EB);
 
   // ============================================================
   // JOB DATA
@@ -25,63 +38,159 @@ class _FindJobsPageState extends State<findjobes> {
   final List<Map<String, dynamic>> jobs = [
     {
       "shortName": "TCS",
-      "companyColor": Color(0xFF2864E8),
-      "companyBackground": Color(0xFFEFF5FF),
+      "companyColor": const Color(0xFF2864E8),
+      "companyBackground": const Color(0xFFEFF5FF),
       "title": "Senior React Developer",
       "company": "TCS",
-      "location": "Mumbai",
+      "location": "Mumbai, Maharashtra",
       "salary": "₹12-18 LPA",
       "type": "Full Time",
-      "typeColor": Color(0xFF2864E8),
-      "typeBackground": Color(0xFFEFF5FF),
+      "typeColor": const Color(0xFF2864E8),
+      "typeBackground": const Color(0xFFEFF5FF),
+      "experience": "3-5 years",
+      "postedDate": "Jan 20, 2024",
+      "description":
+      "We are looking for a highly skilled Senior React Developer "
+          "to join our growing development team. In this role, you will "
+          "be responsible for architecting, building, and deploying "
+          "highly responsive, pixel-perfect user interfaces. You will "
+          "work closely with product managers and designers to translate "
+          "product visions into scalable frontend codebases.",
+      "responsibilities": [
+        "Design and build scalable and reusable React components from scratch.",
+        "Collaborate with backend engineers to integrate RESTful and GraphQL APIs seamlessly.",
+        "Optimize application architectures for maximum performance and cross-browser responsiveness.",
+        "Write unit and integration tests to ensure code quality and prevent application regressions.",
+        "Provide technical mentorship and run comprehensive code reviews for junior engineers.",
+      ],
+      "requirements": [
+        "Minimum 3-5 years of experience building modern single-page applications with React.",
+        "Expert knowledge of raw JavaScript, TypeScript, and React.",
+        "Strong understanding of REST APIs and GraphQL.",
+        "Experience with Git and modern development workflows.",
+        "Good understanding of responsive web design.",
+      ],
     },
+
     {
       "shortName": "INF",
-      "companyColor": Color(0xFF8B5CF6),
-      "companyBackground": Color(0xFFF3EEFF),
+      "companyColor": const Color(0xFF8B5CF6),
+      "companyBackground": const Color(0xFFF3EEFF),
       "title": "UI/UX Designer",
       "company": "Infosys",
-      "location": "Bangalore",
+      "location": "Bangalore, Karnataka",
       "salary": "₹8-14 LPA",
       "type": "Full Time",
-      "typeColor": Color(0xFF2864E8),
-      "typeBackground": Color(0xFFEFF5FF),
+      "typeColor": const Color(0xFF2864E8),
+      "typeBackground": const Color(0xFFEFF5FF),
+      "experience": "2-4 years",
+      "postedDate": "Jan 18, 2024",
+      "description":
+      "We are looking for a creative UI/UX Designer who can "
+          "create beautiful and user-friendly digital experiences.",
+      "responsibilities": [
+        "Create wireframes and prototypes.",
+        "Design modern and responsive interfaces.",
+        "Work closely with developers and product managers.",
+        "Conduct user research and usability testing.",
+      ],
+      "requirements": [
+        "2-4 years of UI/UX experience.",
+        "Strong knowledge of Figma.",
+        "Good understanding of design systems.",
+        "Knowledge of responsive design principles.",
+      ],
     },
+
     {
       "shortName": "WIP",
-      "companyColor": Color(0xFF00A878),
-      "companyBackground": Color(0xFFE8F8F3),
+      "companyColor": const Color(0xFF00A878),
+      "companyBackground": const Color(0xFFE8F8F3),
       "title": "Data Analyst",
       "company": "Wipro",
-      "location": "Pune",
+      "location": "Pune, Maharashtra",
       "salary": "₹6-10 LPA",
       "type": "Part Time",
-      "typeColor": Color(0xFFFF9800),
-      "typeBackground": Color(0xFFFFF4E3),
+      "typeColor": const Color(0xFFFF9800),
+      "typeBackground": const Color(0xFFFFF4E3),
+      "experience": "1-3 years",
+      "postedDate": "Jan 15, 2024",
+      "description":
+      "We are seeking a Data Analyst to analyze business data "
+          "and provide meaningful insights to help our organization "
+          "make better decisions.",
+      "responsibilities": [
+        "Analyze large datasets.",
+        "Create reports and dashboards.",
+        "Work with business teams.",
+        "Identify trends and patterns.",
+      ],
+      "requirements": [
+        "Knowledge of SQL.",
+        "Knowledge of Excel.",
+        "Basic Python knowledge.",
+        "Good analytical and communication skills.",
+      ],
     },
+
     {
       "shortName": "HCL",
-      "companyColor": Color(0xFFFF3B30),
-      "companyBackground": Color(0xFFFFEEEE),
+      "companyColor": const Color(0xFFFF3B30),
+      "companyBackground": const Color(0xFFFFEEEE),
       "title": "Backend Developer",
       "company": "HCL",
-      "location": "Hyderabad",
+      "location": "Hyderabad, Telangana",
       "salary": "₹10-16 LPA",
       "type": "Remote",
-      "typeColor": Color(0xFF00A878),
-      "typeBackground": Color(0xFFE8F8F3),
+      "typeColor": const Color(0xFF00A878),
+      "typeBackground": const Color(0xFFE8F8F3),
+      "experience": "2-5 years",
+      "postedDate": "Jan 12, 2024",
+      "description":
+      "HCL is looking for a Backend Developer to build scalable "
+          "and reliable server-side applications.",
+      "responsibilities": [
+        "Develop REST APIs.",
+        "Build scalable backend services.",
+        "Work with databases.",
+        "Optimize backend performance.",
+      ],
+      "requirements": [
+        "Strong knowledge of Node.js or Java.",
+        "Knowledge of REST APIs.",
+        "Database knowledge.",
+        "Good understanding of backend architecture.",
+      ],
     },
+
     {
       "shortName": "TEM",
-      "companyColor": Color(0xFF17233B),
-      "companyBackground": Color(0xFFF0F1F3),
+      "companyColor": const Color(0xFF17233B),
+      "companyBackground": const Color(0xFFF0F1F3),
       "title": "Marketing Manager",
       "company": "Tech Mahindra",
-      "location": "Chennai",
+      "location": "Chennai, Tamil Nadu",
       "salary": "₹7-12 LPA",
       "type": "Full Time",
-      "typeColor": Color(0xFF2864E8),
-      "typeBackground": Color(0xFFEFF5FF),
+      "typeColor": const Color(0xFF2864E8),
+      "typeBackground": const Color(0xFFEFF5FF),
+      "experience": "3-6 years",
+      "postedDate": "Jan 10, 2024",
+      "description":
+      "We are looking for an experienced Marketing Manager "
+          "to manage marketing campaigns and improve brand visibility.",
+      "responsibilities": [
+        "Plan marketing campaigns.",
+        "Manage digital marketing activities.",
+        "Analyze marketing performance.",
+        "Work with creative teams.",
+      ],
+      "requirements": [
+        "3-6 years marketing experience.",
+        "Strong communication skills.",
+        "Knowledge of digital marketing.",
+        "Strong leadership skills.",
+      ],
     },
   ];
 
@@ -96,27 +205,16 @@ class _FindJobsPageState extends State<findjobes> {
     return jobs.where((job) {
       bool matchesFilter = true;
 
-      // ALL JOBS
       if (selectedFilter == 0) {
         matchesFilter = true;
-      }
-
-      // FULL TIME
-      else if (selectedFilter == 1) {
+      } else if (selectedFilter == 1) {
         matchesFilter = job["type"] == "Full Time";
-      }
-
-      // PART TIME
-      else if (selectedFilter == 2) {
+      } else if (selectedFilter == 2) {
         matchesFilter = job["type"] == "Part Time";
-      }
-
-      // REMOTE
-      else if (selectedFilter == 3) {
+      } else if (selectedFilter == 3) {
         matchesFilter = job["type"] == "Remote";
       }
 
-      // SEARCH
       bool matchesSearch = true;
 
       if (searchText.isNotEmpty) {
@@ -139,14 +237,37 @@ class _FindJobsPageState extends State<findjobes> {
     }).toList();
   }
 
-  // ============================================================
-  // DISPOSE
-  // ============================================================
-
   @override
   void dispose() {
     searchController.dispose();
     super.dispose();
+  }
+
+  // ============================================================
+  // OPEN JOB DETAILS
+  // ============================================================
+
+  void openJobDetails(
+      Map<String, dynamic> job) async {
+    final result = await Navigator.push(
+      context,
+
+      MaterialPageRoute(
+        builder: (context) {
+          return JobDetailsPage(
+            job: job,
+          );
+        },
+      ),
+    );
+
+    // ==========================================================
+    // APPLY BUTTON CLICKED
+    // ==========================================================
+
+    if (result == true) {
+      widget.onApply();
+    }
   }
 
   // ============================================================
@@ -163,10 +284,9 @@ class _FindJobsPageState extends State<findjobes> {
       body: SafeArea(
         child: Column(
           children: [
-
-            // ==========================================================
+            // ======================================================
             // HEADER
-            // ==========================================================
+            // ======================================================
 
             Container(
               width: double.infinity,
@@ -192,7 +312,6 @@ class _FindJobsPageState extends State<findjobes> {
 
                 child: Row(
                   children: [
-
                     const Text(
                       "Find Jobs",
 
@@ -233,14 +352,14 @@ class _FindJobsPageState extends State<findjobes> {
               ),
             ),
 
-            // ==========================================================
+            // ======================================================
             // CONTENT
-            // ==========================================================
+            // ======================================================
 
             Expanded(
               child: LayoutBuilder(
-                builder: (context, constraints) {
-
+                builder:
+                    (context, constraints) {
                   return SingleChildScrollView(
                     physics:
                     const BouncingScrollPhysics(),
@@ -268,9 +387,8 @@ class _FindJobsPageState extends State<findjobes> {
                         CrossAxisAlignment.start,
 
                         children: [
-
                           // ==================================================
-                          // SEARCH CONTAINER
+                          // SEARCH
                           // ==================================================
 
                           Container(
@@ -297,8 +415,6 @@ class _FindJobsPageState extends State<findjobes> {
 
                             child: Column(
                               children: [
-
-                                // SEARCH FIELD
                                 TextField(
                                   controller:
                                   searchController,
@@ -308,13 +424,16 @@ class _FindJobsPageState extends State<findjobes> {
                                   },
 
                                   textInputAction:
-                                  TextInputAction.search,
+                                  TextInputAction
+                                      .search,
 
                                   style:
                                   const TextStyle(
                                     fontSize: 15,
                                     color:
-                                    Color(0xFF17233B),
+                                    Color(
+                                      0xFF17233B,
+                                    ),
                                   ),
 
                                   decoration:
@@ -326,7 +445,9 @@ class _FindJobsPageState extends State<findjobes> {
                                     const TextStyle(
                                       fontSize: 14,
                                       color:
-                                      Color(0xFF8A909A),
+                                      Color(
+                                        0xFF8A909A,
+                                      ),
                                     ),
 
                                     prefixIcon:
@@ -334,7 +455,9 @@ class _FindJobsPageState extends State<findjobes> {
                                       Icons.search,
                                       size: 24,
                                       color:
-                                      Color(0xFF687386),
+                                      Color(
+                                        0xFF687386,
+                                      ),
                                     ),
 
                                     suffixIcon:
@@ -344,9 +467,12 @@ class _FindJobsPageState extends State<findjobes> {
                                         ? IconButton(
                                       icon:
                                       const Icon(
-                                        Icons.clear,
+                                        Icons
+                                            .clear,
                                         color:
-                                        Color(0xFF687386),
+                                        Color(
+                                          0xFF687386,
+                                        ),
                                       ),
                                       onPressed:
                                           () {
@@ -354,8 +480,7 @@ class _FindJobsPageState extends State<findjobes> {
                                             .clear();
 
                                         setState(
-                                              () {},
-                                        );
+                                                () {});
                                       },
                                     )
                                         : null,
@@ -381,6 +506,7 @@ class _FindJobsPageState extends State<findjobes> {
                                           .circular(
                                         10,
                                       ),
+
                                       borderSide:
                                       const BorderSide(
                                         color:
@@ -397,6 +523,7 @@ class _FindJobsPageState extends State<findjobes> {
                                           .circular(
                                         10,
                                       ),
+
                                       borderSide:
                                       const BorderSide(
                                         color:
@@ -413,6 +540,7 @@ class _FindJobsPageState extends State<findjobes> {
                                           .circular(
                                         10,
                                       ),
+
                                       borderSide:
                                       BorderSide(
                                         color:
@@ -427,7 +555,6 @@ class _FindJobsPageState extends State<findjobes> {
                                   height: 14,
                                 ),
 
-                                // SEARCH BUTTON
                                 SizedBox(
                                   width:
                                   double.infinity,
@@ -436,11 +563,13 @@ class _FindJobsPageState extends State<findjobes> {
                                   child:
                                   ElevatedButton(
                                     onPressed: () {
-                                      FocusScope.of(
+                                      FocusScope
+                                          .of(
                                         context,
                                       ).unfocus();
 
-                                      setState(() {});
+                                      setState(
+                                              () {});
                                     },
 
                                     style:
@@ -474,7 +603,8 @@ class _FindJobsPageState extends State<findjobes> {
                                         Colors.white,
                                         fontSize: 16,
                                         fontWeight:
-                                        FontWeight.w600,
+                                        FontWeight
+                                            .w600,
                                       ),
                                     ),
                                   ),
@@ -492,8 +622,7 @@ class _FindJobsPageState extends State<findjobes> {
                           // ==================================================
 
                           SizedBox(
-                            width:
-                            double.infinity,
+                            width: double.infinity,
 
                             child:
                             SingleChildScrollView(
@@ -502,10 +631,8 @@ class _FindJobsPageState extends State<findjobes> {
 
                               child: Row(
                                 children: [
-
                                   _filterChip(
-                                    title:
-                                    "All Jobs",
+                                    title: "All Jobs",
                                     index: 0,
                                   ),
 
@@ -514,8 +641,7 @@ class _FindJobsPageState extends State<findjobes> {
                                   ),
 
                                   _filterChip(
-                                    title:
-                                    "Full Time",
+                                    title: "Full Time",
                                     index: 1,
                                   ),
 
@@ -524,8 +650,7 @@ class _FindJobsPageState extends State<findjobes> {
                                   ),
 
                                   _filterChip(
-                                    title:
-                                    "Part Time",
+                                    title: "Part Time",
                                     index: 2,
                                   ),
 
@@ -534,8 +659,7 @@ class _FindJobsPageState extends State<findjobes> {
                                   ),
 
                                   _filterChip(
-                                    title:
-                                    "Remote",
+                                    title: "Remote",
                                     index: 3,
                                   ),
                                 ],
@@ -546,6 +670,7 @@ class _FindJobsPageState extends State<findjobes> {
                           const SizedBox(
                             height: 20,
                           ),
+
                           // ==================================================
                           // JOB LIST
                           // ==================================================
@@ -554,13 +679,17 @@ class _FindJobsPageState extends State<findjobes> {
                             _noJobsWidget()
                           else
                             Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment:
+                              CrossAxisAlignment
+                                  .start,
+
                               children:
                               List.generate(
                                 filteredJobs.length,
                                     (index) {
-
-                                  final job = filteredJobs[index];
+                                  final job =
+                                  filteredJobs[
+                                  index];
 
                                   return Padding(
                                     padding:
@@ -569,47 +698,8 @@ class _FindJobsPageState extends State<findjobes> {
                                       bottom: 14,
                                     ),
 
-                                    child:
-                                    _jobCard(
-                                      companyShortName:
-                                      job[
-                                      "shortName"],
-
-                                      companyColor:
-                                      job[
-                                      "companyColor"],
-
-                                      companyBackground:
-                                      job[
-                                      "companyBackground"],
-
-                                      jobTitle:
-                                      job[
-                                      "title"],
-
-                                      companyName:
-                                      job[
-                                      "company"],
-
-                                      location:
-                                      job[
-                                      "location"],
-
-                                      salary:
-                                      job[
-                                      "salary"],
-
-                                      jobType:
-                                      job[
-                                      "type"],
-
-                                      jobTypeColor:
-                                      job[
-                                      "typeColor"],
-
-                                      jobTypeBackground:
-                                      job[
-                                      "typeBackground"],
+                                    child: _jobCard(
+                                      job: job,
                                     ),
                                   );
                                 },
@@ -620,17 +710,11 @@ class _FindJobsPageState extends State<findjobes> {
                             height: 10,
                           ),
 
-                          // ==================================================
-                          // VIEW ALL
-                          // ==================================================
-
                           if (filteredJobs.isNotEmpty)
                             Center(
                               child:
                               GestureDetector(
-                                onTap: () {
-                                  // Navigate to all jobs page
-                                },
+                                onTap: () {},
 
                                 child:
                                 const Padding(
@@ -700,7 +784,6 @@ class _FindJobsPageState extends State<findjobes> {
 
       child: Column(
         children: [
-
           Icon(
             Icons.search_off,
             size: 60,
@@ -714,8 +797,10 @@ class _FindJobsPageState extends State<findjobes> {
 
             style: TextStyle(
               fontSize: 19,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF17233B),
+              fontWeight:
+              FontWeight.bold,
+              color:
+              Color(0xFF17233B),
             ),
           ),
 
@@ -728,7 +813,8 @@ class _FindJobsPageState extends State<findjobes> {
 
             style: TextStyle(
               fontSize: 13,
-              color: Color(0xFF7B808A),
+              color:
+              Color(0xFF7B808A),
             ),
           ),
         ],
@@ -748,7 +834,8 @@ class _FindJobsPageState extends State<findjobes> {
         selectedFilter == index;
 
     return GestureDetector(
-      behavior: HitTestBehavior.opaque,
+      behavior:
+      HitTestBehavior.opaque,
 
       onTap: () {
         setState(() {
@@ -809,23 +896,15 @@ class _FindJobsPageState extends State<findjobes> {
   // ============================================================
 
   Widget _jobCard({
-    required String companyShortName,
-    required Color companyColor,
-    required Color companyBackground,
-    required String jobTitle,
-    required String companyName,
-    required String location,
-    required String salary,
-    required String jobType,
-    required Color jobTypeColor,
-    required Color jobTypeBackground,
+    required Map<String, dynamic> job,
   }) {
     return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-
       onTap: () {
-        // Open job details page
+        openJobDetails(job);
       },
+
+      behavior:
+      HitTestBehavior.opaque,
 
       child: Container(
         width: double.infinity,
@@ -845,10 +924,8 @@ class _FindJobsPageState extends State<findjobes> {
 
           boxShadow: [
             BoxShadow(
-              color:
-              Colors.black.withOpacity(
-                0.03,
-              ),
+              color: Colors.black
+                  .withOpacity(0.03),
 
               blurRadius: 5,
 
@@ -863,18 +940,13 @@ class _FindJobsPageState extends State<findjobes> {
           CrossAxisAlignment.start,
 
           children: [
-
-            // ========================================================
-            // COMPANY LOGO
-            // ========================================================
-
             Container(
               width: 52,
               height: 52,
 
               decoration: BoxDecoration(
                 color:
-                companyBackground,
+                job["companyBackground"],
 
                 borderRadius:
                 BorderRadius.circular(
@@ -884,11 +956,14 @@ class _FindJobsPageState extends State<findjobes> {
 
               child: Center(
                 child: Text(
-                  companyShortName,
+                  job["shortName"],
 
                   style: TextStyle(
-                    color: companyColor,
+                    color:
+                    job["companyColor"],
+
                     fontSize: 15,
+
                     fontWeight:
                     FontWeight.bold,
                   ),
@@ -896,21 +971,19 @@ class _FindJobsPageState extends State<findjobes> {
               ),
             ),
 
-            const SizedBox(width: 14),
-
-            // ========================================================
-            // JOB INFORMATION
-            // ========================================================
+            const SizedBox(
+              width: 14,
+            ),
 
             Expanded(
               child: Column(
                 crossAxisAlignment:
-                CrossAxisAlignment.start,
+                CrossAxisAlignment
+                    .start,
 
                 children: [
-
                   Text(
-                    jobTitle,
+                    job["title"],
 
                     maxLines: 2,
 
@@ -920,8 +993,10 @@ class _FindJobsPageState extends State<findjobes> {
                     style:
                     const TextStyle(
                       fontSize: 17,
+
                       fontWeight:
                       FontWeight.bold,
+
                       color:
                       Color(0xFF17233B),
                     ),
@@ -932,7 +1007,7 @@ class _FindJobsPageState extends State<findjobes> {
                   ),
 
                   Text(
-                    "$companyName • $location",
+                    "${job["company"]} • ${job["location"]}",
 
                     maxLines: 2,
 
@@ -942,6 +1017,7 @@ class _FindJobsPageState extends State<findjobes> {
                     style:
                     const TextStyle(
                       fontSize: 14,
+
                       color:
                       Color(0xFF7B808A),
                     ),
@@ -951,14 +1027,11 @@ class _FindJobsPageState extends State<findjobes> {
                     height: 10,
                   ),
 
-                  // JOB TYPE + SALARY
                   Wrap(
                     spacing: 8,
                     runSpacing: 8,
 
                     children: [
-
-                      // JOB TYPE
                       Container(
                         padding:
                         const EdgeInsets
@@ -970,7 +1043,7 @@ class _FindJobsPageState extends State<findjobes> {
                         decoration:
                         BoxDecoration(
                           color:
-                          jobTypeBackground,
+                          job["typeBackground"],
 
                           borderRadius:
                           BorderRadius
@@ -980,29 +1053,31 @@ class _FindJobsPageState extends State<findjobes> {
                         ),
 
                         child: Text(
-                          jobType,
+                          job["type"],
 
                           style:
                           TextStyle(
                             fontSize: 11,
+
                             color:
-                            jobTypeColor,
+                            job["typeColor"],
+
                             fontWeight:
-                            FontWeight
-                                .w600,
+                            FontWeight.w600,
                           ),
                         ),
                       ),
 
-                      // SALARY
                       Text(
-                        salary,
+                        job["salary"],
 
                         style:
                         const TextStyle(
                           fontSize: 14,
+
                           fontWeight:
                           FontWeight.bold,
+
                           color:
                           Color(0xFF17233B),
                         ),
