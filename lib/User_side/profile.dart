@@ -364,36 +364,33 @@ class ProfilePage extends StatelessWidget {
                             // SKILLS
                             // ==========================================
 
-                            const Align(
-                              alignment: Alignment.centerLeft,
-
-                              child: Wrap(
-                                spacing: 8,
-                                runSpacing: 8,
-
-                                children: [
-
-                                  SkillChip(
-                                    text: "React",
-                                  ),
-
-                                  SkillChip(
-                                    text: "JavaScript",
-                                  ),
-
-                                  SkillChip(
-                                    text: "TypeScript",
-                                  ),
-
-                                  SkillChip(
-                                    text: "Node.js",
-                                  ),
-
-                                  SkillChip(
-                                    text: "Python",
-                                  ),
-                                ],
-                              ),
+                            const Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    SkillChip(
+                                      text: "React",
+                                    ),SizedBox(width: 5,),
+                                    SkillChip(
+                                      text: "JavaScript",
+                                    ),SizedBox(width: 5,),
+                                    SkillChip(
+                                      text: "TypeScript",
+                                    ),SizedBox(width: 5,),
+                                  ],
+                                ),
+                                SizedBox(height: 10,),
+                                Row(
+                                  children: [
+                                    SkillChip(
+                                      text: "Node.js",
+                                    ),SizedBox(width: 5,),
+                                    SkillChip(
+                                      text: "Python",
+                                    ),SizedBox(width: 5,),
+                                  ],
+                                )
+                              ],
                             ),
 
                             // ==========================================
@@ -496,7 +493,7 @@ class SkillChip extends StatelessWidget {
         text,
 
         style: const TextStyle(
-          fontSize: 10,
+          fontSize: 13,
           fontWeight: FontWeight.w600,
           color: Color(0xFF2162E8),
         ),
