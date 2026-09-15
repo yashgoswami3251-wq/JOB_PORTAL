@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:job_portal/User_side/forgot_password.dart';
 import 'package:job_portal/User_side/profile.dart';
 
 import 'home_page.dart';
@@ -877,7 +878,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                       Center(
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>ChangePasswordPage()));
+                          },
 
                           style:
                           TextButton.styleFrom(
