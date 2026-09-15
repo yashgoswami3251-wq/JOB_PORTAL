@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 class JobDetailsPage extends StatefulWidget {
   final Map<String, dynamic> job;
 
+  final VoidCallback onApply;
+
   const JobDetailsPage({
     super.key,
     required this.job,
+    required this.onApply,
   });
 
   @override
@@ -15,6 +18,10 @@ class JobDetailsPage extends StatefulWidget {
 
 class _JobDetailsPageState
     extends State<JobDetailsPage> {
+
+  // ============================================================
+  // SAVED JOB
+  // ============================================================
 
   bool isSaved = false;
 
@@ -34,19 +41,12 @@ class _JobDetailsPageState
   // APPLY JOB
   // ============================================================
 
-  void applyJob() {
-    // Return TRUE to FindJobsPage.
-    //
-    // FindJobsPage will then call:
-    //
-    // widget.onApply();
-    //
-    // HomePage receives this and changes:
-    //
-    // selectedIndex = 2;
-    //
-    // Therefore AppliedPages opens inside
-    // HomePage's IndexedStack.
+  void _applyJob() {
+
+    // IMPORTANT:
+    // Close JobDetailsPage and return TRUE
+    // to findjobes page.
+
     Navigator.pop(context, true);
   }
 
@@ -60,8 +60,7 @@ class _JobDetailsPageState
     final job = widget.job;
 
     return Scaffold(
-      backgroundColor:
-      backgroundColor,
+      backgroundColor: backgroundColor,
 
       body: SafeArea(
         child: Column(
@@ -81,14 +80,11 @@ class _JobDetailsPageState
 
               decoration:
               const BoxDecoration(
-                color:
-                Color(0xFFFFFCF7),
+                color: Color(0xFFFFFCF7),
 
                 border: Border(
-                  bottom:
-                  BorderSide(
-                    color:
-                    Color(0xFFE8E8E8),
+                  bottom: BorderSide(
+                    color: Color(0xFFE8E8E8),
                   ),
                 ),
               ),
@@ -96,17 +92,14 @@ class _JobDetailsPageState
               child: Row(
                 children: [
 
-                  // BACK
+                  // BACK BUTTON
                   GestureDetector(
                     onTap: () {
-                      Navigator.pop(
-                        context,
-                        false,
-                      );
+                      Navigator.pop(context);
                     },
 
-                    child: Row(
-                      children: const [
+                    child: const Row(
+                      children: [
 
                         Icon(
                           Icons.arrow_back,
@@ -115,15 +108,12 @@ class _JobDetailsPageState
                           size: 22,
                         ),
 
-                        SizedBox(
-                          width: 7,
-                        ),
+                        SizedBox(width: 7),
 
                         Text(
                           "Back",
 
-                          style:
-                          TextStyle(
+                          style: TextStyle(
                             color:
                             Color(0xFF2864E8),
                             fontSize: 16,
@@ -146,18 +136,15 @@ class _JobDetailsPageState
                     const BoxDecoration(
                       color:
                       Color(0xFF3D687A),
-                      shape:
-                      BoxShape.circle,
+                      shape: BoxShape.circle,
                     ),
 
                     child: const Center(
                       child: Text(
                         "RS",
 
-                        style:
-                        TextStyle(
-                          color:
-                          Colors.white,
+                        style: TextStyle(
+                          color: Colors.white,
                           fontSize: 12,
                           fontWeight:
                           FontWeight.bold,
@@ -174,8 +161,8 @@ class _JobDetailsPageState
             // =====================================================
 
             Expanded(
-              child:
-              SingleChildScrollView(
+              child: SingleChildScrollView(
+
                 physics:
                 const BouncingScrollPhysics(),
 
@@ -191,42 +178,33 @@ class _JobDetailsPageState
                   width: double.infinity,
 
                   padding:
-                  const EdgeInsets.all(
-                    22,
-                  ),
+                  const EdgeInsets.all(22),
 
                   decoration:
                   BoxDecoration(
-                    color:
-                    Colors.white,
+                    color: Colors.white,
 
-                    border:
-                    Border.all(
-                      color:
-                      borderColor,
+                    border: Border.all(
+                      color: borderColor,
                     ),
 
                     borderRadius:
-                    BorderRadius.circular(
-                      14,
-                    ),
+                    BorderRadius.circular(14),
                   ),
 
                   child: Column(
                     crossAxisAlignment:
-                    CrossAxisAlignment
-                        .start,
+                    CrossAxisAlignment.start,
 
                     children: [
 
                       // =================================================
-                      // COMPANY + JOB TITLE
+                      // COMPANY + TITLE
                       // =================================================
 
                       Row(
                         crossAxisAlignment:
-                        CrossAxisAlignment
-                            .start,
+                        CrossAxisAlignment.start,
 
                         children: [
 
@@ -242,36 +220,27 @@ class _JobDetailsPageState
 
                               borderRadius:
                               BorderRadius
-                                  .circular(
-                                10,
-                              ),
+                                  .circular(10),
                             ),
 
                             child: Center(
                               child: Text(
-                                job[
-                                "shortName"],
+                                job["shortName"],
 
                                 style:
                                 TextStyle(
                                   color:
                                   job[
                                   "companyColor"],
-
-                                  fontSize:
-                                  16,
-
+                                  fontSize: 16,
                                   fontWeight:
-                                  FontWeight
-                                      .bold,
+                                  FontWeight.bold,
                                 ),
                               ),
                             ),
                           ),
 
-                          const SizedBox(
-                            width: 16,
-                          ),
+                          const SizedBox(width: 16),
 
                           Expanded(
                             child: Column(
@@ -286,36 +255,27 @@ class _JobDetailsPageState
 
                                   style:
                                   const TextStyle(
-                                    fontSize:
-                                    22,
-
+                                    fontSize: 22,
                                     fontWeight:
-                                    FontWeight
-                                        .bold,
-
+                                    FontWeight.bold,
                                     color:
                                     Color(
-                                      0xFF17233B,
-                                    ),
+                                        0xFF17233B),
                                   ),
                                 ),
 
                                 const SizedBox(
-                                  height: 5,
-                                ),
+                                    height: 5),
 
                                 Text(
                                   "${job["company"]} • ${job["location"]}",
 
                                   style:
                                   const TextStyle(
-                                    fontSize:
-                                    15,
-
+                                    fontSize: 15,
                                     color:
                                     Color(
-                                      0xFF7B808A,
-                                    ),
+                                        0xFF7B808A),
                                   ),
                                 ),
                               ],
@@ -324,9 +284,7 @@ class _JobDetailsPageState
                         ],
                       ),
 
-                      const SizedBox(
-                        height: 24,
-                      ),
+                      const SizedBox(height: 24),
 
                       // =================================================
                       // APPLY + SAVE
@@ -335,16 +293,18 @@ class _JobDetailsPageState
                       Row(
                         children: [
 
+                          // =================================================
                           // APPLY NOW
+                          // =================================================
+
                           Expanded(
-                            child:
-                            SizedBox(
+                            child: SizedBox(
                               height: 50,
 
                               child:
                               ElevatedButton(
                                 onPressed:
-                                applyJob,
+                                _applyJob,
 
                                 style:
                                 ElevatedButton
@@ -361,9 +321,7 @@ class _JobDetailsPageState
                                   RoundedRectangleBorder(
                                     borderRadius:
                                     BorderRadius
-                                        .circular(
-                                      9,
-                                    ),
+                                        .circular(9),
                                   ),
                                 ),
 
@@ -373,31 +331,33 @@ class _JobDetailsPageState
 
                                   style:
                                   TextStyle(
-                                    fontSize:
-                                    16,
-
+                                    fontSize: 16,
                                     fontWeight:
-                                    FontWeight
-                                        .w600,
+                                    FontWeight.w600,
                                   ),
                                 ),
                               ),
                             ),
                           ),
 
-                          const SizedBox(
-                            width: 14,
-                          ),
+                          const SizedBox(width: 14),
 
+                          // =================================================
                           // SAVE JOB
+                          // =================================================
+
                           Expanded(
-                            child:
-                            SizedBox(
+                            child: SizedBox(
                               height: 50,
 
                               child:
                               OutlinedButton(
                                 onPressed: () {
+
+                                  // =====================================
+                                  // YOUR SAVED CONCEPT IS UNCHANGED
+                                  // =====================================
+
                                   setState(() {
                                     isSaved =
                                     !isSaved;
@@ -414,17 +374,14 @@ class _JobDetailsPageState
                                   const BorderSide(
                                     color:
                                     Color(
-                                      0xFFDDE1E7,
-                                    ),
+                                        0xFFDDE1E7),
                                   ),
 
                                   shape:
                                   RoundedRectangleBorder(
                                     borderRadius:
                                     BorderRadius
-                                        .circular(
-                                      9,
-                                    ),
+                                        .circular(9),
                                   ),
                                 ),
 
@@ -446,8 +403,7 @@ class _JobDetailsPageState
                                     ),
 
                                     const SizedBox(
-                                      width: 6,
-                                    ),
+                                        width: 6),
 
                                     Text(
                                       isSaved
@@ -456,17 +412,12 @@ class _JobDetailsPageState
 
                                       style:
                                       const TextStyle(
-                                        fontSize:
-                                        16,
-
+                                        fontSize: 16,
                                         fontWeight:
-                                        FontWeight
-                                            .w600,
-
+                                        FontWeight.w600,
                                         color:
                                         Color(
-                                          0xFF687386,
-                                        ),
+                                            0xFF687386),
                                       ),
                                     ),
                                   ],
@@ -477,19 +428,14 @@ class _JobDetailsPageState
                         ],
                       ),
 
-                      const SizedBox(
-                        height: 22,
-                      ),
+                      const SizedBox(height: 22),
 
                       Divider(
-                        color:
-                        borderColor,
+                        color: borderColor,
                         height: 1,
                       ),
 
-                      const SizedBox(
-                        height: 24,
-                      ),
+                      const SizedBox(height: 24),
 
                       // =================================================
                       // JOB INFORMATION
@@ -499,22 +445,16 @@ class _JobDetailsPageState
                         children: [
 
                           Expanded(
-                            child:
-                            _infoItem(
-                              title:
-                              "Salary",
-
+                            child: _infoItem(
+                              title: "Salary",
                               value:
                               job["salary"],
                             ),
                           ),
 
                           Expanded(
-                            child:
-                            _infoItem(
-                              title:
-                              "Job Type",
-
+                            child: _infoItem(
+                              title: "Job Type",
                               value:
                               job["type"],
                             ),
@@ -522,19 +462,15 @@ class _JobDetailsPageState
                         ],
                       ),
 
-                      const SizedBox(
-                        height: 20,
-                      ),
+                      const SizedBox(height: 20),
 
                       Row(
                         children: [
 
                           Expanded(
-                            child:
-                            _infoItem(
+                            child: _infoItem(
                               title:
                               "Experience",
-
                               value:
                               job[
                               "experience"],
@@ -542,11 +478,9 @@ class _JobDetailsPageState
                           ),
 
                           Expanded(
-                            child:
-                            _infoItem(
+                            child: _infoItem(
                               title:
                               "Posted Date",
-
                               value:
                               job[
                               "postedDate"],
@@ -555,19 +489,14 @@ class _JobDetailsPageState
                         ],
                       ),
 
-                      const SizedBox(
-                        height: 24,
-                      ),
+                      const SizedBox(height: 24),
 
                       Divider(
-                        color:
-                        borderColor,
+                        color: borderColor,
                         height: 1,
                       ),
 
-                      const SizedBox(
-                        height: 25,
-                      ),
+                      const SizedBox(height: 25),
 
                       // =================================================
                       // DESCRIPTION
@@ -577,9 +506,7 @@ class _JobDetailsPageState
                         "Job Description",
                       ),
 
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10),
 
                       Text(
                         job["description"],
@@ -589,15 +516,11 @@ class _JobDetailsPageState
                           fontSize: 16,
                           height: 1.5,
                           color:
-                          Color(
-                            0xFF17233B,
-                          ),
+                          Color(0xFF17233B),
                         ),
                       ),
 
-                      const SizedBox(
-                        height: 25,
-                      ),
+                      const SizedBox(height: 25),
 
                       // =================================================
                       // RESPONSIBILITIES
@@ -607,13 +530,10 @@ class _JobDetailsPageState
                         "Key Responsibilities",
                       ),
 
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10),
 
                       ...List.generate(
-                        job[
-                        "responsibilities"]
+                        job["responsibilities"]
                             .length,
 
                             (index) {
@@ -629,25 +549,18 @@ class _JobDetailsPageState
 
                               style:
                               const TextStyle(
-                                fontSize:
-                                16,
-
-                                height:
-                                1.45,
-
+                                fontSize: 16,
+                                height: 1.45,
                                 color:
                                 Color(
-                                  0xFF17233B,
-                                ),
+                                    0xFF17233B),
                               ),
                             ),
                           );
                         },
                       ),
 
-                      const SizedBox(
-                        height: 18,
-                      ),
+                      const SizedBox(height: 18),
 
                       // =================================================
                       // REQUIREMENTS
@@ -657,14 +570,10 @@ class _JobDetailsPageState
                         "Job Requirements",
                       ),
 
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10),
 
                       ...List.generate(
-                        job[
-                        "requirements"]
-                            .length,
+                        job["requirements"].length,
 
                             (index) {
                           return Padding(
@@ -679,40 +588,30 @@ class _JobDetailsPageState
 
                               style:
                               const TextStyle(
-                                fontSize:
-                                16,
-
-                                height:
-                                1.45,
-
+                                fontSize: 16,
+                                height: 1.45,
                                 color:
                                 Color(
-                                  0xFF17233B,
-                                ),
+                                    0xFF17233B),
                               ),
                             ),
                           );
                         },
                       ),
 
-                      const SizedBox(
-                        height: 25,
-                      ),
+                      const SizedBox(height: 25),
 
                       // =================================================
                       // BOTTOM APPLY BUTTON
                       // =================================================
 
                       SizedBox(
-                        width:
-                        double.infinity,
-
+                        width: double.infinity,
                         height: 52,
 
                         child:
                         ElevatedButton(
-                          onPressed:
-                          applyJob,
+                          onPressed: _applyJob,
 
                           style:
                           ElevatedButton
@@ -729,9 +628,7 @@ class _JobDetailsPageState
                             RoundedRectangleBorder(
                               borderRadius:
                               BorderRadius
-                                  .circular(
-                                10,
-                              ),
+                                  .circular(10),
                             ),
                           ),
 
@@ -741,12 +638,9 @@ class _JobDetailsPageState
 
                             style:
                             TextStyle(
-                              fontSize:
-                              17,
-
+                              fontSize: 17,
                               fontWeight:
-                              FontWeight
-                                  .w600,
+                              FontWeight.w600,
                             ),
                           ),
                         ),
@@ -779,28 +673,22 @@ class _JobDetailsPageState
         Text(
           title,
 
-          style:
-          const TextStyle(
+          style: const TextStyle(
             fontSize: 13,
-            color:
-            Color(0xFF7B808A),
+            color: Color(0xFF7B808A),
           ),
         ),
 
-        const SizedBox(
-          height: 4,
-        ),
+        const SizedBox(height: 4),
 
         Text(
           value,
 
-          style:
-          const TextStyle(
+          style: const TextStyle(
             fontSize: 16,
             fontWeight:
             FontWeight.w600,
-            color:
-            Color(0xFF17233B),
+            color: Color(0xFF17233B),
           ),
         ),
       ],
@@ -811,18 +699,15 @@ class _JobDetailsPageState
   // SECTION TITLE
   // ============================================================
 
-  Widget _sectionTitle(
-      String title) {
+  Widget _sectionTitle(String title) {
     return Text(
       title,
 
-      style:
-      const TextStyle(
+      style: const TextStyle(
         fontSize: 17,
         fontWeight:
         FontWeight.bold,
-        color:
-        Color(0xFF17233B),
+        color: Color(0xFF17233B),
       ),
     );
   }

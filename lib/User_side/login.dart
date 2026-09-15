@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:job_portal/User_side/register_page.dart';
 
+import 'forgot_password.dart';
 import 'home_page.dart';
 
 const Color navyColor = Color(0xFF1E2D50);
@@ -20,10 +22,6 @@ void main() {
 
   runApp(const MyApp());
 }
-
-// ============================================================
-// APP
-// ============================================================
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -49,15 +47,135 @@ class MyApp extends StatelessWidget {
 // LOGIN PAGE
 // ============================================================
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+
+
+  String selectedRole = "Job Seeker";
+
+
+  final TextEditingController emailController = TextEditingController();
+
+  final TextEditingController passwordController = TextEditingController();
+
+
+  bool hidePassword = true;
+
+
+  void changeRole(String role) {
+    setState(() {
+      selectedRole = role;
+
+      emailController.clear();
+      passwordController.clear();
+    });
+  }
+
+
+  void login() {
+
+    FocusScope.of(context).unfocus();
+
+    if (emailController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Please enter your email"),
+        ),
+      );
+
+      return;
+    }
+
+    if (passwordController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Please enter your password"),
+        ),
+      );
+
+      return;
+    }
+
+
+    if (selectedRole == "Job Seeker") {
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const HomePage(),
+        ),
+      );
+    }
+
+    // --------------------------------------------------------
+    // EMPLOYER
+    // --------------------------------------------------------
+
+    else if (selectedRole == "Employer") {
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "Employer login successful",
+          ),
+        ),
+      );
+
+      // Later:
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => const EmployerHomePage(),
+      //   ),
+      // );
+    }
+
+    // --------------------------------------------------------
+    // ADMIN
+    // --------------------------------------------------------
+
+    else if (selectedRole == "Admin") {
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "Admin login successful",
+          ),
+        ),
+      );
+
+      // Later:
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => const AdminHomePage(),
+      //   ),
+      // );
+    }
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+
+    super.dispose();
+  }
+
+  // ==========================================================
+  // BUILD
+  // ==========================================================
+
+  @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-      // IMPORTANT:
-      // White background means no blue strip
-      // at bottom or around the form.
       backgroundColor: Colors.white,
 
       body: SafeArea(
@@ -67,9 +185,9 @@ class LoginPage extends StatelessWidget {
         child: Column(
           children: [
 
-            // ====================================================
+            // ==================================================
             // HEADER
-            // ====================================================
+            // ==================================================
 
             Container(
               width: double.infinity,
@@ -106,6 +224,7 @@ class LoginPage extends StatelessWidget {
 
                       Text(
                         "HireHub",
+
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 21,
@@ -118,11 +237,12 @@ class LoginPage extends StatelessWidget {
                   const SizedBox(height: 18),
 
                   // ==================================================
-                  // TITLE
+                  // HEADER TITLE
                   // ==================================================
 
                   const Text(
                     "Build Your Career.",
+
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,
@@ -132,6 +252,7 @@ class LoginPage extends StatelessWidget {
 
                   const Text(
                     "Shape Your Future.",
+
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,
@@ -143,7 +264,9 @@ class LoginPage extends StatelessWidget {
 
                   const Text(
                     "Explore trusted job opportunities and apply easily.",
+
                     textAlign: TextAlign.center,
+
                     style: TextStyle(
                       color: Colors.white70,
                       fontSize: 16,
@@ -153,9 +276,9 @@ class LoginPage extends StatelessWidget {
               ),
             ),
 
-            // ====================================================
-            // WHITE CONTENT
-            // ====================================================
+            // ==================================================
+            // CONTENT
+            // ==================================================
 
             Expanded(
               child: Container(
@@ -183,6 +306,7 @@ class LoginPage extends StatelessWidget {
 
                       const Text(
                         "Welcome back",
+
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
@@ -192,9 +316,10 @@ class LoginPage extends StatelessWidget {
 
                       const SizedBox(height: 5),
 
-                      const Text(
-                        "Select your role and sign in to your account",
-                        style: TextStyle(
+                      Text(
+                        "Sign in as a $selectedRole",
+
+                        style: const TextStyle(
                           fontSize: 17,
                           color: Colors.grey,
                         ),
@@ -202,11 +327,16 @@ class LoginPage extends StatelessWidget {
 
                       const SizedBox(height: 18),
 
+                      // ==================================================
+                      // ROLE SELECTOR
+                      // ==================================================
+
                       Container(
                         width: double.infinity,
-                        height: 46,
+                        height: 50,
 
-                        padding: const EdgeInsets.all(3),
+                        padding:
+                        const EdgeInsets.all(3),
 
                         decoration: BoxDecoration(
                           color: lightGrey,
@@ -220,25 +350,157 @@ class LoginPage extends StatelessWidget {
                         ),
 
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            TextButton(onPressed: (){
 
-                            }, child: Center(child: Text("Admin",style: TextStyle(color: Colors.grey.shade600,fontSize: 15),))),SizedBox(width: 10,),
-                            TextButton(onPressed: (){
+                            // ADMIN
+                            _roleButton(
+                              title: "Admin",
+                              selected:
+                              selectedRole == "Admin",
 
-                            }, child: Center(child: Text("Employer",style: TextStyle(color: Colors.grey.shade600,fontSize: 15)))),SizedBox(width: 10,),
-                            TextButton(onPressed: (){
+                              onTap: () {
+                                changeRole("Admin");
+                              },
+                            ),
 
-                            }, child: Center(child: Text("Job Seeker",style: TextStyle(color: Colors.grey.shade600,fontSize: 15)))),SizedBox(width: 10,),
+                            // EMPLOYER
+                            _roleButton(
+                              title: "Employer",
+                              selected:
+                              selectedRole == "Employer",
+
+                              onTap: () {
+                                changeRole("Employer");
+                              },
+                            ),
+
+                            // JOB SEEKER
+                            _roleButton(
+                              title: "Job Seeker",
+                              selected:
+                              selectedRole ==
+                                  "Job Seeker",
+
+                              onTap: () {
+                                changeRole("Job Seeker");
+                              },
+                            ),
                           ],
                         ),
                       ),
 
-                      const SizedBox(height: 18),
+                      const SizedBox(height: 22),
+
+                      // ==================================================
+                      // ROLE INFORMATION
+                      // ==================================================
+
+                      Container(
+                        width: double.infinity,
+
+                        padding:
+                        const EdgeInsets.all(12),
+
+                        decoration: BoxDecoration(
+                          color: const Color(
+                            0xFFF3F7FF,
+                          ),
+
+                          borderRadius:
+                          BorderRadius.circular(9),
+
+                          border: Border.all(
+                            color: const Color(
+                              0xFFDCE8FF,
+                            ),
+                          ),
+                        ),
+
+                        child: Row(
+                          children: [
+
+                            Container(
+                              width: 38,
+                              height: 38,
+
+                              decoration:
+                              BoxDecoration(
+                                color: Colors.white,
+
+                                borderRadius:
+                                BorderRadius
+                                    .circular(8),
+                              ),
+
+                              child: Icon(
+                                selectedRole ==
+                                    "Admin"
+                                    ? Icons
+                                    .admin_panel_settings
+                                    : selectedRole ==
+                                    "Employer"
+                                    ? Icons
+                                    .business
+                                    : Icons
+                                    .person,
+
+                                color: buttonBlue,
+
+                                size: 21,
+                              ),
+                            ),
+
+                            const SizedBox(width: 10),
+
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment:
+                                CrossAxisAlignment
+                                    .start,
+
+                                children: [
+
+                                  Text(
+                                    "$selectedRole Login",
+
+                                    style:
+                                    const TextStyle(
+                                      fontSize: 12,
+                                      fontWeight:
+                                      FontWeight.bold,
+                                      color:
+                                      navyColor,
+                                    ),
+                                  ),
+
+                                  const SizedBox(height: 3),
+
+                                  Text(
+                                    _getRoleDescription(),
+
+                                    style:
+                                    const TextStyle(
+                                      fontSize: 9,
+                                      color:
+                                      Colors.grey,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      const SizedBox(height: 20),
+
+                      // ==================================================
+                      // EMAIL
+                      // ==================================================
 
                       const Text(
                         "Email Address",
+
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w600,
@@ -252,18 +514,15 @@ class LoginPage extends StatelessWidget {
                         height: 50,
 
                         child: TextField(
+                          controller: emailController,
                           keyboardType:
                           TextInputType.emailAddress,
-
-                          style: const TextStyle(
+                          style:
+                          const TextStyle(
                             fontSize: 13,
                           ),
-
-                          decoration:
-                          InputDecoration(
-                            hintText:
-                            "sureshkumar12@gmail.com",
-
+                          decoration: InputDecoration(
+                            hintText: _getEmailHint(),
                             hintStyle:
                             const TextStyle(
                               fontSize: 12,
@@ -274,14 +533,12 @@ class LoginPage extends StatelessWidget {
                             const Icon(
                               Icons.email_outlined,
                               size: 19,
-                              color: Colors.blueGrey,
+                              color:
+                              Colors.blueGrey,
                             ),
 
                             contentPadding:
-                            const EdgeInsets
-                                .symmetric(
-                              horizontal: 10,
-                            ),
+                            const EdgeInsets.symmetric(horizontal: 10,),
 
                             border:
                             OutlineInputBorder(
@@ -290,29 +547,34 @@ class LoginPage extends StatelessWidget {
 
                               borderSide:
                               const BorderSide(
-                                color: borderColor,
+                                color:
+                                borderColor,
                               ),
                             ),
 
                             enabledBorder:
                             OutlineInputBorder(
                               borderRadius:
-                              BorderRadius.circular(8),
+                              BorderRadius
+                                  .circular(8),
 
                               borderSide:
                               const BorderSide(
-                                color: borderColor,
+                                color:
+                                borderColor,
                               ),
                             ),
 
                             focusedBorder:
                             OutlineInputBorder(
                               borderRadius:
-                              BorderRadius.circular(8),
+                              BorderRadius
+                                  .circular(8),
 
                               borderSide:
                               const BorderSide(
-                                color: buttonBlue,
+                                color:
+                                buttonBlue,
                                 width: 1.5,
                               ),
                             ),
@@ -328,6 +590,7 @@ class LoginPage extends StatelessWidget {
 
                       const Text(
                         "Password",
+
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w600,
@@ -341,15 +604,22 @@ class LoginPage extends StatelessWidget {
                         height: 50,
 
                         child: TextField(
-                          obscureText: true,
+                          controller:
+                          passwordController,
+
+                          obscureText:
+                          hidePassword,
+
                           obscuringCharacter: "*",
 
-                          style: const TextStyle(
+                          style:
+                          const TextStyle(
                             fontSize: 13,
                           ),
 
                           decoration:
                           InputDecoration(
+
                             hintText:
                             "Enter your password",
 
@@ -363,15 +633,31 @@ class LoginPage extends StatelessWidget {
                             const Icon(
                               Icons.lock_outline,
                               size: 19,
-                              color: Colors.blueGrey,
+                              color:
+                              Colors.blueGrey,
                             ),
 
                             suffixIcon:
-                            const Icon(
-                              Icons
-                                  .visibility_off_outlined,
-                              size: 19,
-                              color: Colors.blueGrey,
+                            IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  hidePassword =
+                                  !hidePassword;
+                                });
+                              },
+
+                              icon: Icon(
+                                hidePassword
+                                    ? Icons
+                                    .visibility_off_outlined
+                                    : Icons
+                                    .visibility_outlined,
+
+                                size: 19,
+
+                                color:
+                                Colors.blueGrey,
+                              ),
                             ),
 
                             contentPadding:
@@ -383,33 +669,39 @@ class LoginPage extends StatelessWidget {
                             border:
                             OutlineInputBorder(
                               borderRadius:
-                              BorderRadius.circular(8),
+                              BorderRadius
+                                  .circular(8),
 
                               borderSide:
                               const BorderSide(
-                                color: borderColor,
+                                color:
+                                borderColor,
                               ),
                             ),
 
                             enabledBorder:
                             OutlineInputBorder(
                               borderRadius:
-                              BorderRadius.circular(8),
+                              BorderRadius
+                                  .circular(8),
 
                               borderSide:
                               const BorderSide(
-                                color: borderColor,
+                                color:
+                                borderColor,
                               ),
                             ),
 
                             focusedBorder:
                             OutlineInputBorder(
                               borderRadius:
-                              BorderRadius.circular(8),
+                              BorderRadius
+                                  .circular(8),
 
                               borderSide:
                               const BorderSide(
-                                color: buttonBlue,
+                                color:
+                                buttonBlue,
                                 width: 1.5,
                               ),
                             ),
@@ -420,7 +712,7 @@ class LoginPage extends StatelessWidget {
                       const SizedBox(height: 7),
 
                       // ==================================================
-                      // REMEMBER ME + FORGOT
+                      // REMEMBER + FORGOT
                       // ==================================================
 
                       Row(
@@ -433,7 +725,8 @@ class LoginPage extends StatelessWidget {
                             child: Checkbox(
                               value: false,
 
-                              onChanged: (value) {},
+                              onChanged:
+                                  (value) {},
 
                               activeColor:
                               buttonBlue,
@@ -448,6 +741,7 @@ class LoginPage extends StatelessWidget {
 
                           const Text(
                             "Keep me signed in",
+
                             style: TextStyle(
                               fontSize: 15,
                               color: Colors.grey,
@@ -457,10 +751,21 @@ class LoginPage extends StatelessWidget {
                           const Spacer(),
 
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder:
+                                      (context) =>
+                                  const ChangePasswordPage(),
+                                ),
+                              );
+                            },
 
                             child: const Text(
                               "Forgot Password?",
+
                               style: TextStyle(
                                 fontSize: 15,
                                 color: buttonBlue,
@@ -474,14 +779,16 @@ class LoginPage extends StatelessWidget {
 
                       const SizedBox(height: 17),
 
+                      // ==================================================
+                      // LOGIN BUTTON
+                      // ==================================================
+
                       SizedBox(
                         width: double.infinity,
                         height: 50,
 
                         child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
-                          },
+                          onPressed: login,
 
                           style:
                           ElevatedButton.styleFrom(
@@ -496,13 +803,15 @@ class LoginPage extends StatelessWidget {
                             shape:
                             RoundedRectangleBorder(
                               borderRadius:
-                              BorderRadius.circular(8),
+                              BorderRadius
+                                  .circular(8),
                             ),
                           ),
 
-                          child: const Text(
-                            "Login to Account",
-                            style: TextStyle(
+                          child: Text(
+                            "Login as $selectedRole",
+
+                            style: const TextStyle(
                               fontSize: 13,
                               fontWeight:
                               FontWeight.bold,
@@ -513,6 +822,10 @@ class LoginPage extends StatelessWidget {
 
                       const SizedBox(height: 18),
 
+                      // ==================================================
+                      // REGISTER
+                      // ==================================================
+
                       Center(
                         child: Row(
                           mainAxisAlignment:
@@ -520,24 +833,49 @@ class LoginPage extends StatelessWidget {
 
                           children: [
 
-                            const Text(
-                              "Don't have an account? ",
-                              style: TextStyle(
+                            Text(
+                              selectedRole ==
+                                  "Job Seeker"
+                                  ? "Don't have an account? "
+                                  : selectedRole ==
+                                  "Employer"
+                                  ? "Don't have an employer account? "
+                                  : "Need admin access? ",
+
+                              style:
+                              const TextStyle(
                                 fontSize: 15,
                                 color: Colors.grey,
                               ),
                             ),
 
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
 
-                              child: const Text(
-                                "Register",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  color: buttonBlue,
-                                  fontWeight:
-                                  FontWeight.bold,
+                                ScaffoldMessenger
+                                    .of(context)
+                                    .showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      "$selectedRole registration",
+                                    ),
+                                  ),
+                                );
+                              },
+
+                              child: InkWell(
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>RegisterPage()));
+                                },
+                                child: const Text(
+                                  "Register",
+
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: buttonBlue,
+                                    fontWeight:
+                                    FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ),
@@ -559,41 +897,89 @@ class LoginPage extends StatelessWidget {
   // ROLE BUTTON
   // ============================================================
 
-  Widget _roleButton(
-      String title,
-      bool selected,
-      ) {
+  Widget _roleButton({
+    required String title,
+    required bool selected,
+    required VoidCallback onTap,
+  }) {
+
     return Expanded(
-      child: Container(
-        margin: const EdgeInsets.all(2),
+      child: GestureDetector(
+        onTap: onTap,
 
-        decoration: BoxDecoration(
-          color: selected
-              ? buttonBlue
-              : Colors.transparent,
+        child: Container(
+          margin: const EdgeInsets.all(2),
 
-          borderRadius:
-          BorderRadius.circular(6),
-        ),
+          decoration: BoxDecoration(
+            color: selected
+                ? buttonBlue
+                : Colors.transparent,
 
-        child: Center(
-          child: Text(
-            title,
+            borderRadius:
+            BorderRadius.circular(6),
+          ),
 
-            style: TextStyle(
-              fontSize: 11,
+          child: Center(
+            child: Text(
+              title,
 
-              color: selected
-                  ? Colors.white
-                  : Colors.black54,
+              style: TextStyle(
+                fontSize: 11,
 
-              fontWeight: selected
-                  ? FontWeight.bold
-                  : FontWeight.normal,
+                color: selected
+                    ? Colors.white
+                    : Colors.black54,
+
+                fontWeight: selected
+                    ? FontWeight.bold
+                    : FontWeight.normal,
+              ),
             ),
           ),
         ),
       ),
     );
   }
+
+  // ============================================================
+  // ROLE DESCRIPTION
+  // ============================================================
+
+  String _getRoleDescription() {
+
+    if (selectedRole == "Admin") {
+      return "Manage users, jobs and platform activities.";
+    }
+
+    if (selectedRole == "Employer") {
+      return "Post jobs and manage your job applications.";
+    }
+
+    return "Find jobs, apply and manage your applications.";
+  }
+
+  // ============================================================
+  // EMAIL HINT
+  // ============================================================
+
+  String _getEmailHint() {
+
+    if (selectedRole == "Admin") {
+      return "admin@hirehub.com";
+    }
+
+    if (selectedRole == "Employer") {
+      return "company@hirehub.com";
+    }
+
+    return "sureshkumar12@gmail.com";
+  }
 }
+
+// ============================================================
+// TEMPORARY CHANGE PASSWORD PAGE
+// ============================================================
+// Keep your existing forgot_password.dart page instead.
+// This class is only here if you want this file to run alone.
+// ============================================================
+

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:job_portal/User_side/profile.dart';
 import 'job_details_page.dart';
 
 class findjobes extends StatefulWidget {
@@ -16,24 +17,12 @@ class findjobes extends StatefulWidget {
 class _FindJobsPageState extends State<findjobes> {
   int selectedFilter = 0;
 
-  final TextEditingController searchController =
-  TextEditingController();
+  final TextEditingController searchController = TextEditingController();
 
-  final Color backgroundColor =
-  const Color(0xFFFFFCF7);
-
-  final Color navyColor =
-  const Color(0xFF17233B);
-
-  final Color blueColor =
-  const Color(0xFF2864E8);
-
-  final Color borderColor =
-  const Color(0xFFE1E5EB);
-
-  // ============================================================
-  // JOB DATA
-  // ============================================================
+  final Color backgroundColor = const Color(0xFFFFFCF7);
+  final Color navyColor = const Color(0xFF17233B);
+  final Color blueColor = const Color(0xFF2864E8);
+  final Color borderColor = const Color(0xFFE1E5EB);
 
   final List<Map<String, dynamic>> jobs = [
     {
@@ -71,7 +60,6 @@ class _FindJobsPageState extends State<findjobes> {
         "Good understanding of responsive web design.",
       ],
     },
-
     {
       "shortName": "INF",
       "companyColor": const Color(0xFF8B5CF6),
@@ -101,7 +89,6 @@ class _FindJobsPageState extends State<findjobes> {
         "Knowledge of responsive design principles.",
       ],
     },
-
     {
       "shortName": "WIP",
       "companyColor": const Color(0xFF00A878),
@@ -132,7 +119,6 @@ class _FindJobsPageState extends State<findjobes> {
         "Good analytical and communication skills.",
       ],
     },
-
     {
       "shortName": "HCL",
       "companyColor": const Color(0xFFFF3B30),
@@ -162,7 +148,6 @@ class _FindJobsPageState extends State<findjobes> {
         "Good understanding of backend architecture.",
       ],
     },
-
     {
       "shortName": "TEM",
       "companyColor": const Color(0xFF17233B),
@@ -193,10 +178,6 @@ class _FindJobsPageState extends State<findjobes> {
       ],
     },
   ];
-
-  // ============================================================
-  // FILTERED JOBS
-  // ============================================================
 
   List<Map<String, dynamic>> get filteredJobs {
     final searchText =
@@ -247,38 +228,35 @@ class _FindJobsPageState extends State<findjobes> {
   // OPEN JOB DETAILS
   // ============================================================
 
-  void openJobDetails(
-      Map<String, dynamic> job) async {
+  void openJobDetails(Map<String, dynamic> job) async {
     final result = await Navigator.push(
       context,
-
       MaterialPageRoute(
         builder: (context) {
           return JobDetailsPage(
             job: job,
+
+            // This callback is NOT used for navigation.
+            // Navigation is handled using Navigator.pop(context, true).
+            onApply: () {},
           );
         },
       ),
     );
 
-    // ==========================================================
+    // ============================================================
     // APPLY BUTTON CLICKED
-    // ==========================================================
+    // ============================================================
 
     if (result == true) {
       widget.onApply();
     }
   }
 
-  // ============================================================
-  // BUILD
-  // ============================================================
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-
       resizeToAvoidBottomInset: true,
 
       body: SafeArea(
@@ -290,7 +268,6 @@ class _FindJobsPageState extends State<findjobes> {
 
             Container(
               width: double.infinity,
-
               padding: const EdgeInsets.symmetric(
                 horizontal: 20,
                 vertical: 10,
@@ -298,7 +275,6 @@ class _FindJobsPageState extends State<findjobes> {
 
               decoration: const BoxDecoration(
                 color: Color(0xFFFFFCF7),
-
                 border: Border(
                   bottom: BorderSide(
                     color: Color(0xFFE8E8E8),
@@ -314,7 +290,6 @@ class _FindJobsPageState extends State<findjobes> {
                   children: [
                     const Text(
                       "Find Jobs",
-
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -324,25 +299,27 @@ class _FindJobsPageState extends State<findjobes> {
 
                     const Spacer(),
 
-                    Container(
-                      width: 40,
-                      height: 40,
+                    InkWell(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>ProfilePage()));
+                      },
+                      child: Container(
+                        width: 40,
+                        height: 40,
 
-                      decoration:
-                      const BoxDecoration(
-                        color: Color(0xFF3D687A),
-                        shape: BoxShape.circle,
-                      ),
+                        decoration: const BoxDecoration(
+                          color: Color(0xFF3D687A),
+                          shape: BoxShape.circle,
+                        ),
 
-                      child: const Center(
-                        child: Text(
-                          "RS",
-
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontWeight:
-                            FontWeight.bold,
+                        child: const Center(
+                          child: Text(
+                            "RS",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
@@ -358,18 +335,14 @@ class _FindJobsPageState extends State<findjobes> {
 
             Expanded(
               child: LayoutBuilder(
-                builder:
-                    (context, constraints) {
+                builder: (context, constraints) {
                   return SingleChildScrollView(
-                    physics:
-                    const BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
 
                     keyboardDismissBehavior:
-                    ScrollViewKeyboardDismissBehavior
-                        .onDrag,
+                    ScrollViewKeyboardDismissBehavior.onDrag,
 
-                    padding:
-                    const EdgeInsets.fromLTRB(
+                    padding: const EdgeInsets.fromLTRB(
                       20,
                       18,
                       20,
@@ -378,8 +351,7 @@ class _FindJobsPageState extends State<findjobes> {
 
                     child: ConstrainedBox(
                       constraints: BoxConstraints(
-                        minHeight:
-                        constraints.maxHeight,
+                        minHeight: constraints.maxHeight,
                       ),
 
                       child: Column(
@@ -393,14 +365,9 @@ class _FindJobsPageState extends State<findjobes> {
 
                           Container(
                             width: double.infinity,
+                            padding: const EdgeInsets.all(16),
 
-                            padding:
-                            const EdgeInsets.all(
-                              16,
-                            ),
-
-                            decoration:
-                            BoxDecoration(
+                            decoration: BoxDecoration(
                               color: Colors.white,
 
                               border: Border.all(
@@ -408,9 +375,7 @@ class _FindJobsPageState extends State<findjobes> {
                               ),
 
                               borderRadius:
-                              BorderRadius.circular(
-                                14,
-                              ),
+                              BorderRadius.circular(14),
                             ),
 
                             child: Column(
@@ -424,16 +389,11 @@ class _FindJobsPageState extends State<findjobes> {
                                   },
 
                                   textInputAction:
-                                  TextInputAction
-                                      .search,
+                                  TextInputAction.search,
 
-                                  style:
-                                  const TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 15,
-                                    color:
-                                    Color(
-                                      0xFF17233B,
-                                    ),
+                                    color: Color(0xFF17233B),
                                   ),
 
                                   decoration:
@@ -444,43 +404,32 @@ class _FindJobsPageState extends State<findjobes> {
                                     hintStyle:
                                     const TextStyle(
                                       fontSize: 14,
-                                      color:
-                                      Color(
-                                        0xFF8A909A,
-                                      ),
+                                      color: Color(0xFF8A909A),
                                     ),
 
                                     prefixIcon:
                                     const Icon(
                                       Icons.search,
                                       size: 24,
-                                      color:
-                                      Color(
-                                        0xFF687386,
-                                      ),
+                                      color: Color(0xFF687386),
                                     ),
 
                                     suffixIcon:
                                     searchController
-                                        .text
-                                        .isNotEmpty
+                                        .text.isNotEmpty
                                         ? IconButton(
-                                      icon:
-                                      const Icon(
-                                        Icons
-                                            .clear,
-                                        color:
-                                        Color(
+                                      icon: const Icon(
+                                        Icons.clear,
+                                        color: Color(
                                           0xFF687386,
                                         ),
                                       ),
-                                      onPressed:
-                                          () {
+
+                                      onPressed: () {
                                         searchController
                                             .clear();
 
-                                        setState(
-                                                () {});
+                                        setState(() {});
                                       },
                                     )
                                         : null,
@@ -488,13 +437,10 @@ class _FindJobsPageState extends State<findjobes> {
                                     filled: true,
 
                                     fillColor:
-                                    const Color(
-                                      0xFFFFFCF7,
-                                    ),
+                                    const Color(0xFFFFFCF7),
 
                                     contentPadding:
-                                    const EdgeInsets
-                                        .symmetric(
+                                    const EdgeInsets.symmetric(
                                       horizontal: 12,
                                       vertical: 14,
                                     ),
@@ -502,79 +448,54 @@ class _FindJobsPageState extends State<findjobes> {
                                     border:
                                     OutlineInputBorder(
                                       borderRadius:
-                                      BorderRadius
-                                          .circular(
-                                        10,
-                                      ),
+                                      BorderRadius.circular(10),
 
                                       borderSide:
                                       const BorderSide(
-                                        color:
-                                        Color(
-                                          0xFFDDE1E7,
-                                        ),
+                                        color: Color(0xFFDDE1E7),
                                       ),
                                     ),
 
                                     enabledBorder:
                                     OutlineInputBorder(
                                       borderRadius:
-                                      BorderRadius
-                                          .circular(
-                                        10,
-                                      ),
+                                      BorderRadius.circular(10),
 
                                       borderSide:
                                       const BorderSide(
-                                        color:
-                                        Color(
-                                          0xFFDDE1E7,
-                                        ),
+                                        color: Color(0xFFDDE1E7),
                                       ),
                                     ),
 
                                     focusedBorder:
                                     OutlineInputBorder(
                                       borderRadius:
-                                      BorderRadius
-                                          .circular(
-                                        10,
-                                      ),
+                                      BorderRadius.circular(10),
 
-                                      borderSide:
-                                      BorderSide(
-                                        color:
-                                        blueColor,
+                                      borderSide: BorderSide(
+                                        color: blueColor,
                                         width: 1.5,
                                       ),
                                     ),
                                   ),
                                 ),
 
-                                const SizedBox(
-                                  height: 14,
-                                ),
+                                const SizedBox(height: 14),
 
                                 SizedBox(
-                                  width:
-                                  double.infinity,
+                                  width: double.infinity,
                                   height: 52,
 
-                                  child:
-                                  ElevatedButton(
+                                  child: ElevatedButton(
                                     onPressed: () {
-                                      FocusScope
-                                          .of(
-                                        context,
-                                      ).unfocus();
+                                      FocusScope.of(context)
+                                          .unfocus();
 
-                                      setState(
-                                              () {});
+                                      setState(() {});
                                     },
 
                                     style:
-                                    ElevatedButton
-                                        .styleFrom(
+                                    ElevatedButton.styleFrom(
                                       backgroundColor:
                                       blueColor,
 
@@ -586,25 +507,18 @@ class _FindJobsPageState extends State<findjobes> {
                                       shape:
                                       RoundedRectangleBorder(
                                         borderRadius:
-                                        BorderRadius
-                                            .circular(
-                                          10,
-                                        ),
+                                        BorderRadius.circular(10),
                                       ),
                                     ),
 
-                                    child:
-                                    const Text(
+                                    child: const Text(
                                       "Search Jobs",
 
-                                      style:
-                                      TextStyle(
-                                        color:
-                                        Colors.white,
+                                      style: TextStyle(
+                                        color: Colors.white,
                                         fontSize: 16,
                                         fontWeight:
-                                        FontWeight
-                                            .w600,
+                                        FontWeight.w600,
                                       ),
                                     ),
                                   ),
@@ -613,63 +527,47 @@ class _FindJobsPageState extends State<findjobes> {
                             ),
                           ),
 
-                          const SizedBox(
-                            height: 20,
-                          ),
+                          const SizedBox(height: 20),
 
                           // ==================================================
                           // FILTERS
                           // ==================================================
 
-                          SizedBox(
-                            width: double.infinity,
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
 
-                            child:
-                            SingleChildScrollView(
-                              scrollDirection:
-                              Axis.horizontal,
+                            child: Row(
+                              children: [
+                                _filterChip(
+                                  title: "All Jobs",
+                                  index: 0,
+                                ),
 
-                              child: Row(
-                                children: [
-                                  _filterChip(
-                                    title: "All Jobs",
-                                    index: 0,
-                                  ),
+                                const SizedBox(width: 8),
 
-                                  const SizedBox(
-                                    width: 8,
-                                  ),
+                                _filterChip(
+                                  title: "Full Time",
+                                  index: 1,
+                                ),
 
-                                  _filterChip(
-                                    title: "Full Time",
-                                    index: 1,
-                                  ),
+                                const SizedBox(width: 8),
 
-                                  const SizedBox(
-                                    width: 8,
-                                  ),
+                                _filterChip(
+                                  title: "Part Time",
+                                  index: 2,
+                                ),
 
-                                  _filterChip(
-                                    title: "Part Time",
-                                    index: 2,
-                                  ),
+                                const SizedBox(width: 8),
 
-                                  const SizedBox(
-                                    width: 8,
-                                  ),
-
-                                  _filterChip(
-                                    title: "Remote",
-                                    index: 3,
-                                  ),
-                                ],
-                              ),
+                                _filterChip(
+                                  title: "Remote",
+                                  index: 3,
+                                ),
+                              ],
                             ),
                           ),
 
-                          const SizedBox(
-                            height: 20,
-                          ),
+                          const SizedBox(height: 20),
 
                           // ==================================================
                           // JOB LIST
@@ -679,22 +577,15 @@ class _FindJobsPageState extends State<findjobes> {
                             _noJobsWidget()
                           else
                             Column(
-                              crossAxisAlignment:
-                              CrossAxisAlignment
-                                  .start,
-
-                              children:
-                              List.generate(
+                              children: List.generate(
                                 filteredJobs.length,
                                     (index) {
                                   final job =
-                                  filteredJobs[
-                                  index];
+                                  filteredJobs[index];
 
                                   return Padding(
                                     padding:
-                                    const EdgeInsets
-                                        .only(
+                                    const EdgeInsets.only(
                                       bottom: 14,
                                     ),
 
@@ -706,46 +597,33 @@ class _FindJobsPageState extends State<findjobes> {
                               ),
                             ),
 
-                          const SizedBox(
-                            height: 10,
-                          ),
+                          const SizedBox(height: 10),
 
                           if (filteredJobs.isNotEmpty)
                             Center(
-                              child:
-                              GestureDetector(
+                              child: GestureDetector(
                                 onTap: () {},
 
-                                child:
-                                const Padding(
+                                child: const Padding(
                                   padding:
-                                  EdgeInsets
-                                      .symmetric(
+                                  EdgeInsets.symmetric(
                                     vertical: 8,
                                   ),
 
                                   child: Text(
                                     "View All Jobs →",
 
-                                    style:
-                                    TextStyle(
+                                    style: TextStyle(
                                       fontSize: 15,
                                       fontWeight:
-                                      FontWeight
-                                          .w600,
+                                      FontWeight.w600,
                                       color:
-                                      Color(
-                                        0xFF2864E8,
-                                      ),
+                                      Color(0xFF2864E8),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-
-                          const SizedBox(
-                            height: 10,
-                          ),
                         ],
                       ),
                     ),
@@ -758,10 +636,6 @@ class _FindJobsPageState extends State<findjobes> {
       ),
     );
   }
-
-  // ============================================================
-  // NO JOBS
-  // ============================================================
 
   Widget _noJobsWidget() {
     return Container(
@@ -778,8 +652,7 @@ class _FindJobsPageState extends State<findjobes> {
           color: borderColor,
         ),
 
-        borderRadius:
-        BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(14),
       ),
 
       child: Column(
@@ -797,10 +670,8 @@ class _FindJobsPageState extends State<findjobes> {
 
             style: TextStyle(
               fontSize: 19,
-              fontWeight:
-              FontWeight.bold,
-              color:
-              Color(0xFF17233B),
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF17233B),
             ),
           ),
 
@@ -813,8 +684,7 @@ class _FindJobsPageState extends State<findjobes> {
 
             style: TextStyle(
               fontSize: 13,
-              color:
-              Color(0xFF7B808A),
+              color: Color(0xFF7B808A),
             ),
           ),
         ],
@@ -822,20 +692,14 @@ class _FindJobsPageState extends State<findjobes> {
     );
   }
 
-  // ============================================================
-  // FILTER CHIP
-  // ============================================================
-
   Widget _filterChip({
     required String title,
     required int index,
   }) {
-    final bool selected =
-        selectedFilter == index;
+    final bool selected = selectedFilter == index;
 
     return GestureDetector(
-      behavior:
-      HitTestBehavior.opaque,
+      behavior: HitTestBehavior.opaque,
 
       onTap: () {
         setState(() {
@@ -846,8 +710,7 @@ class _FindJobsPageState extends State<findjobes> {
       child: Container(
         height: 42,
 
-        padding:
-        const EdgeInsets.symmetric(
+        padding: const EdgeInsets.symmetric(
           horizontal: 18,
         ),
 
@@ -859,13 +722,10 @@ class _FindJobsPageState extends State<findjobes> {
           border: Border.all(
             color: selected
                 ? blueColor
-                : const Color(
-              0xFFE0E3E8,
-            ),
+                : const Color(0xFFE0E3E8),
           ),
 
-          borderRadius:
-          BorderRadius.circular(22),
+          borderRadius: BorderRadius.circular(22),
         ),
 
         child: Center(
@@ -877,9 +737,7 @@ class _FindJobsPageState extends State<findjobes> {
 
               color: selected
                   ? Colors.white
-                  : const Color(
-                0xFF687386,
-              ),
+                  : const Color(0xFF687386),
 
               fontWeight: selected
                   ? FontWeight.w600
@@ -891,10 +749,6 @@ class _FindJobsPageState extends State<findjobes> {
     );
   }
 
-  // ============================================================
-  // JOB CARD
-  // ============================================================
-
   Widget _jobCard({
     required Map<String, dynamic> job,
   }) {
@@ -903,14 +757,12 @@ class _FindJobsPageState extends State<findjobes> {
         openJobDetails(job);
       },
 
-      behavior:
-      HitTestBehavior.opaque,
+      behavior: HitTestBehavior.opaque,
 
       child: Container(
         width: double.infinity,
 
-        padding:
-        const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
 
         decoration: BoxDecoration(
           color: Colors.white,
@@ -919,18 +771,13 @@ class _FindJobsPageState extends State<findjobes> {
             color: borderColor,
           ),
 
-          borderRadius:
-          BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(14),
 
           boxShadow: [
             BoxShadow(
-              color: Colors.black
-                  .withOpacity(0.03),
-
+              color: Colors.black.withOpacity(0.03),
               blurRadius: 5,
-
-              offset:
-              const Offset(0, 2),
+              offset: const Offset(0, 2),
             ),
           ],
         ),
@@ -945,13 +792,10 @@ class _FindJobsPageState extends State<findjobes> {
               height: 52,
 
               decoration: BoxDecoration(
-                color:
-                job["companyBackground"],
+                color: job["companyBackground"],
 
                 borderRadius:
-                BorderRadius.circular(
-                  10,
-                ),
+                BorderRadius.circular(10),
               ),
 
               child: Center(
@@ -959,27 +803,20 @@ class _FindJobsPageState extends State<findjobes> {
                   job["shortName"],
 
                   style: TextStyle(
-                    color:
-                    job["companyColor"],
-
+                    color: job["companyColor"],
                     fontSize: 15,
-
-                    fontWeight:
-                    FontWeight.bold,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
             ),
 
-            const SizedBox(
-              width: 14,
-            ),
+            const SizedBox(width: 14),
 
             Expanded(
               child: Column(
                 crossAxisAlignment:
-                CrossAxisAlignment
-                    .start,
+                CrossAxisAlignment.start,
 
                 children: [
                   Text(
@@ -990,21 +827,14 @@ class _FindJobsPageState extends State<findjobes> {
                     overflow:
                     TextOverflow.ellipsis,
 
-                    style:
-                    const TextStyle(
+                    style: const TextStyle(
                       fontSize: 17,
-
-                      fontWeight:
-                      FontWeight.bold,
-
-                      color:
-                      Color(0xFF17233B),
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF17233B),
                     ),
                   ),
 
-                  const SizedBox(
-                    height: 5,
-                  ),
+                  const SizedBox(height: 5),
 
                   Text(
                     "${job["company"]} • ${job["location"]}",
@@ -1014,18 +844,13 @@ class _FindJobsPageState extends State<findjobes> {
                     overflow:
                     TextOverflow.ellipsis,
 
-                    style:
-                    const TextStyle(
+                    style: const TextStyle(
                       fontSize: 14,
-
-                      color:
-                      Color(0xFF7B808A),
+                      color: Color(0xFF7B808A),
                     ),
                   ),
 
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  const SizedBox(height: 10),
 
                   Wrap(
                     spacing: 8,
@@ -1034,34 +859,26 @@ class _FindJobsPageState extends State<findjobes> {
                     children: [
                       Container(
                         padding:
-                        const EdgeInsets
-                            .symmetric(
+                        const EdgeInsets.symmetric(
                           horizontal: 10,
                           vertical: 6,
                         ),
 
-                        decoration:
-                        BoxDecoration(
-                          color:
-                          job["typeBackground"],
+                        decoration: BoxDecoration(
+                          color: job[
+                          "typeBackground"],
 
                           borderRadius:
-                          BorderRadius
-                              .circular(
-                            15,
-                          ),
+                          BorderRadius.circular(15),
                         ),
 
                         child: Text(
                           job["type"],
 
-                          style:
-                          TextStyle(
+                          style: TextStyle(
                             fontSize: 11,
-
                             color:
                             job["typeColor"],
-
                             fontWeight:
                             FontWeight.w600,
                           ),
@@ -1071,13 +888,10 @@ class _FindJobsPageState extends State<findjobes> {
                       Text(
                         job["salary"],
 
-                        style:
-                        const TextStyle(
+                        style: const TextStyle(
                           fontSize: 14,
-
                           fontWeight:
                           FontWeight.bold,
-
                           color:
                           Color(0xFF17233B),
                         ),

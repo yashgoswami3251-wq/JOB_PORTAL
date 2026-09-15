@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:job_portal/User_side/profile.dart';
 import 'job_details_page.dart';
 
 class SavedPage extends StatefulWidget {
@@ -235,23 +236,28 @@ class _SavedPageState extends State<SavedPage> {
 
                   const Spacer(),
 
-                  Container(
-                    width: 36,
-                    height: 36,
+                  InkWell(
+                    onTap: (){
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ProfilePage()));
+                    },
+                    child: Container(
+                      width: 36,
+                      height: 36,
 
-                    decoration: const BoxDecoration(
-                      color: Color(0xFF3D687A),
-                      shape: BoxShape.circle,
-                    ),
+                      decoration: const BoxDecoration(
+                        color: Color(0xFF3D687A),
+                        shape: BoxShape.circle,
+                      ),
 
-                    child: const Center(
-                      child: Text(
-                        "RS",
+                      child: const Center(
+                        child: Text(
+                          "RS",
 
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 11,
-                          fontWeight: FontWeight.bold,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
