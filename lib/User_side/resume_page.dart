@@ -332,37 +332,72 @@ class ResumePage extends StatelessWidget {
                             // CHOOSE FILE BUTTON
                             // ==================================================
 
-                            SizedBox(
-                              width: 108,
-                              height: 35,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  width: 108,
+                                  height: 35,
 
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  // Add file picker here
-                                },
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      // Add file picker here
+                                    },
 
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: buttonColor,
-                                  foregroundColor: Colors.white,
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: buttonColor,
+                                      foregroundColor: Colors.white,
 
-                                  elevation: 0,
+                                      elevation: 0,
 
-                                  padding: EdgeInsets.zero,
+                                      padding: EdgeInsets.zero,
 
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                    BorderRadius.circular(6),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                        BorderRadius.circular(6),
+                                      ),
+                                    ),
+
+                                    child: const Text(
+                                      "Choose File",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
                                   ),
                                 ),
+                                SizedBox(width: 15,),
+                                SizedBox(
+                                  width: 108,
+                                  height: 35,
 
-                                child: const Text(
-                                  "Choose File",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      // Add file picker here
+                                    },
+
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: buttonColor,
+                                      foregroundColor: Colors.white,
+                                      elevation: 0,
+                                      padding: EdgeInsets.zero,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                        BorderRadius.circular(6),
+                                      ),
+                                    ),
+
+                                    child: const Text(
+                                      "Submit Resume",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
+                              ],
                             ),
 
                             const SizedBox(height: 10),

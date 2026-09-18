@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'apply_job_page.dart';
 
 class JobDetailsPage extends StatefulWidget {
   final Map<String, dynamic> job;
@@ -12,18 +13,20 @@ class JobDetailsPage extends StatefulWidget {
   });
 
   @override
-  State<JobDetailsPage> createState() =>
-      _JobDetailsPageState();
+  State<JobDetailsPage> createState() => _JobDetailsPageState();
 }
 
-class _JobDetailsPageState
-    extends State<JobDetailsPage> {
+class _JobDetailsPageState extends State<JobDetailsPage> {
 
   // ============================================================
   // SAVED JOB
   // ============================================================
 
   bool isSaved = false;
+
+  // ============================================================
+  // COLORS
+  // ============================================================
 
   final Color backgroundColor =
   const Color(0xFFFFFCF7);
@@ -38,14 +41,43 @@ class _JobDetailsPageState
   const Color(0xFFE1E5EB);
 
   // ============================================================
+  // OPEN APPLY JOB PAGE
+  // ============================================================
+
+  Future<void> _openApplyPage() async {
+
+    final bool? applicationSubmitted =
+    await Navigator.push<bool>(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ApplyJobPage(
+          job: widget.job,
+        ),
+      ),
+    );
+
+    // ==========================================================
+    // IMPORTANT
+    // ==========================================================
+    //
+    // ApplyJobPage returns TRUE after Submit Application.
+    //
+    // Then this page calls _applyJob().
+    //
+
+    if (applicationSubmitted == true && mounted) {
+      _applyJob();
+    }
+  }
+
+  // ============================================================
   // APPLY JOB
   // ============================================================
 
   void _applyJob() {
 
-    // IMPORTANT:
-    // Close JobDetailsPage and return TRUE
-    // to findjobes page.
+    // Close JobDetailsPage
+    // and return TRUE to Find Jobs page.
 
     Navigator.pop(context, true);
   }
@@ -92,7 +124,10 @@ class _JobDetailsPageState
               child: Row(
                 children: [
 
+                  // =================================================
                   // BACK BUTTON
+                  // =================================================
+
                   GestureDetector(
                     onTap: () {
                       Navigator.pop(context);
@@ -103,8 +138,7 @@ class _JobDetailsPageState
 
                         Icon(
                           Icons.arrow_back,
-                          color:
-                          Color(0xFF2864E8),
+                          color: Color(0xFF2864E8),
                           size: 22,
                         ),
 
@@ -114,11 +148,9 @@ class _JobDetailsPageState
                           "Back",
 
                           style: TextStyle(
-                            color:
-                            Color(0xFF2864E8),
+                            color: Color(0xFF2864E8),
                             fontSize: 16,
-                            fontWeight:
-                            FontWeight.w600,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ],
@@ -127,15 +159,17 @@ class _JobDetailsPageState
 
                   const Spacer(),
 
+                  // =================================================
                   // PROFILE
+                  // =================================================
+
                   Container(
                     width: 36,
                     height: 36,
 
                     decoration:
                     const BoxDecoration(
-                      color:
-                      Color(0xFF3D687A),
+                      color: Color(0xFF3D687A),
                       shape: BoxShape.circle,
                     ),
 
@@ -146,8 +180,7 @@ class _JobDetailsPageState
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 12,
-                          fontWeight:
-                          FontWeight.bold,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
@@ -219,8 +252,7 @@ class _JobDetailsPageState
                               "companyBackground"],
 
                               borderRadius:
-                              BorderRadius
-                                  .circular(10),
+                              BorderRadius.circular(10),
                             ),
 
                             child: Center(
@@ -245,8 +277,7 @@ class _JobDetailsPageState
                           Expanded(
                             child: Column(
                               crossAxisAlignment:
-                              CrossAxisAlignment
-                                  .start,
+                              CrossAxisAlignment.start,
 
                               children: [
 
@@ -259,13 +290,11 @@ class _JobDetailsPageState
                                     fontWeight:
                                     FontWeight.bold,
                                     color:
-                                    Color(
-                                        0xFF17233B),
+                                    Color(0xFF17233B),
                                   ),
                                 ),
 
-                                const SizedBox(
-                                    height: 5),
+                                const SizedBox(height: 5),
 
                                 Text(
                                   "${job["company"]} • ${job["location"]}",
@@ -274,8 +303,7 @@ class _JobDetailsPageState
                                   const TextStyle(
                                     fontSize: 15,
                                     color:
-                                    Color(
-                                        0xFF7B808A),
+                                    Color(0xFF7B808A),
                                   ),
                                 ),
                               ],
@@ -304,11 +332,10 @@ class _JobDetailsPageState
                               child:
                               ElevatedButton(
                                 onPressed:
-                                _applyJob,
+                                _openApplyPage,
 
                                 style:
-                                ElevatedButton
-                                    .styleFrom(
+                                ElevatedButton.styleFrom(
                                   backgroundColor:
                                   blueColor,
 
@@ -320,8 +347,7 @@ class _JobDetailsPageState
                                   shape:
                                   RoundedRectangleBorder(
                                     borderRadius:
-                                    BorderRadius
-                                        .circular(9),
+                                    BorderRadius.circular(9),
                                   ),
                                 ),
 
@@ -354,9 +380,8 @@ class _JobDetailsPageState
                               OutlinedButton(
                                 onPressed: () {
 
-                                  // =====================================
-                                  // YOUR SAVED CONCEPT IS UNCHANGED
-                                  // =====================================
+                                  // YOUR SAVED CONCEPT
+                                  // IS NOT CHANGED.
 
                                   setState(() {
                                     isSaved =
@@ -365,45 +390,39 @@ class _JobDetailsPageState
                                 },
 
                                 style:
-                                OutlinedButton
-                                    .styleFrom(
+                                OutlinedButton.styleFrom(
                                   foregroundColor:
                                   navyColor,
 
                                   side:
                                   const BorderSide(
                                     color:
-                                    Color(
-                                        0xFFDDE1E7),
+                                    Color(0xFFDDE1E7),
                                   ),
 
                                   shape:
                                   RoundedRectangleBorder(
                                     borderRadius:
-                                    BorderRadius
-                                        .circular(9),
+                                    BorderRadius.circular(9),
                                   ),
                                 ),
 
-                                child: Row(
+                                child:
+                                Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment
-                                      .center,
+                                  MainAxisAlignment.center,
 
                                   children: [
 
                                     Icon(
                                       isSaved
-                                          ? Icons
-                                          .bookmark
-                                          : Icons
-                                          .bookmark_border,
+                                          ? Icons.bookmark
+                                          : Icons.bookmark_border,
 
                                       size: 19,
                                     ),
 
-                                    const SizedBox(
-                                        width: 6),
+                                    const SizedBox(width: 6),
 
                                     Text(
                                       isSaved
@@ -416,8 +435,7 @@ class _JobDetailsPageState
                                         fontWeight:
                                         FontWeight.w600,
                                         color:
-                                        Color(
-                                            0xFF687386),
+                                        Color(0xFF687386),
                                       ),
                                     ),
                                   ],
@@ -447,16 +465,14 @@ class _JobDetailsPageState
                           Expanded(
                             child: _infoItem(
                               title: "Salary",
-                              value:
-                              job["salary"],
+                              value: job["salary"],
                             ),
                           ),
 
                           Expanded(
                             child: _infoItem(
                               title: "Job Type",
-                              value:
-                              job["type"],
+                              value: job["type"],
                             ),
                           ),
                         ],
@@ -469,21 +485,15 @@ class _JobDetailsPageState
 
                           Expanded(
                             child: _infoItem(
-                              title:
-                              "Experience",
-                              value:
-                              job[
-                              "experience"],
+                              title: "Experience",
+                              value: job["experience"],
                             ),
                           ),
 
                           Expanded(
                             child: _infoItem(
-                              title:
-                              "Posted Date",
-                              value:
-                              job[
-                              "postedDate"],
+                              title: "Posted Date",
+                              value: job["postedDate"],
                             ),
                           ),
                         ],
@@ -515,8 +525,7 @@ class _JobDetailsPageState
                         const TextStyle(
                           fontSize: 16,
                           height: 1.5,
-                          color:
-                          Color(0xFF17233B),
+                          color: Color(0xFF17233B),
                         ),
                       ),
 
@@ -533,14 +542,12 @@ class _JobDetailsPageState
                       const SizedBox(height: 10),
 
                       ...List.generate(
-                        job["responsibilities"]
-                            .length,
-
+                        job["responsibilities"].length,
                             (index) {
+
                           return Padding(
                             padding:
-                            const EdgeInsets
-                                .only(
+                            const EdgeInsets.only(
                               bottom: 8,
                             ),
 
@@ -552,8 +559,7 @@ class _JobDetailsPageState
                                 fontSize: 16,
                                 height: 1.45,
                                 color:
-                                Color(
-                                    0xFF17233B),
+                                Color(0xFF17233B),
                               ),
                             ),
                           );
@@ -574,12 +580,11 @@ class _JobDetailsPageState
 
                       ...List.generate(
                         job["requirements"].length,
-
                             (index) {
+
                           return Padding(
                             padding:
-                            const EdgeInsets
-                                .only(
+                            const EdgeInsets.only(
                               bottom: 8,
                             ),
 
@@ -591,8 +596,7 @@ class _JobDetailsPageState
                                 fontSize: 16,
                                 height: 1.45,
                                 color:
-                                Color(
-                                    0xFF17233B),
+                                Color(0xFF17233B),
                               ),
                             ),
                           );
@@ -611,11 +615,11 @@ class _JobDetailsPageState
 
                         child:
                         ElevatedButton(
-                          onPressed: _applyJob,
+                          onPressed:
+                          _openApplyPage,
 
                           style:
-                          ElevatedButton
-                              .styleFrom(
+                          ElevatedButton.styleFrom(
                             backgroundColor:
                             blueColor,
 
@@ -627,8 +631,7 @@ class _JobDetailsPageState
                             shape:
                             RoundedRectangleBorder(
                               borderRadius:
-                              BorderRadius
-                                  .circular(10),
+                              BorderRadius.circular(10),
                             ),
                           ),
 
@@ -664,6 +667,7 @@ class _JobDetailsPageState
     required String title,
     required String value,
   }) {
+
     return Column(
       crossAxisAlignment:
       CrossAxisAlignment.start,
@@ -673,7 +677,8 @@ class _JobDetailsPageState
         Text(
           title,
 
-          style: const TextStyle(
+          style:
+          const TextStyle(
             fontSize: 13,
             color: Color(0xFF7B808A),
           ),
@@ -684,7 +689,8 @@ class _JobDetailsPageState
         Text(
           value,
 
-          style: const TextStyle(
+          style:
+          const TextStyle(
             fontSize: 16,
             fontWeight:
             FontWeight.w600,
@@ -700,10 +706,12 @@ class _JobDetailsPageState
   // ============================================================
 
   Widget _sectionTitle(String title) {
+
     return Text(
       title,
 
-      style: const TextStyle(
+      style:
+      const TextStyle(
         fontSize: 17,
         fontWeight:
         FontWeight.bold,
