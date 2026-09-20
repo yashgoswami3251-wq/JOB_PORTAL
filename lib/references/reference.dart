@@ -2,7 +2,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 
-
 // Header font Size and Font_weight
 const double fontSize = 22;
 const FontWeight fontweight = FontWeight.bold;
