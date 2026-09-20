@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:job_portal/User_side/register_page.dart';
 
-import '../Admin_side/admin_home_page.dart';
-import '../Employe_side/homepage.dart';
 import 'forgot_password.dart';
 import 'home_page.dart';
 
@@ -11,10 +9,6 @@ const Color navyColor = Color(0xFF1E2D50);
 const Color buttonBlue = Color(0xFF2864E8);
 const Color lightGrey = Color(0xFFF8FAFD);
 const Color borderColor = Color(0xFFDCE3EE);
-
-// ============================================================
-// MAIN
-// ============================================================
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,10 +23,6 @@ void main() {
   runApp(const MyApp());
 }
 
-// ============================================================
-// MY APP
-// ============================================================
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -40,11 +30,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+
       title: "HireHub",
+
       theme: ThemeData(
         useMaterial3: true,
         scaffoldBackgroundColor: Colors.white,
       ),
+
       home: const LoginPage(),
     );
   }
@@ -62,34 +55,18 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  // ==========================================================
-  // SELECTED ROLE
-  // ==========================================================
 
-  String selectedRole = "User";
 
-  // ==========================================================
-  // CONTROLLERS
-  // ==========================================================
+  String selectedRole = "Job Seeker";
+
 
   final TextEditingController emailController = TextEditingController();
 
-  final TextEditingController passwordController =
-  TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
-  // ==========================================================
-  // VARIABLES
-  // ==========================================================
 
   bool hidePassword = true;
 
-  bool keepSignedIn = false;
-
-  bool isLoading = false;
-
-  // ==========================================================
-  // CHANGE ROLE
-  // ==========================================================
 
   void changeRole(String role) {
     setState(() {
@@ -100,16 +77,10 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  // ==========================================================
-  // LOGIN
-  // ==========================================================
 
   void login() {
-    FocusScope.of(context).unfocus();
 
-    // --------------------------------------------------------
-    // EMAIL VALIDATION
-    // --------------------------------------------------------
+    FocusScope.of(context).unfocus();
 
     if (emailController.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -121,10 +92,6 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
-    // --------------------------------------------------------
-    // PASSWORD VALIDATION
-    // --------------------------------------------------------
-
     if (passwordController.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -135,105 +102,63 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
+
+    if (selectedRole == "Job Seeker") {
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const HomePage(),
+        ),
+      );
+    }
+
     // --------------------------------------------------------
-    // SHOW LOADING
+    // EMPLOYER
     // --------------------------------------------------------
 
-    setState(() {
-      isLoading = true;
-    });
+    else if (selectedRole == "Employer") {
 
-    // Small delay to simulate login process
-    Future.delayed(const Duration(milliseconds: 700), () {
-      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "Employer login successful",
+          ),
+        ),
+      );
 
-      setState(() {
-        isLoading = false;
-      });
+      // Later:
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => const EmployerHomePage(),
+      //   ),
+      // );
+    }
 
-      String email = emailController.text.trim();
-      String password = passwordController.text.trim();
+    // --------------------------------------------------------
+    // ADMIN
+    // --------------------------------------------------------
 
-      // ======================================================
-      // USER LOGIN
-      // ======================================================
+    else if (selectedRole == "Admin") {
 
-      if (selectedRole == "User") {
-        if (
-        email == "marmik@gmail.com" && password == "123456"
-        )
-        {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute( builder: (context) => const HomePage(),
-            ),
-          );
-        } else {
-          _showLoginError(
-            "Invalid User email or password",
-          );
-        }
-      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "Admin login successful",
+          ),
+        ),
+      );
 
-      // ======================================================
-      // EMPLOYEE LOGIN
-      // ======================================================
-
-      else if (selectedRole == "Employee") {
-        if (email == "yash@gmail.com" &&
-            password == "123456") {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const employehomepage(),
-            ),
-          );
-        } else {
-          _showLoginError(
-            "Invalid Employee email or password",
-          );
-        }
-      }
-
-      // ======================================================
-      // ADMIN LOGIN
-      // ======================================================
-
-      else if (selectedRole == "Admin") {
-        if (
-        email == "pritesh@gmail.com" && password == "123456"
-        ) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const AdminHomePage(),
-            ),
-          );
-        } else {
-          _showLoginError(
-            "Invalid Admin email or password",
-          );
-        }
-      }
-    });
+      // Later:
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => const AdminHomePage(),
+      //   ),
+      // );
+    }
   }
-
-  // ==========================================================
-  // LOGIN ERROR
-  // ==========================================================
-
-  void _showLoginError(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: Colors.redAccent,
-      ),
-    );
-  }
-
-  // ==========================================================
-  // DISPOSE
-  // ==========================================================
 
   @override
   void dispose() {
@@ -249,8 +174,10 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Colors.white,
+
       body: SafeArea(
         top: false,
         bottom: false,
@@ -368,7 +295,8 @@ class _LoginPageState extends State<LoginPage> {
                   ),
 
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment:
+                    CrossAxisAlignment.start,
 
                     children: [
 
@@ -435,25 +363,26 @@ class _LoginPageState extends State<LoginPage> {
                               },
                             ),
 
-                            // EMPLOYEE
+                            // EMPLOYER
                             _roleButton(
-                              title: "Employee",
+                              title: "Employer",
                               selected:
-                              selectedRole == "Employee",
+                              selectedRole == "Employer",
 
                               onTap: () {
-                                changeRole("Employee");
+                                changeRole("Employer");
                               },
                             ),
 
-                            // USER
+                            // JOB SEEKER
                             _roleButton(
-                              title: "User",
+                              title: "Job Seeker",
                               selected:
-                              selectedRole == "User",
+                              selectedRole ==
+                                  "Job Seeker",
 
                               onTap: () {
-                                changeRole("User");
+                                changeRole("Job Seeker");
                               },
                             ),
                           ],
@@ -504,13 +433,14 @@ class _LoginPageState extends State<LoginPage> {
                               ),
 
                               child: Icon(
-                                selectedRole == "Admin"
+                                selectedRole ==
+                                    "Admin"
                                     ? Icons
                                     .admin_panel_settings
                                     : selectedRole ==
-                                    "Employee"
+                                    "Employer"
                                     ? Icons
-                                    .badge_outlined
+                                    .business
                                     : Icons
                                     .person,
 
@@ -584,22 +514,15 @@ class _LoginPageState extends State<LoginPage> {
                         height: 50,
 
                         child: TextField(
-                          controller:
-                          emailController,
-
+                          controller: emailController,
                           keyboardType:
                           TextInputType.emailAddress,
-
                           style:
                           const TextStyle(
                             fontSize: 13,
                           ),
-
-                          decoration:
-                          InputDecoration(
-                            hintText:
-                            _getEmailHint(),
-
+                          decoration: InputDecoration(
+                            hintText: _getEmailHint(),
                             hintStyle:
                             const TextStyle(
                               fontSize: 12,
@@ -615,16 +538,12 @@ class _LoginPageState extends State<LoginPage> {
                             ),
 
                             contentPadding:
-                            const EdgeInsets
-                                .symmetric(
-                              horizontal: 10,
-                            ),
+                            const EdgeInsets.symmetric(horizontal: 10,),
 
                             border:
                             OutlineInputBorder(
                               borderRadius:
-                              BorderRadius
-                                  .circular(8),
+                              BorderRadius.circular(8),
 
                               borderSide:
                               const BorderSide(
@@ -700,6 +619,7 @@ class _LoginPageState extends State<LoginPage> {
 
                           decoration:
                           InputDecoration(
+
                             hintText:
                             "Enter your password",
 
@@ -803,14 +723,10 @@ class _LoginPageState extends State<LoginPage> {
                             height: 24,
 
                             child: Checkbox(
-                              value: keepSignedIn,
+                              value: false,
 
-                              onChanged: (value) {
-                                setState(() {
-                                  keepSignedIn =
-                                      value ?? false;
-                                });
-                              },
+                              onChanged:
+                                  (value) {},
 
                               activeColor:
                               buttonBlue,
@@ -836,10 +752,12 @@ class _LoginPageState extends State<LoginPage> {
 
                           GestureDetector(
                             onTap: () {
+
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) =>
+                                  builder:
+                                      (context) =>
                                   const ChangePasswordPage(),
                                 ),
                               );
@@ -870,8 +788,7 @@ class _LoginPageState extends State<LoginPage> {
                         height: 50,
 
                         child: ElevatedButton(
-                          onPressed:
-                          isLoading ? null : login,
+                          onPressed: login,
 
                           style:
                           ElevatedButton.styleFrom(
@@ -891,22 +808,10 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
 
-                          child: isLoading
-                              ? const SizedBox(
-                            width: 22,
-                            height: 22,
-                            child:
-                            CircularProgressIndicator(
-                              strokeWidth: 2,
-                              color:
-                              Colors.white,
-                            ),
-                          )
-                              : Text(
+                          child: Text(
                             "Login as $selectedRole",
 
-                            style:
-                            const TextStyle(
+                            style: const TextStyle(
                               fontSize: 13,
                               fontWeight:
                               FontWeight.bold,
@@ -929,11 +834,12 @@ class _LoginPageState extends State<LoginPage> {
                           children: [
 
                             Text(
-                              selectedRole == "User"
+                              selectedRole ==
+                                  "Job Seeker"
                                   ? "Don't have an account? "
                                   : selectedRole ==
-                                  "Employee"
-                                  ? "Don't have an employee account? "
+                                  "Employer"
+                                  ? "Don't have an employer account? "
                                   : "Need admin access? ",
 
                               style:
@@ -945,37 +851,31 @@ class _LoginPageState extends State<LoginPage> {
 
                             GestureDetector(
                               onTap: () {
-                                if (selectedRole ==
-                                    "User") {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder:
-                                          (context) =>
-                                      const RegisterPage(),
+
+                                ScaffoldMessenger
+                                    .of(context)
+                                    .showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      "$selectedRole registration",
                                     ),
-                                  );
-                                } else {
-                                  ScaffoldMessenger.of(
-                                      context)
-                                      .showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                        "$selectedRole registration is managed by Admin",
-                                      ),
-                                    ),
-                                  );
-                                }
+                                  ),
+                                );
                               },
 
-                              child: const Text(
-                                "Register",
+                              child: InkWell(
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>RegisterPage()));
+                                },
+                                child: const Text(
+                                  "Register",
 
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  color: buttonBlue,
-                                  fontWeight:
-                                  FontWeight.bold,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: buttonBlue,
+                                    fontWeight:
+                                    FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ),
@@ -1002,6 +902,7 @@ class _LoginPageState extends State<LoginPage> {
     required bool selected,
     required VoidCallback onTap,
   }) {
+
     return Expanded(
       child: GestureDetector(
         onTap: onTap,
@@ -1045,12 +946,13 @@ class _LoginPageState extends State<LoginPage> {
   // ============================================================
 
   String _getRoleDescription() {
+
     if (selectedRole == "Admin") {
-      return "Manage users, employees, jobs and platform activities.";
+      return "Manage users, jobs and platform activities.";
     }
 
-    if (selectedRole == "Employee") {
-      return "Manage job postings and review job applications.";
+    if (selectedRole == "Employer") {
+      return "Post jobs and manage your job applications.";
     }
 
     return "Find jobs, apply and manage your applications.";
@@ -1061,241 +963,23 @@ class _LoginPageState extends State<LoginPage> {
   // ============================================================
 
   String _getEmailHint() {
+
     if (selectedRole == "Admin") {
-      return "pritesh@gmail.com";
+      return "admin@hirehub.com";
     }
 
-    if (selectedRole == "Employee") {
-      return "yash@gmail.com";
+    if (selectedRole == "Employer") {
+      return "company@hirehub.com";
     }
 
-    return "marmik@gmail.com";
+    return "sureshkumar12@gmail.com";
   }
 }
 
-
 // ============================================================
-// ADMIN CARD
+// TEMPORARY CHANGE PASSWORD PAGE
 // ============================================================
-
-Widget _adminCard({
-  required IconData icon,
-  required String title,
-  required String value,
-}) {
-  return Container(
-    padding: const EdgeInsets.all(16),
-
-    decoration: BoxDecoration(
-      color: Colors.white,
-
-      borderRadius:
-      BorderRadius.circular(12),
-
-      border: Border.all(
-        color: borderColor,
-      ),
-    ),
-
-    child: Column(
-      crossAxisAlignment:
-      CrossAxisAlignment.start,
-
-      children: [
-
-        Icon(
-          icon,
-          color: buttonBlue,
-          size: 28,
-        ),
-
-        const SizedBox(height: 12),
-
-        Text(
-          value,
-          style: const TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: navyColor,
-          ),
-        ),
-
-        Text(
-          title,
-          style: const TextStyle(
-            color: Colors.grey,
-          ),
-        ),
-      ],
-    ),
-  );
-}
-
-
-
-// ============================================================
-// EMPLOYEE CARD
+// Keep your existing forgot_password.dart page instead.
+// This class is only here if you want this file to run alone.
 // ============================================================
 
-Widget _employeeCard({
-  required IconData icon,
-  required String title,
-  required String value,
-}) {
-  return Container(
-    padding: const EdgeInsets.all(16),
-
-    decoration: BoxDecoration(
-      color: Colors.white,
-
-      borderRadius:
-      BorderRadius.circular(12),
-
-      border: Border.all(
-        color: borderColor,
-      ),
-    ),
-
-    child: Column(
-      crossAxisAlignment:
-      CrossAxisAlignment.start,
-
-      children: [
-
-        Icon(
-          icon,
-          color: buttonBlue,
-          size: 28,
-        ),
-
-        const SizedBox(height: 12),
-
-        Text(
-          value,
-          style: const TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: navyColor,
-          ),
-        ),
-
-        Text(
-          title,
-          style: const TextStyle(
-            color: Colors.grey,
-          ),
-        ),
-      ],
-    ),
-  );
-}
-
-// ============================================================
-// PANEL OPTION
-// ============================================================
-
-Widget _panelOption({
-  required IconData icon,
-  required String title,
-  required String subtitle,
-}) {
-  return Container(
-    width: double.infinity,
-
-    margin: const EdgeInsets.only(
-      bottom: 12,
-    ),
-
-    padding: const EdgeInsets.all(15),
-
-    decoration: BoxDecoration(
-      color: Colors.white,
-
-      borderRadius:
-      BorderRadius.circular(12),
-
-      border: Border.all(
-        color: borderColor,
-      ),
-    ),
-
-    child: Row(
-      children: [
-
-        Container(
-          width: 45,
-          height: 45,
-
-          decoration: BoxDecoration(
-            color: const Color(
-              0xFFF3F7FF,
-            ),
-
-            borderRadius:
-            BorderRadius.circular(10),
-          ),
-
-          child: Icon(
-            icon,
-            color: buttonBlue,
-          ),
-        ),
-
-        const SizedBox(width: 14),
-
-        Expanded(
-          child: Column(
-            crossAxisAlignment:
-            CrossAxisAlignment.start,
-
-            children: [
-
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight:
-                  FontWeight.bold,
-                  color: navyColor,
-                ),
-              ),
-
-              const SizedBox(height: 4),
-
-              Text(
-                subtitle,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey,
-                ),
-              ),
-            ],
-          ),
-        ),
-
-        const Icon(
-          Icons.arrow_forward_ios,
-          size: 16,
-          color: Colors.grey,
-        ),
-      ],
-    ),
-  );
-}
-
-// ============================================================
-// LOGOUT
-// ============================================================
-
-void _logout(BuildContext context) {
-  Navigator.pushAndRemoveUntil(
-    context,
-
-    MaterialPageRoute(
-      builder: (context) =>
-      const LoginPage(),
-    ),
-
-        (route) => false,
-  );
-}
