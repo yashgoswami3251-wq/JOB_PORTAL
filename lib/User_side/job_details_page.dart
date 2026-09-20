@@ -13,6 +13,7 @@ class JobDetailsPage extends StatefulWidget {
     required this.onApply,
   });
 
+
   @override
   State<JobDetailsPage> createState() => _JobDetailsPageState();
 }
