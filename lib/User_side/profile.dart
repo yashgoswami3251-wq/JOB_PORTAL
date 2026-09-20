@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:job_portal/User_side/settings_page.dart';
+import '../references/reference.dart';
 import 'edit_profile.dart';
 import 'resume_page.dart';
 
@@ -10,13 +11,6 @@ class ProfilePage extends StatelessWidget {
   // COLORS
   // ============================================================
 
-  static const Color bgColor = Color(0xFFFFFCF7);
-  static const Color textColor = Color(0xFF17233B);
-  static const Color greyColor = Color(0xFF737B87);
-  static const Color avatarColor = Color(0xFF397184);
-  static const Color buttonColor = Color(0xFF2864E8);
-  static const Color borderColor = Color(0xFFE1E5E9);
-  static const Color chipColor = Color(0xFFF0F5FF);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +22,7 @@ class ProfilePage extends StatelessWidget {
     // ============================================================
 
     return Scaffold(
-      backgroundColor: bgColor,
+      backgroundColor: backgroundColor,
 
       body: SafeArea(
         top: true,
@@ -45,8 +39,8 @@ class ProfilePage extends StatelessWidget {
               height: 58,
               width: double.infinity,
 
-              decoration: const BoxDecoration(
-                color: bgColor,
+              decoration:  BoxDecoration(
+                color: backgroundColor,
 
                 border: Border(
                   bottom: BorderSide(
@@ -64,11 +58,11 @@ class ProfilePage extends StatelessWidget {
                 child: Row(
                   children: [
 
-                    const Text(
+                     Text(
                       "HireHub",
                       style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.w700,
+                        fontSize: fontSize,
+                        fontWeight: fontweight,
                         color: textColor,
                         letterSpacing: -0.3,
                       ),
@@ -135,7 +129,7 @@ class ProfilePage extends StatelessWidget {
                       // MY PROFILE
                       // ==================================================
 
-                      const Text(
+                       Text(
                         "My Profile",
                         style: TextStyle(
                           fontSize: 22,
@@ -188,7 +182,7 @@ class ProfilePage extends StatelessWidget {
                               height: 75,
 
                               decoration:
-                              const BoxDecoration(
+                               BoxDecoration(
                                 color: avatarColor,
                                 shape: BoxShape.circle,
                               ),
@@ -212,7 +206,7 @@ class ProfilePage extends StatelessWidget {
                             // NAME
                             // ==========================================
 
-                            const Text(
+                             Text(
                               "Rahul Sharma",
                               style: TextStyle(
                                 fontSize: 23,
@@ -228,7 +222,7 @@ class ProfilePage extends StatelessWidget {
                             // SUBTITLE
                             // ==========================================
 
-                            const Text(
+                             Text(
                               "Job Seeker • Senior React Developer",
                               textAlign: TextAlign.center,
 
@@ -262,8 +256,7 @@ class ProfilePage extends StatelessWidget {
 
                                 style:
                                 ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                  buttonColor,
+                                  backgroundColor: blueColor,
                                   foregroundColor:
                                   Colors.white,
                                   elevation: 0,
@@ -307,7 +300,7 @@ class ProfilePage extends StatelessWidget {
                             // PROFILE INFORMATION
                             // ==========================================
 
-                            const Align(
+                             Align(
                               alignment:
                               Alignment.centerLeft,
 
@@ -378,7 +371,7 @@ class ProfilePage extends StatelessWidget {
                             // TECHNICAL SKILLS
                             // ==========================================
 
-                            const Align(
+                             Align(
                               alignment:
                               Alignment.centerLeft,
 
@@ -402,9 +395,8 @@ class ProfilePage extends StatelessWidget {
                             // This prevents horizontal overflow.
                             // ==========================================
 
-                            const Align(
-                              alignment:
-                              Alignment.centerLeft,
+                             Align(
+                              alignment: Alignment.centerLeft,
 
                               child: Wrap(
                                 spacing: 5,
@@ -444,7 +436,7 @@ class ProfilePage extends StatelessWidget {
                       // MY RESUME SECTION
                       // ==================================================
 
-                      const Text(
+                       Text(
                         "My Resume",
                         style: TextStyle(
                           fontSize: 19,
@@ -526,7 +518,7 @@ class ProfilePage extends StatelessWidget {
                               const SizedBox(width: 12),
 
                               // TEXT
-                              const Expanded(
+                               Expanded(
                                 child: Column(
                                   crossAxisAlignment:
                                   CrossAxisAlignment
@@ -665,10 +657,10 @@ class SkillChip extends StatelessWidget {
       child: Text(
         text,
 
-        style: const TextStyle(
+        style:  TextStyle(
           fontSize: 13,
           fontWeight: FontWeight.w600,
-          color: Color(0xFF2162E8),
+          color: blueColor
         ),
       ),
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:job_portal/User_side/forgot_password.dart';
 import 'package:job_portal/User_side/profile.dart';
 
+import '../references/reference.dart';
 import 'home_page.dart';
 
 class EditProfilePage extends StatefulWidget {
@@ -202,8 +203,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   const Text(
                     "Edit Profile",
                     style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
+                      fontSize: fontSize,
+                      fontWeight: fontweight,
                       color: textColor,
                     ),
                   ),

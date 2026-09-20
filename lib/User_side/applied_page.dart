@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:job_portal/User_side/profile.dart';
 
+import '../references/reference.dart';
+
 class AppliedPages extends StatefulWidget {
 final Map<String, dynamic>? appliedJob;
 
@@ -17,10 +19,6 @@ State<AppliedPages> createState() => _AppliedPagesState();
 class _AppliedPagesState extends State<AppliedPages> {
 int selectedFilter = 0;
 
-final Color backgroundColor = const Color(0xFFFFFCF7);
-final Color navyColor = const Color(0xFF17233B);
-final Color blueColor = const Color(0xFF2864E8);
-final Color borderColor = const Color(0xFFE1E5EB);
 
 late List<Map<String, dynamic>> applications;
 
@@ -183,8 +181,8 @@ const Text(
 "My Applications",
 
 style: TextStyle(
-fontSize: 24,
-fontWeight: FontWeight.bold,
+fontSize: fontSize,
+fontWeight: fontweight,
 color: Color(0xFF17233B),
 ),
 ),
@@ -324,13 +322,13 @@ selectedFilter = 0;
 });
 },
 
-child: const Text(
+child: Text(
 "View All Applications →",
 
 style: TextStyle(
 fontSize: 16,
 fontWeight: FontWeight.w600,
-color: Color(0xFF2864E8),
+color: blueColor,
 ),
 ),
 ),

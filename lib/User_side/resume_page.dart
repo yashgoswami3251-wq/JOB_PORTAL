@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../references/reference.dart';
+
 class ResumePage extends StatelessWidget {
   const ResumePage({super.key});
 
@@ -345,7 +347,7 @@ class ResumePage extends StatelessWidget {
                                     },
 
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: buttonColor,
+                                      backgroundColor: blueColor,
                                       foregroundColor: Colors.white,
 
                                       elevation: 0,
@@ -378,7 +380,7 @@ class ResumePage extends StatelessWidget {
                                     },
 
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: buttonColor,
+                                      backgroundColor: blueColor,
                                       foregroundColor: Colors.white,
                                       elevation: 0,
                                       padding: EdgeInsets.zero,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:job_portal/User_side/profile.dart';
+import '../references/reference.dart';
 import 'job_details_page.dart';
 
 class findjobes extends StatefulWidget {
@@ -19,10 +20,6 @@ class _FindJobsPageState extends State<findjobes> {
 
   final TextEditingController searchController = TextEditingController();
 
-  final Color backgroundColor = const Color(0xFFFFFCF7);
-  final Color navyColor = const Color(0xFF17233B);
-  final Color blueColor = const Color(0xFF2864E8);
-  final Color borderColor = const Color(0xFFE1E5EB);
 
   final List<Map<String, dynamic>> jobs = [
     {
@@ -291,8 +288,8 @@ class _FindJobsPageState extends State<findjobes> {
                     const Text(
                       "Find Jobs",
                       style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
+                        fontSize: fontSize,
+                        fontWeight: fontweight,
                         color: Color(0xFF17233B),
                       ),
                     ),
@@ -496,8 +493,7 @@ class _FindJobsPageState extends State<findjobes> {
 
                                     style:
                                     ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                      blueColor,
+                                      backgroundColor: blueColor,
 
                                       foregroundColor:
                                       Colors.white,
@@ -604,9 +600,9 @@ class _FindJobsPageState extends State<findjobes> {
                               child: GestureDetector(
                                 onTap: () {},
 
-                                child: const Padding(
+                                child: Padding(
                                   padding:
-                                  EdgeInsets.symmetric(
+                                  const EdgeInsets.symmetric(
                                     vertical: 8,
                                   ),
 
@@ -617,8 +613,7 @@ class _FindJobsPageState extends State<findjobes> {
                                       fontSize: 15,
                                       fontWeight:
                                       FontWeight.w600,
-                                      color:
-                                      Color(0xFF2864E8),
+                                      color: blueColor,
                                     ),
                                   ),
                                 ),

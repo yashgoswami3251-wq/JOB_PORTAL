@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:job_portal/User_side/profile.dart';
+import '../references/reference.dart';
 import 'job_details_page.dart';
 
 class SavedPage extends StatefulWidget {
@@ -19,10 +20,6 @@ class _SavedPageState extends State<SavedPage> {
   // COLORS
   // ============================================================
 
-  final Color backgroundColor = const Color(0xFFFFFCF7);
-  final Color navyColor = const Color(0xFF17233B);
-  final Color blueColor = const Color(0xFF2864E8);
-  final Color borderColor = const Color(0xFFE1E5EB);
 
   // ============================================================
   // SAVED JOBS
@@ -228,8 +225,8 @@ class _SavedPageState extends State<SavedPage> {
                     "Saved Jobs",
 
                     style: TextStyle(
-                      fontSize: 23,
-                      fontWeight: FontWeight.bold,
+                      fontSize: fontSize,
+                      fontWeight: fontweight,
                       color: Color(0xFF17233B),
                     ),
                   ),
@@ -316,7 +313,7 @@ class _SavedPageState extends State<SavedPage> {
                         child: GestureDetector(
                           onTap: () {},
 
-                          child: const Padding(
+                          child:  Padding(
                             padding: EdgeInsets.symmetric(
                               vertical: 8,
                             ),
@@ -327,7 +324,7 @@ class _SavedPageState extends State<SavedPage> {
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,
-                                color: Color(0xFF2864E8),
+                                color: blueColor,
                               ),
                             ),
                           ),

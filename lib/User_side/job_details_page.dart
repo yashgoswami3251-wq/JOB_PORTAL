@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../references/reference.dart';
 import 'apply_job_page.dart';
 
 class JobDetailsPage extends StatefulWidget {
@@ -23,22 +24,6 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
   // ============================================================
 
   bool isSaved = false;
-
-  // ============================================================
-  // COLORS
-  // ============================================================
-
-  final Color backgroundColor =
-  const Color(0xFFFFFCF7);
-
-  final Color navyColor =
-  const Color(0xFF17233B);
-
-  final Color blueColor =
-  const Color(0xFF2864E8);
-
-  final Color borderColor =
-  const Color(0xFFE1E5EB);
 
   // ============================================================
   // OPEN APPLY JOB PAGE
@@ -336,8 +321,7 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
 
                                 style:
                                 ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                  blueColor,
+                                  backgroundColor: blueColor,
 
                                   foregroundColor:
                                   Colors.white,

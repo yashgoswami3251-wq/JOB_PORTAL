@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../references/reference.dart';
 
 import 'saved_page.dart';
 import 'applied_page.dart';
@@ -24,11 +25,6 @@ class _HomePageState extends State<HomePage> {
   // COLORS
   // ============================================================
 
-  final Color backgroundColor = const Color(0xFFFFFCF7);
-  final Color navyColor = const Color(0xFF17233B);
-  final Color blueColor = const Color(0xFF2864E8);
-  final Color bottomColor = const Color(0xFF17445B);
-  final Color borderColor = const Color(0xFFE1E5EB);
 
   // ============================================================
   // BOTTOM NAVIGATION
@@ -231,8 +227,8 @@ class _HomePageState extends State<HomePage> {
                       Text(
                         "HireHub",
                         style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
+                          fontSize: fontSize,
+                          fontWeight: fontweight,
                           color: navyColor,
                         ),
                       ),
@@ -537,9 +533,7 @@ class _HomePageState extends State<HomePage> {
 
             decoration: BoxDecoration(
               color: selected
-                  ? const Color(0xFF286078)
-                  : Colors.transparent,
-
+                  ? const Color(0xFF286078) : Colors.transparent,
               borderRadius: BorderRadius.circular(9),
             ),
 

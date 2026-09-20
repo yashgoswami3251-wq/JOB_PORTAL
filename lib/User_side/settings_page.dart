@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:job_portal/User_side/home_page.dart';
-import 'package:job_portal/User_side/login.dart';
+import 'package:job_portal/User_side/login.dart' hide borderColor;
+import '../references/reference.dart';
 import 'edit_profile.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -12,16 +13,6 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
 
-  // ============================================================
-  // COLORS
-  // ============================================================
-
-  static const Color bgColor = Color(0xFFFFFCF7);
-  static const Color textColor = Color(0xFF17233B);
-  static const Color greyColor = Color(0xFF737B87);
-  static const Color iconColor = Color(0xFF397184);
-  static const Color borderColor = Color(0xFFE1E5E9);
-  static const Color redColor = Color(0xFFF04444);
 
   // ============================================================
   // BUILD
@@ -30,7 +21,7 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: bgColor,
+      backgroundColor: backgroundColor,
 
       body: SafeArea(
         child: Column(
@@ -44,8 +35,8 @@ class _SettingsPageState extends State<SettingsPage> {
               height: 58,
               width: double.infinity,
 
-              decoration: const BoxDecoration(
-                color: bgColor,
+              decoration: BoxDecoration(
+                color: backgroundColor,
 
                 border: Border(
                   bottom: BorderSide(
@@ -76,7 +67,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
                     SizedBox(width: 10,),
 
-                    const Text(
+                     Text(
                       "HireHub",
                       style: TextStyle(
                         fontSize: 21,
@@ -141,7 +132,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     // SETTINGS TITLE
                     // ==================================================
 
-                    const Text(
+                     Text(
                       "Settings",
                       style: TextStyle(
                         fontSize: 22,
@@ -325,7 +316,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           // TITLE
                           // ==================================================
 
-                          const Text(
+                           Text(
                             "Account Actions",
                             style: TextStyle(
                               fontSize: 14,
@@ -459,7 +450,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 Navigator.pop(context);
               },
 
-              child: const Text(
+              child:  Text(
                 "Cancel",
                 style: TextStyle(
                   color: greyColor,
@@ -518,7 +509,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 Navigator.pop(context);
               },
 
-              child: const Text(
+              child: Text(
                 "Cancel",
                 style: TextStyle(
                   color: greyColor,
