@@ -13,16 +13,6 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
-  // ============================================================
-  // COLORS
-  // ============================================================
-
-  static const Color bgColor = Color(0xFFFFFCF7);
-  static const Color textColor = Color(0xFF17233B);
-  static const Color greyColor = Color(0xFF737B87);
-  static const Color avatarColor = Color(0xFF397184);
-  static const Color buttonColor = Color(0xFF2864E8);
-  static const Color borderColor = Color(0xFFE1E5E9);
 
   // ============================================================
   // CONTROLLERS
@@ -160,7 +150,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: bgColor,
+      backgroundColor: backgroundColor,
 
       body: SafeArea(
         child: Column(
@@ -174,10 +164,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
               height: 58,
               width: double.infinity,
 
-              decoration: const BoxDecoration(
-                color: bgColor,
+              decoration: BoxDecoration(
+                color: backgroundColor,
 
-                border: Border(
+                border: const Border(
                   bottom: BorderSide(
                     color: Color(0xFFE3E3E3),
                     width: 1,
@@ -193,14 +183,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       Navigator.pop(context);
                     },
 
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.arrow_back,
                       size: 24,
                       color: textColor,
                     ),
                   ),
 
-                  const Text(
+                  Text(
                     "Edit Profile",
                     style: TextStyle(
                       fontSize: fontSize,
@@ -224,7 +214,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       ),
 
                       decoration:
-                      const BoxDecoration(
+                      BoxDecoration(
                         color: avatarColor,
                         shape: BoxShape.circle,
                       ),
@@ -307,7 +297,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               height: 80,
 
                               decoration:
-                              const BoxDecoration(
+                              BoxDecoration(
                                 color: avatarColor,
                                 shape:
                                 BoxShape.circle,
@@ -339,12 +329,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 height: 24,
 
                                 decoration:
-                                const BoxDecoration(
-                                  color:
-                                  buttonColor,
+                                 BoxDecoration(
+                                  color: blueColor,
                                   shape:
-                                  BoxShape
-                                      .circle,
+                                  BoxShape.circle,
                                 ),
 
                                 child:
@@ -520,7 +508,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             ),
 
                             style:
-                            const TextStyle(
+                            TextStyle(
                               fontSize: 13,
                               color:
                               textColor,
@@ -743,12 +731,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 OutlinedButton
                                     .styleFrom(
                                   foregroundColor:
-                                  buttonColor,
+                                  blueColor,
 
                                   side:
-                                  const BorderSide(
+                                   BorderSide(
                                     color:
-                                    buttonColor,
+                                    blueColor,
                                   ),
 
                                   shape:
@@ -850,7 +838,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           saveChanges,
 
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: buttonColor,
+                            backgroundColor: blueColor,
                             foregroundColor: Colors.white,
 
                             elevation: 0,
@@ -896,14 +884,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 .shrinkWrap,
                           ),
 
-                          child: const Text(
+                          child:  Text(
                             "Change Password",
                             style: TextStyle(
                               fontSize: 13,
                               fontWeight:
                               FontWeight.w500,
                               color:
-                              buttonColor,
+                              blueColor,
                             ),
                           ),
                         ),
@@ -1067,10 +1055,10 @@ class SkillChip extends StatelessWidget {
       child: Text(
         text,
 
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 13,
           fontWeight: FontWeight.w600,
-          color: Color(0xFF2162E8),
+          color: blueColor,
         ),
       ),
     );
