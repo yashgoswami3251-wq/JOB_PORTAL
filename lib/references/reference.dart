@@ -7,16 +7,15 @@ import 'package:flutter/material.dart';
 const double fontSize = 22;
 const FontWeight fontweight = FontWeight.bold;
 
-
 // All Pages Design
 final Color backgroundColor = const Color(0xFFFFFCF7);
 final Color navyColor = const Color(0xFF17233B);
 final Color borderColor = const Color(0xFFE1E5EB);
 
-// ButtonColor
+// Button Color
 final Color blueColor = const Color(0xFF2864E8);
 
-//bottom naviagation color
+//bottom Naviagation background Color
 final Color bottomColor = const Color(0xFF17445B);
 
 // User Profile design
@@ -30,3 +29,5 @@ final Color chipColor = Color(0xFFF0F5FF);
 const Color iconColor = Color(0xFF397184);
 const Color redColor = Color(0xFFF04444);
 
+// Heading on login page Admin, Employee, Job Seeker background color
+const Color lightGrey = Color(0xFFF8FAFD);
