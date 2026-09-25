@@ -13,6 +13,13 @@ class PostNewJobPage extends StatefulWidget {
 }
 
 class _PostNewJobPageState extends State<PostNewJobPage> {
+
+  // ------------------------------------------------------------
+  // Form Key
+  // ------------------------------------------------------------
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   // ------------------------------------------------------------
   // Controllers
   // ------------------------------------------------------------
@@ -122,10 +129,12 @@ class _PostNewJobPageState extends State<PostNewJobPage> {
   }) {
     return InputDecoration(
       hintText: hintText,
+
       hintStyle: TextStyle(
         fontSize: 12.5,
         color: greyColor,
       ),
+
       suffixIcon: suffixIcon,
 
       filled: true,
@@ -175,6 +184,11 @@ class _PostNewJobPageState extends State<PostNewJobPage> {
           width: 1,
         ),
       ),
+
+      errorStyle: const TextStyle(
+        fontSize: 10.5,
+        color: Colors.red,
+      ),
     );
   }
 
@@ -192,13 +206,26 @@ class _PostNewJobPageState extends State<PostNewJobPage> {
     VoidCallback? onTap,
     Widget? suffixIcon,
     String? Function(String?)? validator,
+    List<TextInputFormatter>? inputFormatters,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          label,
-          style: labelStyle,
+
+        RichText(
+          text: TextSpan(
+            text: label,
+            style: labelStyle,
+            children: const [
+              TextSpan(
+                text: " *",
+                style: TextStyle(
+                  color: Colors.red,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
         ),
 
         const SizedBox(height: 6),
@@ -210,7 +237,12 @@ class _PostNewJobPageState extends State<PostNewJobPage> {
           maxLines: maxLines,
           keyboardType: keyboardType,
           style: inputTextStyle,
+
+          // Individual validator comes from each field
           validator: validator,
+
+          inputFormatters: inputFormatters,
+
           decoration: inputDecoration(
             hintText: hintText,
             suffixIcon: suffixIcon,
@@ -233,9 +265,21 @@ class _PostNewJobPageState extends State<PostNewJobPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          label,
-          style: labelStyle,
+
+        RichText(
+          text: TextSpan(
+            text: label,
+            style: labelStyle,
+            children: const [
+              TextSpan(
+                text: " *",
+                style: TextStyle(
+                  color: Colors.red,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
         ),
 
         const SizedBox(height: 6),
@@ -243,7 +287,6 @@ class _PostNewJobPageState extends State<PostNewJobPage> {
         DropdownButtonFormField<String>(
           value: value,
           isExpanded: true,
-
           style: inputTextStyle,
 
           icon: Icon(
@@ -263,6 +306,14 @@ class _PostNewJobPageState extends State<PostNewJobPage> {
               ),
             );
           }).toList(),
+
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return "$label is required";
+            }
+
+            return null;
+          },
 
           onChanged: onChanged,
         ),
@@ -297,35 +348,19 @@ class _PostNewJobPageState extends State<PostNewJobPage> {
   // ------------------------------------------------------------
 
   void postJob() {
-    if (jobTitleController.text.trim().isEmpty ||
-        companyController.text.trim().isEmpty ||
-        locationController.text.trim().isEmpty ||
-        salaryMinController.text.trim().isEmpty ||
-        salaryMaxController.text.trim().isEmpty ||
-        descriptionController.text.trim().isEmpty ||
-        requirementsController.text.trim().isEmpty ||
-        qualificationsController.text.trim().isEmpty ||
-        deadlineController.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            "Please fill all required fields",
-          ),
-        ),
-      );
 
+    // Run all TextFormField validators
+    if (!_formKey.currentState!.validate()) {
       return;
-    }
-
-    // Here you can insert the job into SQLite/Firebase/API.
+  }
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text(
-          "Job posted successfully!",
-        ),
+        content: Text("Job posted successfully!",),
       ),
     );
+
+    // Here you can insert the job into SQLite/Firebase/API.
   }
 
   // ------------------------------------------------------------
@@ -335,26 +370,44 @@ class _PostNewJobPageState extends State<PostNewJobPage> {
   Widget buildHeader() {
     return Container(
       width: double.infinity,
+
       padding: const EdgeInsets.fromLTRB(
         16,
         10,
         16,
         10,
       ),
+
       decoration: BoxDecoration(
         color: backgroundColor,
       ),
+
       child: Row(
         children: [
+
           InkWell(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>EmployeeHomePage()));
-              }, child: Icon(Icons.arrow_circle_left)),
-          SizedBox(width: 10,),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EmployeeHomePage(),
+                ),
+              );
+            },
+            child:  Icon(
+              Icons.arrow_back_ios,
+              size: 20,
+              color: blueColor,
+            ),
+          ),
+
+          const SizedBox(width: 10),
+
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+
                 Text(
                   "Post New Job",
                   style: TextStyle(
@@ -390,11 +443,14 @@ class _PostNewJobPageState extends State<PostNewJobPage> {
           Container(
             width: 29,
             height: 29,
+
             decoration: BoxDecoration(
               color: bottomColor,
               shape: BoxShape.circle,
             ),
+
             alignment: Alignment.center,
+
             child: const Text(
               "TCS",
               style: TextStyle(
@@ -415,13 +471,17 @@ class _PostNewJobPageState extends State<PostNewJobPage> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: backgroundColor,
 
       body: SafeArea(
         child: Form(
+          key: _formKey,
+
           child: Column(
             children: [
+
               // Header
               buildHeader(),
 
@@ -439,40 +499,66 @@ class _PostNewJobPageState extends State<PostNewJobPage> {
 
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+
                     children: [
-                      // ------------------------------------------------
+
+                      // ==================================================
                       // Job Title
-                      // ------------------------------------------------
+                      // ==================================================
 
                       buildTextField(
                         label: "Job Title",
                         controller: jobTitleController,
                         hintText: "Enter job title",
+
+                        validator: (value) {
+
+                          if (value == null ||
+                              value.trim().isEmpty) {
+
+                            return "Job Title is required";
+                          }
+
+                          return null;
+                        },
                       ),
 
                       const SizedBox(height: 12),
 
-                      // ------------------------------------------------
+                      // ==================================================
                       // Company
-                      // ------------------------------------------------
+                      // ==================================================
 
                       buildTextField(
                         label: "Company",
                         controller: companyController,
                         hintText: "Enter company name",
+
+                        validator: (value) {
+
+                          if (value == null ||
+                              value.trim().isEmpty) {
+
+                            return "Company is required";
+                          }
+
+                          return null;
+                        },
                       ),
 
                       const SizedBox(height: 12),
 
-                      // ------------------------------------------------
+                      // ==================================================
                       // Category
-                      // ------------------------------------------------
+                      // ==================================================
 
                       buildDropdown(
                         label: "Category",
                         value: selectedCategory,
                         items: categories,
+
                         onChanged: (value) {
+
                           if (value != null) {
                             setState(() {
                               selectedCategory = value;
@@ -483,48 +569,102 @@ class _PostNewJobPageState extends State<PostNewJobPage> {
 
                       const SizedBox(height: 12),
 
-                      // ------------------------------------------------
+                      // ==================================================
                       // Location
-                      // ------------------------------------------------
+                      // ==================================================
 
                       buildTextField(
                         label: "Location",
                         controller: locationController,
                         hintText: "Mumbai, Maharashtra",
+
+                        validator: (value) {
+
+                          if (value == null ||
+                              value.trim().isEmpty) {
+
+                            return "Location is required";
+                          }
+
+                          return null;
+                        },
                       ),
 
                       const SizedBox(height: 12),
 
-                      // ------------------------------------------------
+                      // ==================================================
                       // Salary
-                      // ------------------------------------------------
+                      // ==================================================
 
                       Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment:
+                        CrossAxisAlignment.start,
+
                         children: [
+
+                          // Salary Min
                           Expanded(
                             child: buildTextField(
                               label: "Salary Min (₹ LPA)",
                               controller: salaryMinController,
                               hintText: "10 LPA",
+
                               keyboardType:
-                              const TextInputType.numberWithOptions(
+                              const TextInputType
+                                  .numberWithOptions(
                                 decimal: true,
                               ),
+
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                  RegExp(r'^\d*\.?\d*'),
+                                ),
+                              ],
+
+                              validator: (value) {
+
+                                if (value == null ||
+                                    value.trim().isEmpty) {
+
+                                  return "Salary Min is required";
+                                }
+
+                                return null;
+                              },
                             ),
                           ),
 
                           const SizedBox(width: 14),
 
+                          // Salary Max
                           Expanded(
                             child: buildTextField(
                               label: "Salary Max (₹ LPA)",
                               controller: salaryMaxController,
                               hintText: "18 LPA",
+
                               keyboardType:
-                              const TextInputType.numberWithOptions(
+                              const TextInputType
+                                  .numberWithOptions(
                                 decimal: true,
                               ),
+
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                  RegExp(r'^\d*\.?\d*'),
+                                ),
+                              ],
+
+                              validator: (value) {
+
+                                if (value == null ||
+                                    value.trim().isEmpty) {
+
+                                  return "Salary Max is required";
+                                }
+
+                                return null;
+                              },
                             ),
                           ),
                         ],
@@ -532,15 +672,17 @@ class _PostNewJobPageState extends State<PostNewJobPage> {
 
                       const SizedBox(height: 12),
 
-                      // ------------------------------------------------
+                      // ==================================================
                       // Job Type
-                      // ------------------------------------------------
+                      // ==================================================
 
                       buildDropdown(
                         label: "Job Type",
                         value: selectedJobType,
                         items: jobTypes,
+
                         onChanged: (value) {
+
                           if (value != null) {
                             setState(() {
                               selectedJobType = value;
@@ -551,9 +693,9 @@ class _PostNewJobPageState extends State<PostNewJobPage> {
 
                       const SizedBox(height: 12),
 
-                      // ------------------------------------------------
+                      // ==================================================
                       // Description
-                      // ------------------------------------------------
+                      // ==================================================
 
                       buildTextField(
                         label: "Description",
@@ -561,13 +703,24 @@ class _PostNewJobPageState extends State<PostNewJobPage> {
                         hintText:
                         "Describe the job position...",
                         maxLines: 4,
+
+                        validator: (value) {
+
+                          if (value == null ||
+                              value.trim().isEmpty) {
+
+                            return "Description is required";
+                          }
+
+                          return null;
+                        },
                       ),
 
                       const SizedBox(height: 12),
 
-                      // ------------------------------------------------
+                      // ==================================================
                       // Requirements
-                      // ------------------------------------------------
+                      // ==================================================
 
                       buildTextField(
                         label: "Requirements",
@@ -575,13 +728,24 @@ class _PostNewJobPageState extends State<PostNewJobPage> {
                         hintText:
                         "Enter required skills and experience...",
                         maxLines: 3,
+
+                        validator: (value) {
+
+                          if (value == null ||
+                              value.trim().isEmpty) {
+
+                            return "Requirements is required";
+                          }
+
+                          return null;
+                        },
                       ),
 
                       const SizedBox(height: 12),
 
-                      // ------------------------------------------------
+                      // ==================================================
                       // Qualifications
-                      // ------------------------------------------------
+                      // ==================================================
 
                       buildTextField(
                         label: "Qualifications",
@@ -589,36 +753,62 @@ class _PostNewJobPageState extends State<PostNewJobPage> {
                         hintText:
                         "B.Tech/B.E in Computer Science, or equivalent",
                         maxLines: 2,
+
+                        validator: (value) {
+
+                          if (value == null ||
+                              value.trim().isEmpty) {
+
+                            return "Qualifications is required";
+                          }
+
+                          return null;
+                        },
                       ),
 
                       const SizedBox(height: 12),
 
-                      // ------------------------------------------------
+                      // ==================================================
                       // Deadline
-                      // ------------------------------------------------
+                      // ==================================================
 
                       buildTextField(
                         label: "Deadline",
                         controller: deadlineController,
                         hintText: "Select deadline",
+
                         readOnly: true,
+
                         onTap: selectDeadline,
+
                         suffixIcon: Icon(
                           Icons.calendar_today_outlined,
                           size: 17,
                           color: greyColor,
                         ),
+
+                        validator: (value) {
+
+                          if (value == null ||
+                              value.trim().isEmpty) {
+
+                            return "Deadline is required";
+                          }
+
+                          return null;
+                        },
                       ),
 
                       const SizedBox(height: 22),
 
-                      // ------------------------------------------------
+                      // ==================================================
                       // Post Job Button
-                      // ------------------------------------------------
+                      // ==================================================
 
                       SizedBox(
                         width: double.infinity,
                         height: 46,
+
                         child: ElevatedButton(
                           onPressed: postJob,
 
@@ -636,6 +826,7 @@ class _PostNewJobPageState extends State<PostNewJobPage> {
 
                           child: const Text(
                             "Post Job",
+
                             style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w600,
