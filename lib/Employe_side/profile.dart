@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:job_portal/Employe_side/settings.dart';
+import 'package:job_portal/Employe_side/settings.dart' hide SettingsPage;
 import '../User_side/edit_profile.dart';
 import '../User_side/settings_page.dart';
 import '../references/reference.dart';
+import 'homepage.dart';
 
 class CompanyProfilePage extends StatelessWidget {
   const CompanyProfilePage({super.key});
@@ -71,6 +72,17 @@ class CompanyProfilePage extends StatelessWidget {
       ),
       child: Row(
         children: [
+          InkWell(
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>EmployeeHomePage()));
+            },
+            child: Icon(
+              Icons.arrow_back_ios,
+              size: 20,
+              color: blueColor,
+            ),
+          ),
+          SizedBox(width: 5,),
           // ----------------------------------------------------------
           // TITLE
           // ----------------------------------------------------------
@@ -111,8 +123,7 @@ class CompanyProfilePage extends StatelessWidget {
             child: IconButton(
               padding: EdgeInsets.zero,
               onPressed: () {
-                // Add setting page path
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>EmpSettingsPage()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>EMPSettingsPage()));
               },
               icon: const Icon(
                 Icons.settings_outlined,

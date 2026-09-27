@@ -101,8 +101,8 @@ class _MyJobPostingsPageState extends State<MyJobPostingsPage> {
                 Text(
                   "My Job Postings",
                   style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                    fontSize: fontSize,
+                    fontWeight: fontweight,
                     color: navyColor,
                   ),
                 ),
@@ -131,8 +131,8 @@ class _MyJobPostingsPageState extends State<MyJobPostingsPage> {
 
           // Profile
           Container(
-            width: 29,
-            height: 29,
+            width: profileSize,
+            height: profileSize,
             decoration: BoxDecoration(
               color: bottomColor,
               shape: BoxShape.circle,

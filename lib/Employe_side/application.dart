@@ -53,18 +53,6 @@ class Applicant {
 
 class _ApplicationPageState extends State<ApplicationPage> {
   // ----------------------------------------------------------
-  // Colors
-  // ----------------------------------------------------------
-
-  final Color backgroundColor = const Color(0xFFFFFCF7);
-  final Color navyColor = const Color(0xFF17233B);
-  final Color blueColor = const Color(0xFF2864E8);
-  final Color borderColor = const Color(0xFFE1E5EB);
-  final Color greyColor = const Color(0xFF737B8C);
-  final Color greenColor = const Color(0xFF138A43);
-  final Color redColor = const Color(0xFFC91D1D);
-
-  // ----------------------------------------------------------
   // Current Filter
   // ----------------------------------------------------------
 
@@ -490,7 +478,7 @@ class _ApplicationPageState extends State<ApplicationPage> {
                 ),
               ),
 
-              const SizedBox(width: 2),
+              const SizedBox(width: 5),
 
               Column(
                 children: [
@@ -498,8 +486,8 @@ class _ApplicationPageState extends State<ApplicationPage> {
                     "Applications",
                     style: TextStyle(
                       color: navyColor,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                      fontSize: fontSize,
+                      fontWeight: fontweight,
                     ),
                   ),
 
@@ -523,16 +511,20 @@ class _ApplicationPageState extends State<ApplicationPage> {
 
               const SizedBox(width: 12),
 
-              CircleAvatar(
-                radius: 14,
-                backgroundColor:
-                const Color(0xFF397184),
+              Container(
+                width: profileSize,
+                height: profileSize,
+                decoration: BoxDecoration(
+                  color: bottomColor,
+                  shape: BoxShape.circle,
+                ),
+                alignment: Alignment.center,
                 child: const Text(
                   "TCS",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 9,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),

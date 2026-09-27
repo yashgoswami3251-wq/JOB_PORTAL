@@ -186,8 +186,8 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
               });
             },
             child: Container(
-              width: 38,
-              height: 38,
+              width: profileSize,
+              height: profileSize,
               decoration: BoxDecoration(
                 color: avatarColor,
                 shape: BoxShape.circle,

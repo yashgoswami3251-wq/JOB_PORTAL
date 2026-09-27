@@ -411,8 +411,8 @@ class _PostNewJobPageState extends State<PostNewJobPage> {
                 Text(
                   "Post New Job",
                   style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                    fontSize: fontSize,
+                    fontWeight: fontweight,
                     color: navyColor,
                   ),
                 ),
@@ -441,8 +441,8 @@ class _PostNewJobPageState extends State<PostNewJobPage> {
 
           // Profile circle
           Container(
-            width: 29,
-            height: 29,
+            width: profileSize,
+            height: profileSize,
 
             decoration: BoxDecoration(
               color: bottomColor,
