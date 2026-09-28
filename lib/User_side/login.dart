@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:job_portal/User_side/register_page.dart';
 
-import '../Admin_side/admin_home_page.dart';
+import '../Admin_side/AdminHomePage.dart';
 import '../Employe_side/homepage.dart';
 import '../references/reference.dart';
 import 'forgot_password.dart';
