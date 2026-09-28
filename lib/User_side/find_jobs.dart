@@ -177,8 +177,7 @@ class _FindJobsPageState extends State<findjobes> {
   ];
 
   List<Map<String, dynamic>> get filteredJobs {
-    final searchText =
-    searchController.text.trim().toLowerCase();
+    final searchText = searchController.text.trim().toLowerCase();
 
     return jobs.where((job) {
       bool matchesFilter = true;
@@ -378,8 +377,7 @@ class _FindJobsPageState extends State<findjobes> {
                             child: Column(
                               children: [
                                 TextField(
-                                  controller:
-                                  searchController,
+                                  controller: searchController,
 
                                   onChanged: (value) {
                                     setState(() {});
