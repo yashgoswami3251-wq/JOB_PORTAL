@@ -348,7 +348,7 @@ class _PostNewJobPageState extends State<PostNewJobPage> {
         children: [
           InkWell(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>EmployeeHomePage()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>employehomepage()));
               }, child: Icon(Icons.arrow_circle_left)),
           SizedBox(width: 10,),
           Expanded(
