@@ -12,6 +12,9 @@ final Color backgroundColor = const Color(0xFFFFFCF7);
 final Color navyColor = const Color(0xFF17233B);
 final Color borderColor = const Color(0xFFE1E5EB);
 
+//application used
+final Color greenColor = const Color(0xFF138A43);
+
 // Button Color
 final Color blueColor = const Color(0xFF2864E8);
 
@@ -31,3 +34,7 @@ const Color redColor = Color(0xFFF04444);
 
 // Heading on login page Admin, Employee, Job Seeker background color
 const Color lightGrey = Color(0xFFF8FAFD);
+
+// Employee panel => All pages profile logo
+const double profileSize = 38;
+
