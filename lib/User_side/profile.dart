@@ -1,25 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import 'package:job_portal/User_side/settings_page.dart';
+import 'package:job_portal/Riverpod/profileprovider.dart';
 import '../references/reference.dart';
 import 'edit_profile.dart';
 import 'resume_page.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends ConsumerWidget {
   const ProfilePage({super.key});
-
-  // ============================================================
-  // COLORS
-  // ============================================================
-
-
   @override
-  Widget build(BuildContext context) {
-    // ============================================================
-    // FIX:
-    // Use Scaffold instead of Container.
-    // This provides the Material widget required by
-    // InkWell, ElevatedButton, etc.
-    // ============================================================
+  Widget build(BuildContext context,WidgetRef ref) {
+
+    final profile = ref.watch(profileProvider);
 
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -207,7 +200,7 @@ class ProfilePage extends StatelessWidget {
                             // ==========================================
 
                              Text(
-                              "Rahul Sharma",
+                              profile.fullName,
                               style: TextStyle(
                                 fontSize: 23,
                                 fontWeight: FontWeight.w700,
@@ -223,7 +216,7 @@ class ProfilePage extends StatelessWidget {
                             // ==========================================
 
                              Text(
-                              "Job Seeker • Senior React Developer",
+                              profile.aboutMe,
                               textAlign: TextAlign.center,
 
                               style: TextStyle(
@@ -319,38 +312,36 @@ class ProfilePage extends StatelessWidget {
 
                             // EMAIL
 
-                            const ProfileDetail(
+                             ProfileDetail(
                               title: "Email Address",
-                              value: "rahul@email.com",
+                              value: profile.email,
                             ),
 
                             const SizedBox(height: 10),
 
                             // PHONE
 
-                            const ProfileDetail(
+                             ProfileDetail(
                               title: "Phone Number",
-                              value:
-                              "+91 98765 43210",
+                              value: profile.mobile,
                             ),
 
                             const SizedBox(height: 10),
 
                             // LOCATION
 
-                            const ProfileDetail(
+                             ProfileDetail(
                               title: "Location",
-                              value:
-                              "Mumbai, Maharashtra",
+                              value: profile.location,
                             ),
 
                             const SizedBox(height: 10),
 
                             // EXPERIENCE
 
-                            const ProfileDetail(
+                             ProfileDetail(
                               title: "Total Experience",
-                              value: "4 years",
+                              value: profile.experience,
                             ),
 
                             const SizedBox(height: 16),

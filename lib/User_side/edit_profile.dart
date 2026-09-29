@@ -1,70 +1,92 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:job_portal/Riverpod/profileprovider.dart';
 import 'package:job_portal/User_side/forgot_password.dart';
 import 'package:job_portal/User_side/profile.dart';
 
 import '../references/reference.dart';
 import 'home_page.dart';
 
-class EditProfilePage extends StatefulWidget {
+class EditProfilePage extends ConsumerStatefulWidget {
   const EditProfilePage({super.key});
 
   @override
-  State<EditProfilePage> createState() => _EditProfilePageState();
+  ConsumerState<EditProfilePage> createState() =>
+      _EditProfilePageState();
 }
 
-class _EditProfilePageState extends State<EditProfilePage> {
-
+class _EditProfilePageState
+    extends ConsumerState<EditProfilePage> {
   // ============================================================
   // CONTROLLERS
   // ============================================================
 
-  final TextEditingController nameController =
-  TextEditingController(text: "Rahul Sharma");
-
-  final TextEditingController emailController =
-  TextEditingController(text: "rahul@email.com");
-
-  final TextEditingController mobileController =
-  TextEditingController(text: "+91 98765 43210");
-
-  final TextEditingController locationController =
-  TextEditingController(text: "Mumbai, Maharashtra");
-
-  final TextEditingController dobController =
-  TextEditingController(text: "15 August 1996");
-
-  final TextEditingController aboutController =
-  TextEditingController(
-    text:
-    "Senior React Developer with a passion for clean code and responsive interfaces.",
-  );
-
-  final TextEditingController educationController =
-  TextEditingController(
-    text: "B.Tech in Computer Science",
-  );
-
-  final TextEditingController experienceController =
-  TextEditingController(
-    text: "4 years",
-  );
-
-  final TextEditingController certificationController =
-  TextEditingController(
-    text: "AWS Certified Cloud Practitioner",
-  );
-
-  final TextEditingController projectsController =
-  TextEditingController(
-    text: "E-Commerce React PWA",
-  );
-
-  final TextEditingController languagesController =
-  TextEditingController(
-    text: "English, Hindi",
-  );
+  late TextEditingController nameController;
+  late TextEditingController emailController;
+  late TextEditingController mobileController;
+  late TextEditingController locationController;
+  late TextEditingController dobController;
+  late TextEditingController aboutController;
+  late TextEditingController educationController;
+  late TextEditingController experienceController;
+  late TextEditingController certificationController;
+  late TextEditingController projectController;
+  late TextEditingController languageController;
 
   String gender = "Male";
+
+  // ============================================================
+  // INIT STATE
+  // ============================================================
+
+  @override
+  void initState() {
+    super.initState();
+
+    // IMPORTANT:
+    // Don't use ref.watch() inside initState().
+    // Use ref.read().
+
+    final profile = ref.read(profileProvider);
+
+    nameController =
+        TextEditingController(text: profile.fullName);
+
+    emailController =
+        TextEditingController(text: profile.email);
+
+    mobileController =
+        TextEditingController(text: profile.mobile);
+
+    locationController =
+        TextEditingController(text: profile.location);
+
+    dobController =
+        TextEditingController(text: profile.dateOfBirth);
+
+    aboutController =
+        TextEditingController(text: profile.aboutMe);
+
+    educationController =
+        TextEditingController(text: profile.education);
+
+    experienceController =
+        TextEditingController(text: profile.experience);
+
+    certificationController =
+        TextEditingController(
+          text: profile.certifications,
+        );
+
+    projectController =
+        TextEditingController(text: profile.projects);
+
+    languageController =
+        TextEditingController(text: profile.languages);
+
+    gender = profile.gender;
+  }
 
   // ============================================================
   // DISPOSE
@@ -81,8 +103,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
     educationController.dispose();
     experienceController.dispose();
     certificationController.dispose();
-    projectsController.dispose();
-    languagesController.dispose();
+    projectController.dispose();
+    languageController.dispose();
 
     super.dispose();
   }
@@ -109,6 +131,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
     }
   }
 
+  // ============================================================
+  // MONTH NAME
+  // ============================================================
+
   String monthName(int month) {
     const months = [
       "",
@@ -130,10 +156,34 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   // ============================================================
-  // SAVE
+  // SAVE CHANGES
   // ============================================================
 
   void saveChanges() {
+    final currentProfile = ref.read(profileProvider);
+
+    // Send edited data to StateNotifier
+    ref.read(profileProvider.notifier).updateProfile(
+      fullName: nameController.text.trim(),
+      email: emailController.text.trim(),
+      mobile: mobileController.text.trim(),
+      location: locationController.text.trim(),
+      dateOfBirth: dobController.text.trim(),
+      gender: gender,
+      aboutMe: aboutController.text.trim(),
+      education: educationController.text.trim(),
+      experience: experienceController.text.trim(),
+      technicalSkills:
+      currentProfile.technicalSkills,
+      certifications:
+      certificationController.text.trim(),
+      projects:
+      projectController.text.trim(),
+      languages:
+      languageController.text.trim(),
+      resume: currentProfile.resume,
+    );
+
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text(
@@ -141,6 +191,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
         ),
       ),
     );
+
+    // Go back to Profile page
+    Navigator.pop(context);
   }
 
   // ============================================================
@@ -156,9 +209,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
         child: Column(
           children: [
 
-            // ======================================================
+            // ==================================================
             // HEADER
-            // ======================================================
+            // ==================================================
 
             Container(
               height: 58,
@@ -166,7 +219,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
               decoration: BoxDecoration(
                 color: backgroundColor,
-
                 border: const Border(
                   bottom: BorderSide(
                     color: Color(0xFFE3E3E3),
@@ -178,6 +230,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               child: Row(
                 children: [
 
+                  // BACK BUTTON
                   IconButton(
                     onPressed: () {
                       Navigator.pop(context);
@@ -190,6 +243,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     ),
                   ),
 
+                  // TITLE
                   Text(
                     "Edit Profile",
                     style: TextStyle(
@@ -201,20 +255,26 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                   const Spacer(),
 
+                  // TOP AVATAR
                   InkWell(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                          const HomePage(),
+                        ),
+                      );
                     },
+
                     child: Container(
                       width: 29,
                       height: 29,
 
-                      margin: const EdgeInsets.only(
-                        right: 11,
-                      ),
+                      margin:
+                      const EdgeInsets.only(right: 11),
 
-                      decoration:
-                      BoxDecoration(
+                      decoration: BoxDecoration(
                         color: avatarColor,
                         shape: BoxShape.circle,
                       ),
@@ -235,9 +295,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
             ),
 
-            // ======================================================
+            // ==================================================
             // SCROLLABLE CONTENT
-            // ======================================================
+            // ==================================================
 
             Expanded(
               child: SingleChildScrollView(
@@ -281,9 +341,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                     children: [
 
-                      // =================================================
-                      // AVATAR
-                      // =================================================
+                      // ==================================================
+                      // PROFILE IMAGE
+                      // ==================================================
 
                       Center(
                         child: Stack(
@@ -303,8 +363,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 BoxShape.circle,
                               ),
 
-                              child:
-                              const Center(
+                              child: const Center(
                                 child: Text(
                                   "RS",
                                   style:
@@ -313,13 +372,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     Colors.white,
                                     fontSize: 24,
                                     fontWeight:
-                                    FontWeight
-                                        .w700,
+                                    FontWeight.w700,
                                   ),
                                 ),
                               ),
                             ),
 
+                            // CAMERA ICON
                             Positioned(
                               right: -2,
                               bottom: -2,
@@ -329,16 +388,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 height: 24,
 
                                 decoration:
-                                 BoxDecoration(
-                                  color: blueColor,
+                                BoxDecoration(
+                                  color:
+                                  blueColor,
                                   shape:
                                   BoxShape.circle,
                                 ),
 
-                                child:
-                                const Icon(
-                                  Icons
-                                      .camera_alt,
+                                child: const Icon(
+                                  Icons.camera_alt,
                                   size: 13,
                                   color:
                                   Colors.white,
@@ -351,9 +409,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                       const SizedBox(height: 19),
 
-                      // =================================================
+                      // ==================================================
                       // FULL NAME
-                      // =================================================
+                      // ==================================================
 
                       const FormLabel(
                         text: "Full Name",
@@ -368,9 +426,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                       const SizedBox(height: 15),
 
-                      // =================================================
+                      // ==================================================
                       // EMAIL
-                      // =================================================
+                      // ==================================================
 
                       const FormLabel(
                         text: "Email Address",
@@ -387,9 +445,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                       const SizedBox(height: 15),
 
-                      // =================================================
+                      // ==================================================
                       // MOBILE
-                      // =================================================
+                      // ==================================================
 
                       const FormLabel(
                         text: "Mobile Number",
@@ -406,9 +464,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                       const SizedBox(height: 15),
 
-                      // =================================================
+                      // ==================================================
                       // LOCATION
-                      // =================================================
+                      // ==================================================
 
                       const FormLabel(
                         text: "Location",
@@ -423,9 +481,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                       const SizedBox(height: 15),
 
-                      // =================================================
+                      // ==================================================
                       // DATE OF BIRTH
-                      // =================================================
+                      // ==================================================
 
                       const FormLabel(
                         text: "Date of Birth",
@@ -436,7 +494,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       ProfileTextField(
                         controller:
                         dobController,
-
                         readOnly: true,
 
                         suffixIcon:
@@ -455,9 +512,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                       const SizedBox(height: 15),
 
-                      // =================================================
+                      // ==================================================
                       // GENDER
-                      // =================================================
+                      // ==================================================
 
                       const FormLabel(
                         text: "Gender",
@@ -492,26 +549,22 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         child:
                         DropdownButtonHideUnderline(
                           child:
-                          DropdownButton<
-                              String>(
+                          DropdownButton<String>(
                             value: gender,
 
                             isExpanded: true,
 
-                            icon:
-                            const Icon(
+                            icon: const Icon(
                               Icons
                                   .keyboard_arrow_down,
                               size: 21,
-                              color: Color(
-                                  0xFF697383),
+                              color:
+                              Color(0xFF697383),
                             ),
 
-                            style:
-                            TextStyle(
+                            style: TextStyle(
                               fontSize: 13,
-                              color:
-                              textColor,
+                              color: textColor,
                             ),
 
                             items: const [
@@ -520,17 +573,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 child:
                                 Text("Male"),
                               ),
+
                               DropdownMenuItem(
                                 value: "Female",
                                 child:
-                                Text(
-                                    "Female"),
+                                Text("Female"),
                               ),
+
                               DropdownMenuItem(
                                 value: "Other",
                                 child:
-                                Text(
-                                    "Other"),
+                                Text("Other"),
                               ),
                             ],
 
@@ -550,9 +603,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                       const SizedBox(height: 15),
 
-                      // =================================================
+                      // ==================================================
                       // ABOUT ME
-                      // =================================================
+                      // ==================================================
 
                       const FormLabel(
                         text: "About Me",
@@ -568,9 +621,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                       const SizedBox(height: 15),
 
-                      // =================================================
+                      // ==================================================
                       // EDUCATION
-                      // =================================================
+                      // ==================================================
 
                       const FormLabel(
                         text: "Education",
@@ -585,9 +638,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                       const SizedBox(height: 15),
 
-                      // =================================================
+                      // ==================================================
                       // EXPERIENCE
-                      // =================================================
+                      // ==================================================
 
                       const FormLabel(
                         text: "Experience",
@@ -602,9 +655,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                       const SizedBox(height: 15),
 
-                      // =================================================
+                      // ==================================================
                       // TECHNICAL SKILLS
-                      // =================================================
+                      // ==================================================
 
                       const FormLabel(
                         text: "Technical Skills",
@@ -612,40 +665,38 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                       const SizedBox(height: 8),
 
-                      const Column(
-                        children: [
-                          Row(
-                            children: [
-                              SkillChip(
-                                text: "React",
-                              ),SizedBox(width: 5,),
-                              SkillChip(
-                                text: "JavaScript",
-                              ),SizedBox(width: 5,),
-                              SkillChip(
-                                text: "TypeScript",
-                              ),SizedBox(width: 5,),
-                            ],
+                      Wrap(
+                        spacing: 6,
+                        runSpacing: 8,
+
+                        children: const [
+                          SkillChip(
+                            text: "React",
                           ),
-                          SizedBox(height: 10,),
-                          Row(
-                            children: [
-                              SkillChip(
-                                text: "Node.js",
-                              ),SizedBox(width: 5,),
-                              SkillChip(
-                                text: "Python",
-                              ),SizedBox(width: 5,),
-                            ],
-                          )
+
+                          SkillChip(
+                            text: "JavaScript",
+                          ),
+
+                          SkillChip(
+                            text: "TypeScript",
+                          ),
+
+                          SkillChip(
+                            text: "Node.js",
+                          ),
+
+                          SkillChip(
+                            text: "Python",
+                          ),
                         ],
                       ),
 
                       const SizedBox(height: 16),
 
-                      // =================================================
+                      // ==================================================
                       // CERTIFICATIONS
-                      // =================================================
+                      // ==================================================
 
                       const FormLabel(
                         text: "Certifications",
@@ -660,9 +711,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                       const SizedBox(height: 15),
 
-                      // =================================================
+                      // ==================================================
                       // PROJECTS
-                      // =================================================
+                      // ==================================================
 
                       const FormLabel(
                         text: "Projects",
@@ -672,14 +723,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                       ProfileTextField(
                         controller:
-                        projectsController,
+                        projectController,
                       ),
 
                       const SizedBox(height: 15),
 
-                      // =================================================
+                      // ==================================================
                       // LANGUAGES
-                      // =================================================
+                      // ==================================================
 
                       const FormLabel(
                         text: "Languages",
@@ -689,14 +740,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                       ProfileTextField(
                         controller:
-                        languagesController,
+                        languageController,
                       ),
 
                       const SizedBox(height: 15),
 
-                      // =================================================
+                      // ==================================================
                       // RESUME
-                      // =================================================
+                      // ==================================================
 
                       const FormLabel(
                         text: "Resume",
@@ -707,6 +758,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       Row(
                         children: [
 
+                          // UPLOAD
                           Expanded(
                             child: SizedBox(
                               height: 36,
@@ -734,7 +786,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   blueColor,
 
                                   side:
-                                   BorderSide(
+                                  BorderSide(
                                     color:
                                     blueColor,
                                   ),
@@ -749,7 +801,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   ),
 
                                   padding:
-                                  EdgeInsets.zero,
+                                  EdgeInsets
+                                      .zero,
 
                                   textStyle:
                                   const TextStyle(
@@ -765,6 +818,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                           const SizedBox(width: 10),
 
+                          // DOWNLOAD
                           Expanded(
                             child: SizedBox(
                               height: 36,
@@ -794,7 +848,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   const BorderSide(
                                     color:
                                     Color(
-                                        0xFF7A818C),
+                                      0xFF7A818C,
+                                    ),
                                   ),
 
                                   shape:
@@ -807,7 +862,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   ),
 
                                   padding:
-                                  EdgeInsets.zero,
+                                  EdgeInsets
+                                      .zero,
 
                                   textStyle:
                                   const TextStyle(
@@ -825,31 +881,41 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                       const SizedBox(height: 28),
 
-                      // =================================================
+                      // ==================================================
                       // SAVE CHANGES
-                      // =================================================
+                      // ==================================================
 
                       SizedBox(
                         width: double.infinity,
                         height: 40,
 
-                        child: ElevatedButton(
+                        child:
+                        ElevatedButton(
                           onPressed:
                           saveChanges,
 
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: blueColor,
-                            foregroundColor: Colors.white,
+                          style:
+                          ElevatedButton
+                              .styleFrom(
+                            backgroundColor:
+                            blueColor,
+
+                            foregroundColor:
+                            Colors.white,
 
                             elevation: 0,
 
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(7,),
+                            shape:
+                            RoundedRectangleBorder(
+                              borderRadius:
+                              BorderRadius
+                                  .circular(7),
                             ),
                           ),
 
                           child: const Text(
                             "Save Changes",
+
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight:
@@ -861,14 +927,21 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                       const SizedBox(height: 18),
 
-                      // =================================================
+                      // ==================================================
                       // CHANGE PASSWORD
-                      // =================================================
+                      // ==================================================
 
                       Center(
                         child: TextButton(
                           onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>ChangePasswordPage()));
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder:
+                                    (context) =>
+                                const ChangePasswordPage(),
+                              ),
+                            );
                           },
 
                           style:
@@ -884,8 +957,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 .shrinkWrap,
                           ),
 
-                          child:  Text(
+                          child: Text(
                             "Change Password",
+
                             style: TextStyle(
                               fontSize: 13,
                               fontWeight:
@@ -907,7 +981,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 }
-
 
 // ================================================================
 // FORM LABEL
@@ -934,7 +1007,6 @@ class FormLabel extends StatelessWidget {
     );
   }
 }
-
 
 // ================================================================
 // TEXT FIELD
@@ -1022,7 +1094,6 @@ class ProfileTextField extends StatelessWidget {
     );
   }
 }
-
 
 // ================================================================
 // SKILL CHIP

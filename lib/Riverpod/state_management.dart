@@ -1,4 +1,0 @@
-// User Panel
-
-// Search jobs
-
