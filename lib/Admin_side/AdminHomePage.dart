@@ -1,580 +1,674 @@
 import 'package:flutter/material.dart';
+import '../references/reference.dart';
+import 'admin_profile.dart';
 
-void main() {
-  runApp(const HireHubApp());
-}
-
-class HireHubApp extends StatelessWidget {
-  const HireHubApp({super.key});
+class AdminDashboard extends StatelessWidget {
+  const AdminDashboard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-        fontFamily: 'Arial',
-      ),
-      home: const AdminHomePage(),
-    );
-  }
-}
+    return DefaultTabController(
+      length: 4,
+      child: Scaffold(
+        backgroundColor: backgroundColor,
 
-class AdminHomePage extends StatefulWidget {
-  const AdminHomePage({super.key});
+        // ==============================
+        // APP BAR
+        // ==============================
+        appBar: AppBar(
+          backgroundColor: backgroundColor,
+          elevation: 0,
+          surfaceTintColor: Colors.transparent,
 
-  @override
-  State<AdminHomePage> createState() => _AdminHomePageState();
-}
+          title: Text(
+            "HireHub Portal",
+            style: TextStyle(
+              color: textColor,
+              fontSize: fontSize,
+              fontWeight: fontweight,
+            ),
+          ),
 
-class _AdminHomePageState extends State<AdminHomePage> {
-  int selectedIndex = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      // NO BLUE BACKGROUND
-      backgroundColor: const Color(0xFFFAF8F4),
-
-      body: SafeArea(
-        child: Column(
-          children: [
-            // ============================================================
-            // HEADER
-            // ============================================================
-            Container(
-              height: 58,
-              width: double.infinity,
-              color: Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 18),
-              child: Row(
-                children: [
-                  const Text(
-                    'HireHub Portal',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xFF202B3C),
-                    ),
-                  ),
-
-                  const Spacer(),
-
-                  Icon(
-                    Icons.notifications_none_rounded,
-                    size: 24,
-                    color: Colors.grey.shade600,
-                  ),
-
-                  const SizedBox(width: 14),
-
-                  Container(
-                    width: 32,
-                    height: 32,
-                    decoration: const BoxDecoration(
-                      color: Color(0xFF315B70),
-                      shape: BoxShape.circle,
-                    ),
-                    alignment: Alignment.center,
-                    child: const Text(
-                      'SA',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 11,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ],
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.notifications_none_rounded,
+                color: greyColor,
+                size: 24,
               ),
             ),
 
-            Container(
-              height: 1,
-              color: const Color(0xFFE7E7E7),
-            ),
+            const SizedBox(width: 4),
 
-            // ============================================================
-            // MAIN CONTENT
-            // ============================================================
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(
-                    18,
-                    18,
-                    18,
-                    18,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Welcome
-                      const Text(
-                        'Welcome back, Admin!',
-                        style: TextStyle(
-                          fontSize: 21,
-                          fontWeight: FontWeight.w700,
-                          color: Color(0xFF182235),
-                        ),
-                      ),
-
-                      const SizedBox(height: 5),
-
-                      const Text(
-                        'Portal health and live overview for today.',
-                        style: TextStyle(
-                          fontSize: 13,
-                          color: Color(0xFF777777),
-                        ),
-                      ),
-
-                      const SizedBox(height: 16),
-
-                      // ==================================================
-                      // STATISTICS ROW 1
-                      // ==================================================
-                      Row(
-                        children: [
-                          Expanded(
-                            child: _statCard(
-                              icon: Icons.person_outline_rounded,
-                              iconColor: const Color(0xFF4D8BFF),
-                              iconBackground: const Color(0xFFEAF2FF),
-                              title: 'Total Users',
-                              value: '2,847',
-                            ),
-                          ),
-
-                          const SizedBox(width: 12),
-
-                          Expanded(
-                            child: _statCard(
-                              icon: Icons.business_center_outlined,
-                              iconColor: const Color(0xFF31C89A),
-                              iconBackground: const Color(0xFFE8FAF5),
-                              title: 'Employers',
-                              value: '456',
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(height: 12),
-
-                      // ==================================================
-                      // STATISTICS ROW 2
-                      // ==================================================
-                      Row(
-                        children: [
-                          Expanded(
-                            child: _statCard(
-                              icon: Icons.business_center_outlined,
-                              iconColor: const Color(0xFFFFA500),
-                              iconBackground: const Color(0xFFFFF3DD),
-                              title: 'Total Jobs',
-                              value: '1,234',
-                            ),
-                          ),
-
-                          const SizedBox(width: 12),
-
-                          Expanded(
-                            child: _statCard(
-                              icon: Icons.description_outlined,
-                              iconColor: const Color(0xFFFF6B6B),
-                              iconBackground: const Color(0xFFFFEAEA),
-                              title: 'Applications',
-                              value: '8,912',
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(height: 16),
-
-                      // ==================================================
-                      // QUICK ACTIONS
-                      // ==================================================
-                      _sectionCard(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Quick Actions',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w700,
-                                color: Color(0xFF283345),
-                              ),
-                            ),
-
-                            const SizedBox(height: 12),
-
-                            Wrap(
-                              spacing: 8,
-                              runSpacing: 8,
-                              children: [
-                                _actionButton(
-                                  title: 'Verify Employer',
-                                  filled: true,
-                                ),
-
-                                _actionButton(
-                                  title: 'Review Jobs',
-                                  filled: false,
-                                ),
-
-                                _actionButton(
-                                  title: 'System Audit',
-                                  filled: false,
-                                  grey: true,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      const SizedBox(height: 16),
-
-                      // ==================================================
-                      // RECENT ACTIVITIES
-                      // ==================================================
-                      _sectionCard(
-                        padding: const EdgeInsets.fromLTRB(
-                          15,
-                          15,
-                          15,
-                          8,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Recent Activities',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w700,
-                                color: Color(0xFF283345),
-                              ),
-                            ),
-
-                            const SizedBox(height: 9),
-
-                            _activity(
-                              title:
-                              'New employer: Tech Mahindra (Awaiting verification)',
-                              time: '10 mins ago',
-                            ),
-
-                            _activity(
-                              title:
-                              "Job post approved: 'Lead React Developer' at TCS",
-                              time: '1 hour ago',
-                            ),
-
-                            _activity(
-                              title:
-                              'User registered: Sneha Gupta (sneha@email.com)',
-                              time: '3 hours ago',
-                              last: true,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+            InkWell(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>MyProfilePage()));
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(right: 14),
+                child: CircleAvatar(
+                  radius: 16,
+                  backgroundColor: avatarColor,
+                  child: const Text(
+                    "SA",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
             ),
+          ],
+        ),
 
-            // ============================================================
-            // BOTTOM NAVIGATION
-            // ============================================================
-            Container(
-              height: 64,
-              width: double.infinity,
-              color: const Color(0xFF172C4D),
-              child: Row(
-                children: [
-                  _bottomItem(
-                    icon: Icons.grid_view_rounded,
-                    title: 'Dashboard',
-                    index: 0,
+        // ==============================
+        // BODY
+        // ==============================
+        body: const TabBarView(
+          physics: NeverScrollableScrollPhysics(),
+          children: [
+            DashboardTab(),
+           /* UsersTab(),
+            EmployersTab(),
+            CompaniesTab(),*/
+          ],
+        ),
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+            color: bottomColor,
+            border: Border(
+              top: BorderSide(
+                color: borderColor,
+                width: 0.5,
+              ),
+            ),
+          ),
+          child: SafeArea(
+            child: TabBar(
+              indicator: BoxDecoration(
+                color: avatarColor,
+                borderRadius: BorderRadius.circular(8),
+              ),
+
+              indicatorSize: TabBarIndicatorSize.tab,
+
+              indicatorPadding: const EdgeInsets.symmetric(
+                horizontal: 8,
+                vertical: 5,
+              ),
+
+              labelColor: Colors.white,
+              unselectedLabelColor: Colors.white70,
+
+              labelStyle: const TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.w600,
+              ),
+
+              unselectedLabelStyle: const TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.w400,
+              ),
+
+              tabs: const [
+                Tab(
+                  icon: Icon(
+                    Icons.dashboard_outlined,
+                    size: 21,
                   ),
+                  text: "Dashboard",
+                ),
 
-                  _bottomItem(
+                Tab(
+                  icon: Icon(
+                    Icons.person_outline_rounded,
+                    size: 21,
+                  ),
+                  text: "Users",
+                ),
+
+                Tab(
+                  icon: Icon(
+                    Icons.business_center_outlined,
+                    size: 21,
+                  ),
+                  text: "Employers",
+                ),
+
+                Tab(
+                  icon: Icon(
+                    Icons.business_outlined,
+                    size: 21,
+                  ),
+                  text: "Companies",
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// ============================================================
+// DASHBOARD TAB
+// ============================================================
+
+class DashboardTab extends StatelessWidget {
+  const DashboardTab({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(14, 12, 14, 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+
+            // ==============================
+            // WELCOME
+            // ==============================
+
+            Text(
+              "Welcome back, Admin!",
+              style: TextStyle(
+                color: textColor,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            const SizedBox(height: 3),
+
+            Text(
+              "Portal health and live overview for today.",
+              style: TextStyle(
+                color: greyColor,
+                fontSize: 12,
+              ),
+            ),
+
+            const SizedBox(height: 14),
+
+            // ==============================
+            // STAT CARDS
+            // ==============================
+
+            Row(
+              children: [
+                Expanded(
+                  child: _StatCard(
+                    title: "Total Users",
+                    value: "2,847",
                     icon: Icons.person_outline_rounded,
-                    title: 'Users',
-                    index: 1,
+                    iconBackground: chipColor,
+                    iconColor: blueColor,
                   ),
+                ),
 
-                  _bottomItem(
+                const SizedBox(width: 10),
+
+                Expanded(
+                  child: _StatCard(
+                    title: "Employers",
+                    value: "456",
                     icon: Icons.business_center_outlined,
-                    title: 'Employers',
-                    index: 2,
+                    iconBackground: const Color(0xFFE8F9F2),
+                    iconColor: const Color(0xFF16A979),
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 10),
+
+            Row(
+              children: [
+                Expanded(
+                  child: _StatCard(
+                    title: "Total Jobs",
+                    value: "1,234",
+                    icon: Icons.work_outline_rounded,
+                    iconBackground: const Color(0xFFFFF5E5),
+                    iconColor: const Color(0xFFF59E0B),
+                  ),
+                ),
+
+                const SizedBox(width: 10),
+
+                Expanded(
+                  child: _StatCard(
+                    title: "Applications",
+                    value: "8,912",
+                    icon: Icons.description_outlined,
+                    iconBackground: const Color(0xFFFFEEEE),
+                    iconColor: redColor,
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 14),
+
+            // ==============================
+            // QUICK ACTIONS
+            // ==============================
+
+            _SectionContainer(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+
+                  Text(
+                    "Quick Actions",
+                    style: TextStyle(
+                      color: textColor,
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
 
-                  _bottomItem(
-                    icon: Icons.business_outlined,
-                    title: 'Companies',
-                    index: 3,
+                  const SizedBox(height: 10),
+
+                  Row(
+                    children: [
+
+                      Expanded(
+                        child: _ActionButton(
+                          title: "Verify Employer",
+                          filled: true,
+                          onTap: () {},
+                        ),
+                      ),
+
+                      const SizedBox(width: 7),
+
+                      Expanded(
+                        child: _ActionButton(
+                          title: "Review Jobs",
+                          filled: false,
+                          onTap: () {},
+                        ),
+                      ),
+
+                      const SizedBox(width: 7),
+
+                      Expanded(
+                        child: _ActionButton(
+                          title: "System Audit",
+                          filled: false,
+                          onTap: () {},
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
+
+            const SizedBox(height: 14),
+
+            // ==============================
+            // RECENT ACTIVITIES
+            // ==============================
+
+            _SectionContainer(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+
+                  Text(
+                    "Recent Activities",
+                    style: TextStyle(
+                      color: textColor,
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                  const SizedBox(height: 5),
+
+                  _ActivityItem(
+                    title:
+                    "New employer: Tech Mahindra (Awaiting verification)",
+                    time: "10 mins ago",
+                  ),
+
+                  _ActivityItem(
+                    title:
+                    "Job post approved: 'Lead React Developer' at TCS",
+                    time: "1 hour ago",
+                  ),
+
+                  _ActivityItem(
+                    title:
+                    "User registered: Sneha Gupta (sneha@email.com)",
+                    time: "3 hours ago",
+                    showDivider: false,
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 10),
           ],
         ),
       ),
     );
   }
+}
 
-  // ================================================================
-  // STAT CARD
-  // ================================================================
+// ============================================================
+// STAT CARD
+// ============================================================
 
-  Widget _statCard({
-    required IconData icon,
-    required Color iconColor,
-    required Color iconBackground,
-    required String title,
-    required String value,
-  }) {
+class _StatCard extends StatelessWidget {
+  final String title;
+  final String value;
+  final IconData icon;
+  final Color iconBackground;
+  final Color iconColor;
+
+  const _StatCard({
+    required this.title,
+    required this.value,
+    required this.icon,
+    required this.iconBackground,
+    required this.iconColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      height: 70,
-      padding: const EdgeInsets.symmetric(horizontal: 12),
+      height: 76,
+      padding: const EdgeInsets.all(10),
+
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(9),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: const Color(0xFFE5E5E5),
+          color: borderColor,
+          width: 1,
         ),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x08000000),
-            blurRadius: 4,
-            offset: Offset(0, 1),
-          ),
-        ],
       ),
+
       child: Row(
         children: [
+
           Container(
-            width: 38,
             height: 38,
+            width: 38,
+
             decoration: BoxDecoration(
               color: iconBackground,
               shape: BoxShape.circle,
             ),
+
             child: Icon(
               icon,
               color: iconColor,
-              size: 20,
+              size: 19,
             ),
           ),
 
-          const SizedBox(width: 10),
+          const SizedBox(width: 9),
 
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 11,
-                  color: Color(0xFF7A8088),
-                ),
-              ),
-
-              const SizedBox(height: 2),
-
-              Text(
-                value,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                  color: Color(0xFF273144),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  // ================================================================
-  // SECTION CARD
-  // ================================================================
-
-  Widget _sectionCard({
-    required Widget child,
-    EdgeInsets padding = const EdgeInsets.all(15),
-  }) {
-    return Container(
-      width: double.infinity,
-      padding: padding,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(9),
-        border: Border.all(
-          color: const Color(0xFFE5E5E5),
-        ),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x06000000),
-            blurRadius: 4,
-            offset: Offset(0, 1),
-          ),
-        ],
-      ),
-      child: child,
-    );
-  }
-
-  // ================================================================
-  // ACTION BUTTON
-  // ================================================================
-
-  Widget _actionButton({
-    required String title,
-    required bool filled,
-    bool grey = false,
-  }) {
-    return Container(
-      height: 31,
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      decoration: BoxDecoration(
-        color: filled
-            ? const Color(0xFF2D6BEA)
-            : grey
-            ? const Color(0xFFF1F3F5)
-            : Colors.white,
-        borderRadius: BorderRadius.circular(5),
-        border: filled
-            ? null
-            : Border.all(
-          color: grey
-              ? const Color(0xFFE4E6E8)
-              : const Color(0xFF4A83F4),
-        ),
-      ),
-      alignment: Alignment.center,
-      child: Text(
-        title,
-        style: TextStyle(
-          fontSize: 11,
-          fontWeight: FontWeight.w600,
-          color: filled
-              ? Colors.white
-              : grey
-              ? const Color(0xFF4E5968)
-              : const Color(0xFF3B76E8),
-        ),
-      ),
-    );
-  }
-
-  // ================================================================
-  // ACTIVITY
-  // ================================================================
-
-  Widget _activity({
-    required String title,
-    required String time,
-    bool last = false,
-  }) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      decoration: BoxDecoration(
-        border: last
-            ? null
-            : const Border(
-          bottom: BorderSide(
-            color: Color(0xFFE5E5E5),
-          ),
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              color: Color(0xFF303A4B),
-            ),
-          ),
-
-          const SizedBox(height: 4),
-
-          Text(
-            time,
-            style: const TextStyle(
-              fontSize: 10,
-              color: Color(0xFF8A8F97),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // ================================================================
-  // BOTTOM NAVIGATION
-  // ================================================================
-
-  Widget _bottomItem({
-    required IconData icon,
-    required String title,
-    required int index,
-  }) {
-    final bool selected = selectedIndex == index;
-
-    return Expanded(
-      child: GestureDetector(
-        onTap: () {
-          setState(() {
-            selectedIndex = index;
-          });
-        },
-        child: Center(
-          child: Container(
-            width: 80,
-            height: 48,
-            decoration: BoxDecoration(
-              color: selected
-                  ? const Color(0xFF315B70)
-                  : Colors.transparent,
-              borderRadius: BorderRadius.circular(7),
-            ),
+          Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(
-                  icon,
-                  size: 20,
-                  color: Colors.white,
-                ),
-
-                const SizedBox(height: 3),
 
                 Text(
                   title,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 9,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: greyColor,
+                    fontSize: 10,
+                  ),
+                ),
+
+                const SizedBox(height: 2),
+
+                Text(
+                  value,
+                  style: TextStyle(
+                    color: textColor,
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
             ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ============================================================
+// SECTION CONTAINER
+// ============================================================
+
+class _SectionContainer extends StatelessWidget {
+  final Widget child;
+
+  const _SectionContainer({
+    required this.child,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+
+      padding: const EdgeInsets.all(12),
+
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          color: borderColor,
+          width: 1,
+        ),
+      ),
+
+      child: child,
+    );
+  }
+}
+
+// ============================================================
+// ACTION BUTTON
+// ============================================================
+
+class _ActionButton extends StatelessWidget {
+  final String title;
+  final bool filled;
+  final VoidCallback onTap;
+
+  const _ActionButton({
+    required this.title,
+    required this.filled,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 38,
+      child: OutlinedButton(
+        onPressed: onTap,
+
+        style: OutlinedButton.styleFrom(
+          backgroundColor: filled ? blueColor : Colors.white,
+
+          foregroundColor: filled ? Colors.white : blueColor,
+
+          side: BorderSide(
+            color: filled ? blueColor : blueColor,
+          ),
+
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(6),
+          ),
+
+          padding: const EdgeInsets.symmetric(
+            horizontal: 5,
+          ),
+        ),
+
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            title,
+            style: const TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// ============================================================
+// ACTIVITY ITEM
+// ============================================================
+
+class _ActivityItem extends StatelessWidget {
+  final String title;
+  final String time;
+  final bool showDivider;
+
+  const _ActivityItem({
+    required this.title,
+    required this.time,
+    this.showDivider = true,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 9,
+          ),
+
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+
+              Text(
+                title,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+
+                style: TextStyle(
+                  color: textColor,
+                  fontSize: 11,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+
+              const SizedBox(height: 3),
+
+              Text(
+                time,
+                style: TextStyle(
+                  color: greyColor,
+                  fontSize: 9,
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        if (showDivider)
+          Divider(
+            height: 1,
+            thickness: 0.7,
+            color: borderColor,
+          ),
+      ],
+    );
+  }
+}
+
+// ============================================================
+// SIMPLE TAB PAGE
+// ============================================================
+
+class _SimpleTabPage extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String subtitle;
+
+  const _SimpleTabPage({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+
+              Container(
+                height: 70,
+                width: 70,
+
+                decoration: BoxDecoration(
+                  color: chipColor,
+                  shape: BoxShape.circle,
+                ),
+
+                child: Icon(
+                  icon,
+                  color: blueColor,
+                  size: 32,
+                ),
+              ),
+
+              const SizedBox(height: 15),
+
+              Text(
+                title,
+                style: TextStyle(
+                  color: textColor,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+
+              const SizedBox(height: 5),
+
+              Text(
+                subtitle,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: greyColor,
+                  fontSize: 13,
+                ),
+              ),
+            ],
           ),
         ),
       ),
