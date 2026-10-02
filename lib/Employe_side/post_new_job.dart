@@ -348,7 +348,7 @@ class _PostNewJobPageState extends State<PostNewJobPage> {
         children: [
           InkWell(
               onTap: (){
-                // Navigator.push(context, MaterialPageRoute(builder: (context)=>employehomepage()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>EmployeeHomePage()));
               }, child: Icon(Icons.arrow_circle_left)),
           SizedBox(width: 10,),
           Expanded(
@@ -388,8 +388,8 @@ class _PostNewJobPageState extends State<PostNewJobPage> {
 
           // Profile circle
           Container(
-            width: 29,
-            height: 29,
+            width: profileSize,
+            height: profileSize,
             decoration: BoxDecoration(
               color: bottomColor,
               shape: BoxShape.circle,

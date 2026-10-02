@@ -50,40 +50,27 @@ class _EditProfilePageState
 
     final profile = ref.read(profileProvider);
 
-    nameController =
-        TextEditingController(text: profile.fullName);
+    nameController = TextEditingController(text: profile.fullName);
 
-    emailController =
-        TextEditingController(text: profile.email);
+    emailController = TextEditingController(text: profile.email);
 
-    mobileController =
-        TextEditingController(text: profile.mobile);
+    mobileController = TextEditingController(text: profile.mobile);
 
-    locationController =
-        TextEditingController(text: profile.location);
+    locationController = TextEditingController(text: profile.location);
 
-    dobController =
-        TextEditingController(text: profile.dateOfBirth);
+    dobController = TextEditingController(text: profile.dateOfBirth);
 
-    aboutController =
-        TextEditingController(text: profile.aboutMe);
+    aboutController = TextEditingController(text: profile.aboutMe);
 
-    educationController =
-        TextEditingController(text: profile.education);
+    educationController = TextEditingController(text: profile.education);
 
-    experienceController =
-        TextEditingController(text: profile.experience);
+    experienceController = TextEditingController(text: profile.experience);
 
-    certificationController =
-        TextEditingController(
-          text: profile.certifications,
-        );
+    certificationController = TextEditingController(text: profile.certifications,);
 
-    projectController =
-        TextEditingController(text: profile.projects);
+    projectController = TextEditingController(text: profile.projects);
 
-    languageController =
-        TextEditingController(text: profile.languages);
+    languageController = TextEditingController(text: profile.languages);
 
     gender = profile.gender;
   }
@@ -420,8 +407,7 @@ class _EditProfilePageState
                       const SizedBox(height: 6),
 
                       ProfileTextField(
-                        controller:
-                        nameController,
+                        controller: nameController,
                       ),
 
                       const SizedBox(height: 15),
@@ -437,10 +423,8 @@ class _EditProfilePageState
                       const SizedBox(height: 6),
 
                       ProfileTextField(
-                        controller:
-                        emailController,
-                        keyboardType:
-                        TextInputType.emailAddress,
+                        controller: emailController,
+                        keyboardType: TextInputType.emailAddress,
                       ),
 
                       const SizedBox(height: 15),

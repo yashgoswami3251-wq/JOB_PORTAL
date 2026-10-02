@@ -38,17 +38,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
   // COMPANY CONTROLLERS
   // ============================================================
 
-  final TextEditingController companyNameController =
-  TextEditingController(text: 'TechSolutions Pvt Ltd');
+  final TextEditingController companyNameController = TextEditingController(text: 'TechSolutions Pvt Ltd');
 
-  final TextEditingController industryController =
-  TextEditingController(text: 'Information Technology');
+  final TextEditingController industryController = TextEditingController(text: 'Information Technology');
 
-  final TextEditingController companySizeController =
-  TextEditingController(text: '250-500 Employees');
+  final TextEditingController companySizeController = TextEditingController(text: '250-500 Employees');
 
-  final TextEditingController companyDescriptionController =
-  TextEditingController(
+  final TextEditingController companyDescriptionController = TextEditingController(
     text:
     'TechSolutions Pvt Ltd is an enterprise-oriented technology consultancy '
         'delivering innovative technology integrations, cognitive processing '

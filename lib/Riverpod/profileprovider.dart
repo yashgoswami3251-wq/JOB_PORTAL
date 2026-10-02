@@ -75,8 +75,7 @@ class UserProfile {
 }
 
 class ProfileNotifier extends StateNotifier<UserProfile> {
-  ProfileNotifier()
-      : super(
+  ProfileNotifier() : super(
     UserProfile(
       fullName: "Yashgiri Gauswami",
       email: "rahul@email.com",
@@ -137,3 +136,16 @@ class ProfileNotifier extends StateNotifier<UserProfile> {
   }
 }
 
+
+/*
+final employeeprofileProvider = StateNotifierProvider(<empprofileNotifier, employeeprofile>(ref){
+  return empprofileNotifier();
+},);
+
+class employeeprofile{
+
+}
+
+class empprofileNotifier extends StateNotifier<employeeprofile>{
+
+}*/
