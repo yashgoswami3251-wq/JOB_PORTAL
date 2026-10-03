@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:job_portal/Admin_side/users.dart';
 import '../references/reference.dart';
 import 'admin_profile.dart';
 
@@ -12,70 +13,26 @@ class AdminDashboard extends StatelessWidget {
       child: Scaffold(
         backgroundColor: backgroundColor,
 
-        // ==============================
-        // APP BAR
-        // ==============================
-        appBar: AppBar(
-          backgroundColor: backgroundColor,
-          elevation: 0,
-          surfaceTintColor: Colors.transparent,
-
-          title: Text(
-            "HireHub Portal",
-            style: TextStyle(
-              color: textColor,
-              fontSize: fontSize,
-              fontWeight: fontweight,
-            ),
-          ),
-
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.notifications_none_rounded,
-                color: greyColor,
-                size: 24,
-              ),
-            ),
-
-            const SizedBox(width: 4),
-
-            InkWell(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>MyProfilePage()));
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(right: 14),
-                child: CircleAvatar(
-                  radius: 16,
-                  backgroundColor: avatarColor,
-                  child: const Text(
-                    "SA",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 11,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-
-        // ==============================
+        // ============================================================
         // BODY
-        // ==============================
+        // ============================================================
+
         body: const TabBarView(
           physics: NeverScrollableScrollPhysics(),
           children: [
             DashboardTab(),
-           /* UsersTab(),
-            EmployersTab(),
-            CompaniesTab(),*/
+            UsersPage(),
+            // Employers page
+            UsersPage(),
+            // Companies page
+            UsersPage(),
           ],
         ),
+
+        // ============================================================
+        // BOTTOM NAVIGATION
+        // ============================================================
+
         bottomNavigationBar: Container(
           decoration: BoxDecoration(
             color: bottomColor,
@@ -86,6 +43,7 @@ class AdminDashboard extends StatelessWidget {
               ),
             ),
           ),
+
           child: SafeArea(
             child: TabBar(
               indicator: BoxDecoration(
@@ -154,218 +112,303 @@ class AdminDashboard extends StatelessWidget {
   }
 }
 
-// ============================================================
+// ====================================================================
 // DASHBOARD TAB
-// ============================================================
+// ====================================================================
 
 class DashboardTab extends StatelessWidget {
   const DashboardTab({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(14, 12, 14, 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+    return Scaffold(
+      backgroundColor: backgroundColor,
 
-            // ==============================
-            // WELCOME
-            // ==============================
+      // ============================================================
+      // DASHBOARD APP BAR
+      // ============================================================
 
-            Text(
-              "Welcome back, Admin!",
-              style: TextStyle(
-                color: textColor,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+      appBar: AppBar(
+        backgroundColor: backgroundColor,
+        elevation: 0,
+        surfaceTintColor: Colors.transparent,
+
+        title: Text(
+          "HireHub Portal",
+          style: TextStyle(
+            color: textColor,
+            fontSize: fontSize,
+            fontWeight: fontweight,
+          ),
+        ),
+
+        actions: [
+          // Notification
+          IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.notifications_none_rounded,
+              color: greyColor,
+              size: 24,
+            ),
+          ),
+
+          const SizedBox(width: 4),
+
+          // Admin Profile
+          InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MyProfilePage(),
+                ),
+              );
+            },
+
+            child: Padding(
+              padding: const EdgeInsets.only(right: 14),
+
+              child: CircleAvatar(
+                radius: 16,
+                backgroundColor: avatarColor,
+
+                child: const Text(
+                  "SA",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 11,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ),
+          ),
+        ],
+      ),
 
-            const SizedBox(height: 3),
+      // ============================================================
+      // DASHBOARD CONTENT
+      // ============================================================
 
-            Text(
-              "Portal health and live overview for today.",
-              style: TextStyle(
-                color: greyColor,
-                fontSize: 12,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.fromLTRB(
+            14,
+            12,
+            14,
+            20,
+          ),
+
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+
+              // ======================================================
+              // WELCOME
+              // ======================================================
+
+              Text(
+                "Welcome back, Admin!",
+                style: TextStyle(
+                  color: textColor,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
 
-            const SizedBox(height: 14),
+              const SizedBox(height: 3),
 
-            // ==============================
-            // STAT CARDS
-            // ==============================
-
-            Row(
-              children: [
-                Expanded(
-                  child: _StatCard(
-                    title: "Total Users",
-                    value: "2,847",
-                    icon: Icons.person_outline_rounded,
-                    iconBackground: chipColor,
-                    iconColor: blueColor,
-                  ),
+              Text(
+                "Portal health and live overview for today.",
+                style: TextStyle(
+                  color: greyColor,
+                  fontSize: 12,
                 ),
+              ),
 
-                const SizedBox(width: 10),
+              const SizedBox(height: 14),
 
-                Expanded(
-                  child: _StatCard(
-                    title: "Employers",
-                    value: "456",
-                    icon: Icons.business_center_outlined,
-                    iconBackground: const Color(0xFFE8F9F2),
-                    iconColor: const Color(0xFF16A979),
-                  ),
-                ),
-              ],
-            ),
+              // ======================================================
+              // STAT CARDS ROW 1
+              // ======================================================
 
-            const SizedBox(height: 10),
-
-            Row(
-              children: [
-                Expanded(
-                  child: _StatCard(
-                    title: "Total Jobs",
-                    value: "1,234",
-                    icon: Icons.work_outline_rounded,
-                    iconBackground: const Color(0xFFFFF5E5),
-                    iconColor: const Color(0xFFF59E0B),
-                  ),
-                ),
-
-                const SizedBox(width: 10),
-
-                Expanded(
-                  child: _StatCard(
-                    title: "Applications",
-                    value: "8,912",
-                    icon: Icons.description_outlined,
-                    iconBackground: const Color(0xFFFFEEEE),
-                    iconColor: redColor,
-                  ),
-                ),
-              ],
-            ),
-
-            const SizedBox(height: 14),
-
-            // ==============================
-            // QUICK ACTIONS
-            // ==============================
-
-            _SectionContainer(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              Row(
                 children: [
 
-                  Text(
-                    "Quick Actions",
-                    style: TextStyle(
-                      color: textColor,
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold,
+                  Expanded(
+                    child: _StatCard(
+                      title: "Total Users",
+                      value: "2,847",
+                      icon: Icons.person_outline_rounded,
+                      iconBackground: chipColor,
+                      iconColor: blueColor,
                     ),
                   ),
 
-                  const SizedBox(height: 10),
+                  const SizedBox(width: 10),
 
-                  Row(
-                    children: [
-
-                      Expanded(
-                        child: _ActionButton(
-                          title: "Verify Employer",
-                          filled: true,
-                          onTap: () {},
-                        ),
-                      ),
-
-                      const SizedBox(width: 7),
-
-                      Expanded(
-                        child: _ActionButton(
-                          title: "Review Jobs",
-                          filled: false,
-                          onTap: () {},
-                        ),
-                      ),
-
-                      const SizedBox(width: 7),
-
-                      Expanded(
-                        child: _ActionButton(
-                          title: "System Audit",
-                          filled: false,
-                          onTap: () {},
-                        ),
-                      ),
-                    ],
+                  Expanded(
+                    child: _StatCard(
+                      title: "Employers",
+                      value: "456",
+                      icon: Icons.business_center_outlined,
+                      iconBackground: const Color(0xFFE8F9F2),
+                      iconColor: const Color(0xFF16A979),
+                    ),
                   ),
                 ],
               ),
-            ),
 
-            const SizedBox(height: 14),
+              const SizedBox(height: 10),
 
-            // ==============================
-            // RECENT ACTIVITIES
-            // ==============================
+              // ======================================================
+              // STAT CARDS ROW 2
+              // ======================================================
 
-            _SectionContainer(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              Row(
                 children: [
 
-                  Text(
-                    "Recent Activities",
-                    style: TextStyle(
-                      color: textColor,
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold,
+                  Expanded(
+                    child: _StatCard(
+                      title: "Total Jobs",
+                      value: "1,234",
+                      icon: Icons.work_outline_rounded,
+                      iconBackground: const Color(0xFFFFF5E5),
+                      iconColor: const Color(0xFFF59E0B),
                     ),
                   ),
 
-                  const SizedBox(height: 5),
+                  const SizedBox(width: 10),
 
-                  _ActivityItem(
-                    title:
-                    "New employer: Tech Mahindra (Awaiting verification)",
-                    time: "10 mins ago",
-                  ),
-
-                  _ActivityItem(
-                    title:
-                    "Job post approved: 'Lead React Developer' at TCS",
-                    time: "1 hour ago",
-                  ),
-
-                  _ActivityItem(
-                    title:
-                    "User registered: Sneha Gupta (sneha@email.com)",
-                    time: "3 hours ago",
-                    showDivider: false,
+                  Expanded(
+                    child: _StatCard(
+                      title: "Applications",
+                      value: "8,912",
+                      icon: Icons.description_outlined,
+                      iconBackground: const Color(0xFFFFEEEE),
+                      iconColor: redColor,
+                    ),
                   ),
                 ],
               ),
-            ),
 
-            const SizedBox(height: 10),
-          ],
+              const SizedBox(height: 14),
+
+              // ======================================================
+              // QUICK ACTIONS
+              // ======================================================
+
+              _SectionContainer(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+
+                  children: [
+
+                    Text(
+                      "Quick Actions",
+                      style: TextStyle(
+                        color: textColor,
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+
+                    const SizedBox(height: 10),
+
+                    Row(
+                      children: [
+
+                        Expanded(
+                          child: _ActionButton(
+                            title: "Verify Employer",
+                            filled: true,
+                            onTap: () {},
+                          ),
+                        ),
+
+                        const SizedBox(width: 7),
+
+                        Expanded(
+                          child: _ActionButton(
+                            title: "Review Jobs",
+                            filled: false,
+                            onTap: () {},
+                          ),
+                        ),
+
+                        const SizedBox(width: 7),
+
+                        Expanded(
+                          child: _ActionButton(
+                            title: "System Audit",
+                            filled: false,
+                            onTap: () {},
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 14),
+
+              // ======================================================
+              // RECENT ACTIVITIES
+              // ======================================================
+
+              _SectionContainer(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+
+                  children: [
+
+                    Text(
+                      "Recent Activities",
+                      style: TextStyle(
+                        color: textColor,
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+
+                    const SizedBox(height: 5),
+
+                    _ActivityItem(
+                      title:
+                      "New employer: Tech Mahindra (Awaiting verification)",
+                      time: "10 mins ago",
+                    ),
+
+                    _ActivityItem(
+                      title:
+                      "Job post approved: 'Lead React Developer' at TCS",
+                      time: "1 hour ago",
+                    ),
+
+                    _ActivityItem(
+                      title:
+                      "User registered: Sneha Gupta (sneha@email.com)",
+                      time: "3 hours ago",
+                      showDivider: false,
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 10),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-// ============================================================
+// ====================================================================
 // STAT CARD
-// ============================================================
+// ====================================================================
 
 class _StatCard extends StatelessWidget {
   final String title;
@@ -386,11 +429,14 @@ class _StatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 76,
+
       padding: const EdgeInsets.all(10),
 
       decoration: BoxDecoration(
         color: Colors.white,
+
         borderRadius: BorderRadius.circular(8),
+
         border: Border.all(
           color: borderColor,
           width: 1,
@@ -400,6 +446,7 @@ class _StatCard extends StatelessWidget {
       child: Row(
         children: [
 
+          // Icon
           Container(
             height: 38,
             width: 38,
@@ -418,16 +465,22 @@ class _StatCard extends StatelessWidget {
 
           const SizedBox(width: 9),
 
+          // Text
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
+
               crossAxisAlignment: CrossAxisAlignment.start,
+
               children: [
 
                 Text(
                   title,
+
                   maxLines: 1,
+
                   overflow: TextOverflow.ellipsis,
+
                   style: TextStyle(
                     color: greyColor,
                     fontSize: 10,
@@ -438,6 +491,7 @@ class _StatCard extends StatelessWidget {
 
                 Text(
                   value,
+
                   style: TextStyle(
                     color: textColor,
                     fontSize: 17,
@@ -453,9 +507,9 @@ class _StatCard extends StatelessWidget {
   }
 }
 
-// ============================================================
+// ====================================================================
 // SECTION CONTAINER
-// ============================================================
+// ====================================================================
 
 class _SectionContainer extends StatelessWidget {
   final Widget child;
@@ -473,7 +527,9 @@ class _SectionContainer extends StatelessWidget {
 
       decoration: BoxDecoration(
         color: Colors.white,
+
         borderRadius: BorderRadius.circular(8),
+
         border: Border.all(
           color: borderColor,
           width: 1,
@@ -485,9 +541,9 @@ class _SectionContainer extends StatelessWidget {
   }
 }
 
-// ============================================================
+// ====================================================================
 // ACTION BUTTON
-// ============================================================
+// ====================================================================
 
 class _ActionButton extends StatelessWidget {
   final String title;
@@ -504,16 +560,19 @@ class _ActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 38,
+
       child: OutlinedButton(
         onPressed: onTap,
 
         style: OutlinedButton.styleFrom(
-          backgroundColor: filled ? blueColor : Colors.white,
+          backgroundColor:
+          filled ? blueColor : Colors.white,
 
-          foregroundColor: filled ? Colors.white : blueColor,
+          foregroundColor:
+          filled ? Colors.white : blueColor,
 
           side: BorderSide(
-            color: filled ? blueColor : blueColor,
+            color: blueColor,
           ),
 
           shape: RoundedRectangleBorder(
@@ -527,8 +586,10 @@ class _ActionButton extends StatelessWidget {
 
         child: FittedBox(
           fit: BoxFit.scaleDown,
+
           child: Text(
             title,
+
             style: const TextStyle(
               fontSize: 10,
               fontWeight: FontWeight.w600,
@@ -540,9 +601,9 @@ class _ActionButton extends StatelessWidget {
   }
 }
 
-// ============================================================
+// ====================================================================
 // ACTIVITY ITEM
-// ============================================================
+// ====================================================================
 
 class _ActivityItem extends StatelessWidget {
   final String title;
@@ -566,12 +627,16 @@ class _ActivityItem extends StatelessWidget {
           ),
 
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment:
+            CrossAxisAlignment.start,
+
             children: [
 
               Text(
                 title,
+
                 maxLines: 2,
+
                 overflow: TextOverflow.ellipsis,
 
                 style: TextStyle(
@@ -585,6 +650,7 @@ class _ActivityItem extends StatelessWidget {
 
               Text(
                 time,
+
                 style: TextStyle(
                   color: greyColor,
                   fontSize: 9,
@@ -605,30 +671,33 @@ class _ActivityItem extends StatelessWidget {
   }
 }
 
-// ============================================================
+// ====================================================================
 // SIMPLE TAB PAGE
-// ============================================================
+// ====================================================================
 
 class _SimpleTabPage extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final String subtitle;
 
-  const _SimpleTabPage({
-    required this.icon,
-    required this.title,
-    required this.subtitle,
-  });
+
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Center(
+    return Scaffold(
+      backgroundColor: backgroundColor,
+
+      appBar: AppBar(
+        backgroundColor: backgroundColor,
+        elevation: 0,
+        surfaceTintColor: Colors.transparent,
+      ),
+
+      body: Center(
         child: Padding(
           padding: const EdgeInsets.all(20),
 
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment:
+            MainAxisAlignment.center,
+
             children: [
 
               Container(
@@ -640,34 +709,10 @@ class _SimpleTabPage extends StatelessWidget {
                   shape: BoxShape.circle,
                 ),
 
-                child: Icon(
-                  icon,
-                  color: blueColor,
-                  size: 32,
-                ),
+
               ),
 
-              const SizedBox(height: 15),
 
-              Text(
-                title,
-                style: TextStyle(
-                  color: textColor,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-
-              const SizedBox(height: 5),
-
-              Text(
-                subtitle,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: greyColor,
-                  fontSize: 13,
-                ),
-              ),
             ],
           ),
         ),
