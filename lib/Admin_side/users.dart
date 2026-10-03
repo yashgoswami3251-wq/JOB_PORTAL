@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../references/reference.dart';
 import 'detail_user.dart';
+import 'edit_user.dart';
 
 class UsersPage extends StatefulWidget {
   const UsersPage({super.key});
@@ -505,7 +506,7 @@ class _UsersPageState extends State<UsersPage> {
                 // Edit
                 GestureDetector(
                   onTap: () {
-                    // Edit functionality
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>EditUserPage(user: user,)));
                   },
                   child: Icon(
                     Icons.edit_outlined,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:job_portal/Admin_side/users.dart';
 import '../references/reference.dart';
 import 'admin_profile.dart';
+import 'employers.dart';
 
 class AdminDashboard extends StatelessWidget {
   const AdminDashboard({super.key});
@@ -23,7 +24,7 @@ class AdminDashboard extends StatelessWidget {
             DashboardTab(),
             UsersPage(),
             // Employers page
-            UsersPage(),
+            EmployersPage(),
             // Companies page
             UsersPage(),
           ],
