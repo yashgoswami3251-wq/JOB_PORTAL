@@ -38,3 +38,7 @@ const Color lightGrey = Color(0xFFF8FAFD);
 // Employee panel => All pages profile logo
 const double profileSize = 38;
 
+
+// Admin user page use
+
+final Color primaryBlue = const Color(0xFF2864E8);

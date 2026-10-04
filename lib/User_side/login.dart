@@ -202,7 +202,7 @@ class _LoginPageState extends State<LoginPage> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => const AdminHomePage(),
+              builder: (context) => const AdminDashboard(),
             ),
           );
         } else {
