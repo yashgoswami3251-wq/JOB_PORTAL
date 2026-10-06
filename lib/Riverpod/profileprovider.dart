@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
@@ -149,3 +151,210 @@ class employeeprofile{
 class empprofileNotifier extends StateNotifier<employeeprofile>{
 
 }*/
+
+
+/// Search field on user panel find jobs
+
+final searchqueryprovider = StateProvider<String>((ref) {
+  return '';
+});
+final selectedfilterprovider = StateProvider<int>((ref) {
+  return 0;
+});
+final jobsProvider = Provider<List<Map<String, dynamic>>>((ref) {
+  return [
+    {
+      "shortName": "TCS",
+      "companyColor": const Color(0xFF2864E8),
+      "companyBackground": const Color(0xFFEFF5FF),
+      "title": "Senior React Developer",
+      "company": "TCS",
+      "location": "Mumbai, Maharashtra",
+      "salary": "₹12-18 LPA",
+      "type": "Full Time",
+      "typeColor": const Color(0xFF2864E8),
+      "typeBackground": const Color(0xFFEFF5FF),
+      "experience": "3-5 years",
+      "postedDate": "Jan 20, 2024",
+      "description":
+      "We are looking for a highly skilled Senior React Developer to join our growing development team.",
+      "responsibilities": [
+        "Design and build scalable and reusable React components from scratch.",
+        "Collaborate with backend engineers to integrate RESTful and GraphQL APIs seamlessly.",
+        "Optimize application architectures for maximum performance.",
+        "Write unit and integration tests.",
+        "Provide technical mentorship."
+      ],
+      "requirements": [
+        "Minimum 3-5 years of experience.",
+        "Expert knowledge of JavaScript, TypeScript, and React.",
+        "Strong understanding of REST APIs and GraphQL.",
+        "Experience with Git.",
+        "Good understanding of responsive web design."
+      ],
+    },
+
+    {
+      "shortName": "INF",
+      "companyColor": const Color(0xFF8B5CF6),
+      "companyBackground": const Color(0xFFF3EEFF),
+      "title": "UI/UX Designer",
+      "company": "Infosys",
+      "location": "Bangalore, Karnataka",
+      "salary": "₹8-14 LPA",
+      "type": "Full Time",
+      "typeColor": const Color(0xFF2864E8),
+      "typeBackground": const Color(0xFFEFF5FF),
+      "experience": "2-4 years",
+      "postedDate": "Jan 18, 2024",
+      "description":
+      "We are looking for a creative UI/UX Designer.",
+      "responsibilities": [
+        "Create wireframes and prototypes.",
+        "Design modern and responsive interfaces.",
+        "Work closely with developers.",
+        "Conduct user research."
+      ],
+      "requirements": [
+        "2-4 years of UI/UX experience.",
+        "Strong knowledge of Figma.",
+        "Good understanding of design systems.",
+        "Knowledge of responsive design."
+      ],
+    },
+
+    {
+      "shortName": "WIP",
+      "companyColor": const Color(0xFF00A878),
+      "companyBackground": const Color(0xFFE8F8F3),
+      "title": "Data Analyst",
+      "company": "Wipro",
+      "location": "Pune, Maharashtra",
+      "salary": "₹6-10 LPA",
+      "type": "Part Time",
+      "typeColor": const Color(0xFFFF9800),
+      "typeBackground": const Color(0xFFFFF4E3),
+      "experience": "1-3 years",
+      "postedDate": "Jan 15, 2024",
+      "description":
+      "We are seeking a Data Analyst to analyze business data.",
+      "responsibilities": [
+        "Analyze large datasets.",
+        "Create reports and dashboards.",
+        "Work with business teams.",
+        "Identify trends and patterns."
+      ],
+      "requirements": [
+        "Knowledge of SQL.",
+        "Knowledge of Excel.",
+        "Basic Python knowledge.",
+        "Good analytical and communication skills."
+      ],
+    },
+
+    {
+      "shortName": "HCL",
+      "companyColor": const Color(0xFFFF3B30),
+      "companyBackground": const Color(0xFFFFEEEE),
+      "title": "Backend Developer",
+      "company": "HCL",
+      "location": "Hyderabad, Telangana",
+      "salary": "₹10-16 LPA",
+      "type": "Remote",
+      "typeColor": const Color(0xFF00A878),
+      "typeBackground": const Color(0xFFE8F8F3),
+      "experience": "2-5 years",
+      "postedDate": "Jan 12, 2024",
+      "description":
+      "HCL is looking for a Backend Developer.",
+      "responsibilities": [
+        "Develop REST APIs.",
+        "Build scalable backend services.",
+        "Work with databases.",
+        "Optimize backend performance."
+      ],
+      "requirements": [
+        "Strong knowledge of Node.js or Java.",
+        "Knowledge of REST APIs.",
+        "Database knowledge.",
+        "Good understanding of backend architecture."
+      ],
+    },
+
+    {
+      "shortName": "TEM",
+      "companyColor": const Color(0xFF17233B),
+      "companyBackground": const Color(0xFFF0F1F3),
+      "title": "Marketing Manager",
+      "company": "Tech Mahindra",
+      "location": "Chennai, Tamil Nadu",
+      "salary": "₹7-12 LPA",
+      "type": "Full Time",
+      "typeColor": const Color(0xFF2864E8),
+      "typeBackground": const Color(0xFFEFF5FF),
+      "experience": "3-6 years",
+      "postedDate": "Jan 10, 2024",
+      "description":
+      "We are looking for an experienced Marketing Manager.",
+      "responsibilities": [
+        "Plan marketing campaigns.",
+        "Manage digital marketing activities.",
+        "Analyze marketing performance.",
+        "Work with creative teams."
+      ],
+      "requirements": [
+        "3-6 years marketing experience.",
+        "Strong communication skills.",
+        "Knowledge of digital marketing.",
+        "Strong leadership skills."
+      ],
+    },
+  ];
+});
+final filteredJobsProvider =
+Provider<List<Map<String, dynamic>>>((ref) {
+  final jobs = ref.watch(jobsProvider);
+
+  final searchQuery = ref.watch(searchqueryprovider).trim().toLowerCase();
+
+  final selectedFilter = ref.watch(selectedfilterprovider);
+
+  return jobs.where((job) {
+
+    final title = job["title"].toString().toLowerCase();
+
+    final company = job["company"].toString().toLowerCase();
+
+    final location = job["location"].toString().toLowerCase();
+
+    final matchesSearch =
+        searchQuery.isEmpty ||
+            title.contains(searchQuery) ||
+            company.contains(searchQuery) ||
+            location.contains(searchQuery);
+
+    bool matchesFilter = true;
+
+    // 0 = All Jobs
+    if (selectedFilter == 0) {
+      matchesFilter = true;
+    }
+
+    // 1 = Full Time
+    else if (selectedFilter == 1) {
+      matchesFilter = job["type"] == "Full Time";
+    }
+
+    // 2 = Part Time
+    else if (selectedFilter == 2) {
+      matchesFilter = job["type"] == "Part Time";
+    }
+
+    // 3 = Remote
+    else if (selectedFilter == 3) {
+      matchesFilter = job["type"] == "Remote";
+    }
+
+    return matchesSearch && matchesFilter;
+  }).toList();
+});

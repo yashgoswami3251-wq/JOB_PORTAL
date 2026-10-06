@@ -1,9 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import 'package:job_portal/User_side/profile.dart';
+import '../Riverpod/profileprovider.dart';
 import '../references/reference.dart';
 import 'job_details_page.dart';
 
-class findjobes extends StatefulWidget {
+
+// ============================================================
+// SELECTED FILTER PROVIDER
+// 0 = All Jobs
+// 1 = Full Time
+// 2 = Part Time
+// 3 = Remote
+// ============================================================
+
+final selectedJobFilterProvider = StateProvider<int>((ref) {
+  return 0;
+});
+
+
+// ============================================================
+// FIND JOBS PAGE
+// ============================================================
+
+class findjobes extends ConsumerWidget {
   final VoidCallback onApply;
 
   const findjobes({
@@ -11,246 +32,71 @@ class findjobes extends StatefulWidget {
     required this.onApply,
   });
 
-  @override
-  State<findjobes> createState() => _FindJobsPageState();
-}
+  // ============================================================
+  // FILTERED JOBS
+  // ============================================================
 
-class _FindJobsPageState extends State<findjobes> {
-  int selectedFilter = 0;
-
-  final TextEditingController searchController = TextEditingController();
-
-
-  final List<Map<String, dynamic>> jobs = [
-    {
-      "shortName": "TCS",
-      "companyColor": const Color(0xFF2864E8),
-      "companyBackground": const Color(0xFFEFF5FF),
-      "title": "Senior React Developer",
-      "company": "TCS",
-      "location": "Mumbai, Maharashtra",
-      "salary": "₹12-18 LPA",
-      "type": "Full Time",
-      "typeColor": const Color(0xFF2864E8),
-      "typeBackground": const Color(0xFFEFF5FF),
-      "experience": "3-5 years",
-      "postedDate": "Jan 20, 2024",
-      "description":
-      "We are looking for a highly skilled Senior React Developer "
-          "to join our growing development team. In this role, you will "
-          "be responsible for architecting, building, and deploying "
-          "highly responsive, pixel-perfect user interfaces. You will "
-          "work closely with product managers and designers to translate "
-          "product visions into scalable frontend codebases.",
-      "responsibilities": [
-        "Design and build scalable and reusable React components from scratch.",
-        "Collaborate with backend engineers to integrate RESTful and GraphQL APIs seamlessly.",
-        "Optimize application architectures for maximum performance and cross-browser responsiveness.",
-        "Write unit and integration tests to ensure code quality and prevent application regressions.",
-        "Provide technical mentorship and run comprehensive code reviews for junior engineers.",
-      ],
-      "requirements": [
-        "Minimum 3-5 years of experience building modern single-page applications with React.",
-        "Expert knowledge of raw JavaScript, TypeScript, and React.",
-        "Strong understanding of REST APIs and GraphQL.",
-        "Experience with Git and modern development workflows.",
-        "Good understanding of responsive web design.",
-      ],
-    },
-    {
-      "shortName": "INF",
-      "companyColor": const Color(0xFF8B5CF6),
-      "companyBackground": const Color(0xFFF3EEFF),
-      "title": "UI/UX Designer",
-      "company": "Infosys",
-      "location": "Bangalore, Karnataka",
-      "salary": "₹8-14 LPA",
-      "type": "Full Time",
-      "typeColor": const Color(0xFF2864E8),
-      "typeBackground": const Color(0xFFEFF5FF),
-      "experience": "2-4 years",
-      "postedDate": "Jan 18, 2024",
-      "description":
-      "We are looking for a creative UI/UX Designer who can "
-          "create beautiful and user-friendly digital experiences.",
-      "responsibilities": [
-        "Create wireframes and prototypes.",
-        "Design modern and responsive interfaces.",
-        "Work closely with developers and product managers.",
-        "Conduct user research and usability testing.",
-      ],
-      "requirements": [
-        "2-4 years of UI/UX experience.",
-        "Strong knowledge of Figma.",
-        "Good understanding of design systems.",
-        "Knowledge of responsive design principles.",
-      ],
-    },
-    {
-      "shortName": "WIP",
-      "companyColor": const Color(0xFF00A878),
-      "companyBackground": const Color(0xFFE8F8F3),
-      "title": "Data Analyst",
-      "company": "Wipro",
-      "location": "Pune, Maharashtra",
-      "salary": "₹6-10 LPA",
-      "type": "Part Time",
-      "typeColor": const Color(0xFFFF9800),
-      "typeBackground": const Color(0xFFFFF4E3),
-      "experience": "1-3 years",
-      "postedDate": "Jan 15, 2024",
-      "description":
-      "We are seeking a Data Analyst to analyze business data "
-          "and provide meaningful insights to help our organization "
-          "make better decisions.",
-      "responsibilities": [
-        "Analyze large datasets.",
-        "Create reports and dashboards.",
-        "Work with business teams.",
-        "Identify trends and patterns.",
-      ],
-      "requirements": [
-        "Knowledge of SQL.",
-        "Knowledge of Excel.",
-        "Basic Python knowledge.",
-        "Good analytical and communication skills.",
-      ],
-    },
-    {
-      "shortName": "HCL",
-      "companyColor": const Color(0xFFFF3B30),
-      "companyBackground": const Color(0xFFFFEEEE),
-      "title": "Backend Developer",
-      "company": "HCL",
-      "location": "Hyderabad, Telangana",
-      "salary": "₹10-16 LPA",
-      "type": "Remote",
-      "typeColor": const Color(0xFF00A878),
-      "typeBackground": const Color(0xFFE8F8F3),
-      "experience": "2-5 years",
-      "postedDate": "Jan 12, 2024",
-      "description":
-      "HCL is looking for a Backend Developer to build scalable "
-          "and reliable server-side applications.",
-      "responsibilities": [
-        "Develop REST APIs.",
-        "Build scalable backend services.",
-        "Work with databases.",
-        "Optimize backend performance.",
-      ],
-      "requirements": [
-        "Strong knowledge of Node.js or Java.",
-        "Knowledge of REST APIs.",
-        "Database knowledge.",
-        "Good understanding of backend architecture.",
-      ],
-    },
-    {
-      "shortName": "TEM",
-      "companyColor": const Color(0xFF17233B),
-      "companyBackground": const Color(0xFFF0F1F3),
-      "title": "Marketing Manager",
-      "company": "Tech Mahindra",
-      "location": "Chennai, Tamil Nadu",
-      "salary": "₹7-12 LPA",
-      "type": "Full Time",
-      "typeColor": const Color(0xFF2864E8),
-      "typeBackground": const Color(0xFFEFF5FF),
-      "experience": "3-6 years",
-      "postedDate": "Jan 10, 2024",
-      "description":
-      "We are looking for an experienced Marketing Manager "
-          "to manage marketing campaigns and improve brand visibility.",
-      "responsibilities": [
-        "Plan marketing campaigns.",
-        "Manage digital marketing activities.",
-        "Analyze marketing performance.",
-        "Work with creative teams.",
-      ],
-      "requirements": [
-        "3-6 years marketing experience.",
-        "Strong communication skills.",
-        "Knowledge of digital marketing.",
-        "Strong leadership skills.",
-      ],
-    },
-  ];
-
-  List<Map<String, dynamic>> get filteredJobs {
-    final searchText = searchController.text.trim().toLowerCase();
-
+  List<Map<String, dynamic>> filteredJobs(
+      List<Map<String, dynamic>> jobs,
+      int selectedFilter,
+      ) {
     return jobs.where((job) {
-      bool matchesFilter = true;
-
       if (selectedFilter == 0) {
-        matchesFilter = true;
+        return true;
       } else if (selectedFilter == 1) {
-        matchesFilter = job["type"] == "Full Time";
+        return job["type"] == "Full Time";
       } else if (selectedFilter == 2) {
-        matchesFilter = job["type"] == "Part Time";
+        return job["type"] == "Part Time";
       } else if (selectedFilter == 3) {
-        matchesFilter = job["type"] == "Remote";
+        return job["type"] == "Remote";
       }
 
-      bool matchesSearch = true;
-
-      if (searchText.isNotEmpty) {
-        matchesSearch =
-            job["title"]
-                .toString()
-                .toLowerCase()
-                .contains(searchText) ||
-                job["company"]
-                    .toString()
-                    .toLowerCase()
-                    .contains(searchText) ||
-                job["location"]
-                    .toString()
-                    .toLowerCase()
-                    .contains(searchText);
-      }
-
-      return matchesFilter && matchesSearch;
+      return true;
     }).toList();
-  }
-
-  @override
-  void dispose() {
-    searchController.dispose();
-    super.dispose();
   }
 
   // ============================================================
   // OPEN JOB DETAILS
   // ============================================================
 
-  void openJobDetails(Map<String, dynamic> job) async {
+  Future<void> openJobDetails(
+      BuildContext context,
+      Map<String, dynamic> job,
+      ) async {
     final result = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) {
           return JobDetailsPage(
             job: job,
-
-            // This callback is NOT used for navigation.
-            // Navigation is handled using Navigator.pop(context, true).
             onApply: () {},
           );
         },
       ),
     );
 
-    // ============================================================
-    // APPLY BUTTON CLICKED
-    // ============================================================
-
     if (result == true) {
-      widget.onApply();
+      onApply();
     }
   }
 
+  // ============================================================
+  // BUILD
+  // ============================================================
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    final jobs = ref.watch(jobsProvider);
+    final filteredJobs = ref.watch(filteredJobsProvider);
+
+    // Read selected filter from Riverpod
+    final selectedFilter = ref.watch(selectedJobFilterProvider,
+    );
+
+    // Apply filter
+    final List<Map<String, dynamic>> jobsList = filteredJobs;
+
     return Scaffold(
       backgroundColor: backgroundColor,
       resizeToAvoidBottomInset: true,
@@ -258,12 +104,14 @@ class _FindJobsPageState extends State<findjobes> {
       body: SafeArea(
         child: Column(
           children: [
+
             // ======================================================
             // HEADER
             // ======================================================
 
             Container(
               width: double.infinity,
+
               padding: const EdgeInsets.symmetric(
                 horizontal: 20,
                 vertical: 10,
@@ -271,6 +119,7 @@ class _FindJobsPageState extends State<findjobes> {
 
               decoration: const BoxDecoration(
                 color: Color(0xFFFFFCF7),
+
                 border: Border(
                   bottom: BorderSide(
                     color: Color(0xFFE8E8E8),
@@ -284,8 +133,10 @@ class _FindJobsPageState extends State<findjobes> {
 
                 child: Row(
                   children: [
+
                     const Text(
                       "Find Jobs",
+
                       style: TextStyle(
                         fontSize: fontSize,
                         fontWeight: fontweight,
@@ -296,9 +147,15 @@ class _FindJobsPageState extends State<findjobes> {
                     const Spacer(),
 
                     InkWell(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>ProfilePage()));
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProfilePage(),
+                          ),
+                        );
                       },
+
                       child: Container(
                         width: 40,
                         height: 40,
@@ -311,6 +168,7 @@ class _FindJobsPageState extends State<findjobes> {
                         child: const Center(
                           child: Text(
                             "RS",
+
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 12,
@@ -335,9 +193,6 @@ class _FindJobsPageState extends State<findjobes> {
                   return SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
 
-                    keyboardDismissBehavior:
-                    ScrollViewKeyboardDismissBehavior.onDrag,
-
                     padding: const EdgeInsets.fromLTRB(
                       20,
                       18,
@@ -355,12 +210,14 @@ class _FindJobsPageState extends State<findjobes> {
                         CrossAxisAlignment.start,
 
                         children: [
+
                           // ==================================================
-                          // SEARCH
+                          // STATIC SEARCH FIELD
                           // ==================================================
 
                           Container(
                             width: double.infinity,
+
                             padding: const EdgeInsets.all(16),
 
                             decoration: BoxDecoration(
@@ -376,25 +233,13 @@ class _FindJobsPageState extends State<findjobes> {
 
                             child: Column(
                               children: [
+
                                 TextField(
-                                  controller: searchController,
-
                                   onChanged: (value) {
-                                    setState(() {});
+                                    ref.read(searchqueryprovider.notifier).state = value;
                                   },
-
-                                  textInputAction:
-                                  TextInputAction.search,
-
-                                  style: const TextStyle(
-                                    fontSize: 15,
-                                    color: Color(0xFF17233B),
-                                  ),
-
-                                  decoration:
-                                  InputDecoration(
-                                    hintText:
-                                    "Search by job title, company, or location",
+                                  decoration: InputDecoration(
+                                    hintText: "Search by job title, company, or location",
 
                                     hintStyle:
                                     const TextStyle(
@@ -408,26 +253,6 @@ class _FindJobsPageState extends State<findjobes> {
                                       size: 24,
                                       color: Color(0xFF687386),
                                     ),
-
-                                    suffixIcon:
-                                    searchController
-                                        .text.isNotEmpty
-                                        ? IconButton(
-                                      icon: const Icon(
-                                        Icons.clear,
-                                        color: Color(
-                                          0xFF687386,
-                                        ),
-                                      ),
-
-                                      onPressed: () {
-                                        searchController
-                                            .clear();
-
-                                        setState(() {});
-                                      },
-                                    )
-                                        : null,
 
                                     filled: true,
 
@@ -461,17 +286,6 @@ class _FindJobsPageState extends State<findjobes> {
                                         color: Color(0xFFDDE1E7),
                                       ),
                                     ),
-
-                                    focusedBorder:
-                                    OutlineInputBorder(
-                                      borderRadius:
-                                      BorderRadius.circular(10),
-
-                                      borderSide: BorderSide(
-                                        color: blueColor,
-                                        width: 1.5,
-                                      ),
-                                    ),
                                   ),
                                 ),
 
@@ -482,18 +296,17 @@ class _FindJobsPageState extends State<findjobes> {
                                   height: 52,
 
                                   child: ElevatedButton(
-                                    onPressed: () {
-                                      FocusScope.of(context)
-                                          .unfocus();
-
-                                      setState(() {});
-                                    },
+                                    onPressed: null,
 
                                     style:
                                     ElevatedButton.styleFrom(
-                                      backgroundColor: blueColor,
+                                      backgroundColor:
+                                      blueColor,
 
-                                      foregroundColor:
+                                      disabledBackgroundColor:
+                                      blueColor,
+
+                                      disabledForegroundColor:
                                       Colors.white,
 
                                       elevation: 0,
@@ -532,30 +345,42 @@ class _FindJobsPageState extends State<findjobes> {
 
                             child: Row(
                               children: [
+
                                 _filterChip(
+                                  ref: ref,
                                   title: "All Jobs",
                                   index: 0,
+                                  selectedFilter: selectedFilter,
                                 ),
 
                                 const SizedBox(width: 8),
 
                                 _filterChip(
+                                  ref: ref,
                                   title: "Full Time",
                                   index: 1,
+                                  selectedFilter:
+                                  selectedFilter,
                                 ),
 
                                 const SizedBox(width: 8),
 
                                 _filterChip(
+                                  ref: ref,
                                   title: "Part Time",
                                   index: 2,
+                                  selectedFilter:
+                                  selectedFilter,
                                 ),
 
                                 const SizedBox(width: 8),
 
                                 _filterChip(
+                                  ref: ref,
                                   title: "Remote",
                                   index: 3,
+                                  selectedFilter:
+                                  selectedFilter,
                                 ),
                               ],
                             ),
@@ -567,15 +392,15 @@ class _FindJobsPageState extends State<findjobes> {
                           // JOB LIST
                           // ==================================================
 
-                          if (filteredJobs.isEmpty)
+                          if (jobsList.isEmpty)
                             _noJobsWidget()
                           else
                             Column(
                               children: List.generate(
-                                filteredJobs.length,
+                                jobsList.length,
                                     (index) {
                                   final job =
-                                  filteredJobs[index];
+                                  jobsList[index];
 
                                   return Padding(
                                     padding:
@@ -584,6 +409,7 @@ class _FindJobsPageState extends State<findjobes> {
                                     ),
 
                                     child: _jobCard(
+                                      context: context,
                                       job: job,
                                     ),
                                   );
@@ -593,7 +419,11 @@ class _FindJobsPageState extends State<findjobes> {
 
                           const SizedBox(height: 10),
 
-                          if (filteredJobs.isNotEmpty)
+                          // ==================================================
+                          // VIEW ALL JOBS
+                          // ==================================================
+
+                          if (jobsList.isNotEmpty)
                             Center(
                               child: GestureDetector(
                                 onTap: () {},
@@ -630,74 +460,26 @@ class _FindJobsPageState extends State<findjobes> {
     );
   }
 
-  Widget _noJobsWidget() {
-    return Container(
-      width: double.infinity,
-
-      padding: const EdgeInsets.symmetric(
-        vertical: 60,
-      ),
-
-      decoration: BoxDecoration(
-        color: Colors.white,
-
-        border: Border.all(
-          color: borderColor,
-        ),
-
-        borderRadius: BorderRadius.circular(14),
-      ),
-
-      child: Column(
-        children: [
-          Icon(
-            Icons.search_off,
-            size: 60,
-            color: Colors.grey.shade400,
-          ),
-
-          const SizedBox(height: 15),
-
-          const Text(
-            "No Jobs Found",
-
-            style: TextStyle(
-              fontSize: 19,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF17233B),
-            ),
-          ),
-
-          const SizedBox(height: 6),
-
-          const Text(
-            "Try another job title, company, location or filter.",
-
-            textAlign: TextAlign.center,
-
-            style: TextStyle(
-              fontSize: 13,
-              color: Color(0xFF7B808A),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // ============================================================
+  // FILTER CHIP
+  // ============================================================
 
   Widget _filterChip({
+    required WidgetRef ref,
     required String title,
     required int index,
+    required int selectedFilter,
   }) {
-    final bool selected = selectedFilter == index;
+    final bool selected =
+        selectedFilter == index;
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
 
       onTap: () {
-        setState(() {
-          selectedFilter = index;
-        });
+        ref
+            .read(selectedJobFilterProvider.notifier)
+            .state = index;
       },
 
       child: Container(
@@ -718,7 +500,8 @@ class _FindJobsPageState extends State<findjobes> {
                 : const Color(0xFFE0E3E8),
           ),
 
-          borderRadius: BorderRadius.circular(22),
+          borderRadius:
+          BorderRadius.circular(22),
         ),
 
         child: Center(
@@ -742,12 +525,81 @@ class _FindJobsPageState extends State<findjobes> {
     );
   }
 
+  // ============================================================
+  // NO JOBS WIDGET
+  // ============================================================
+
+  Widget _noJobsWidget() {
+    return Container(
+      width: double.infinity,
+
+      padding: const EdgeInsets.symmetric(
+        vertical: 60,
+      ),
+
+      decoration: BoxDecoration(
+        color: Colors.white,
+
+        border: Border.all(
+          color: borderColor,
+        ),
+
+        borderRadius:
+        BorderRadius.circular(14),
+      ),
+
+      child: Column(
+        children: [
+
+          Icon(
+            Icons.search_off,
+            size: 60,
+            color: Colors.grey.shade400,
+          ),
+
+          const SizedBox(height: 15),
+
+          const Text(
+            "No Jobs Found",
+
+            style: TextStyle(
+              fontSize: 19,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF17233B),
+            ),
+          ),
+
+          const SizedBox(height: 6),
+
+          const Text(
+            "No jobs are available for this filter.",
+
+            textAlign: TextAlign.center,
+
+            style: TextStyle(
+              fontSize: 13,
+              color: Color(0xFF7B808A),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ============================================================
+  // JOB CARD
+  // ============================================================
+
   Widget _jobCard({
+    required BuildContext context,
     required Map<String, dynamic> job,
   }) {
     return GestureDetector(
       onTap: () {
-        openJobDetails(job);
+        openJobDetails(
+          context,
+          job,
+        );
       },
 
       behavior: HitTestBehavior.opaque,
@@ -764,13 +616,18 @@ class _FindJobsPageState extends State<findjobes> {
             color: borderColor,
           ),
 
-          borderRadius: BorderRadius.circular(14),
+          borderRadius:
+          BorderRadius.circular(14),
 
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.03),
+              color:
+              Colors.black.withOpacity(0.03),
+
               blurRadius: 5,
-              offset: const Offset(0, 2),
+
+              offset:
+              const Offset(0, 2),
             ),
           ],
         ),
@@ -780,12 +637,18 @@ class _FindJobsPageState extends State<findjobes> {
           CrossAxisAlignment.start,
 
           children: [
+
+            // ========================================================
+            // COMPANY LOGO
+            // ========================================================
+
             Container(
               width: 52,
               height: 52,
 
               decoration: BoxDecoration(
-                color: job["companyBackground"],
+                color:
+                job["companyBackground"],
 
                 borderRadius:
                 BorderRadius.circular(10),
@@ -796,9 +659,13 @@ class _FindJobsPageState extends State<findjobes> {
                   job["shortName"],
 
                   style: TextStyle(
-                    color: job["companyColor"],
+                    color:
+                    job["companyColor"],
+
                     fontSize: 15,
-                    fontWeight: FontWeight.bold,
+
+                    fontWeight:
+                    FontWeight.bold,
                   ),
                 ),
               ),
@@ -806,12 +673,17 @@ class _FindJobsPageState extends State<findjobes> {
 
             const SizedBox(width: 14),
 
+            // ========================================================
+            // JOB INFORMATION
+            // ========================================================
+
             Expanded(
               child: Column(
                 crossAxisAlignment:
                 CrossAxisAlignment.start,
 
                 children: [
+
                   Text(
                     job["title"],
 
@@ -822,8 +694,12 @@ class _FindJobsPageState extends State<findjobes> {
 
                     style: const TextStyle(
                       fontSize: 17,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF17233B),
+
+                      fontWeight:
+                      FontWeight.bold,
+
+                      color:
+                      Color(0xFF17233B),
                     ),
                   ),
 
@@ -839,7 +715,9 @@ class _FindJobsPageState extends State<findjobes> {
 
                     style: const TextStyle(
                       fontSize: 14,
-                      color: Color(0xFF7B808A),
+
+                      color:
+                      Color(0xFF7B808A),
                     ),
                   ),
 
@@ -850,6 +728,9 @@ class _FindJobsPageState extends State<findjobes> {
                     runSpacing: 8,
 
                     children: [
+
+                      // JOB TYPE
+
                       Container(
                         padding:
                         const EdgeInsets.symmetric(
@@ -857,12 +738,15 @@ class _FindJobsPageState extends State<findjobes> {
                           vertical: 6,
                         ),
 
-                        decoration: BoxDecoration(
-                          color: job[
-                          "typeBackground"],
+                        decoration:
+                        BoxDecoration(
+                          color:
+                          job["typeBackground"],
 
                           borderRadius:
-                          BorderRadius.circular(15),
+                          BorderRadius.circular(
+                            15,
+                          ),
                         ),
 
                         child: Text(
@@ -870,21 +754,28 @@ class _FindJobsPageState extends State<findjobes> {
 
                           style: TextStyle(
                             fontSize: 11,
+
                             color:
                             job["typeColor"],
+
                             fontWeight:
                             FontWeight.w600,
                           ),
                         ),
                       ),
 
+                      // SALARY
+
                       Text(
                         job["salary"],
 
-                        style: const TextStyle(
+                        style:
+                        const TextStyle(
                           fontSize: 14,
+
                           fontWeight:
                           FontWeight.bold,
+
                           color:
                           Color(0xFF17233B),
                         ),
