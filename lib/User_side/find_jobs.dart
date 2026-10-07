@@ -87,7 +87,6 @@ class findjobes extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-    final jobs = ref.watch(jobsProvider);
     final filteredJobs = ref.watch(filteredJobsProvider);
 
     // Read selected filter from Riverpod

@@ -152,7 +152,7 @@ class empprofileNotifier extends StateNotifier<employeeprofile>{
 
 }*/
 
-
+// Trim used to remove Spaces.
 /// Search field on user panel find jobs
 
 final searchqueryprovider = StateProvider<String>((ref) {
@@ -311,8 +311,8 @@ final jobsProvider = Provider<List<Map<String, dynamic>>>((ref) {
     },
   ];
 });
-final filteredJobsProvider =
-Provider<List<Map<String, dynamic>>>((ref) {
+final filteredJobsProvider = Provider<List<Map<String, dynamic>>>((ref) {
+
   final jobs = ref.watch(jobsProvider);
 
   final searchQuery = ref.watch(searchqueryprovider).trim().toLowerCase();
