@@ -221,25 +221,34 @@ class _SavedPageState extends State<SavedPage> {
 
               child: Row(
                 children: [
-                  const Text(
-                    "Saved Jobs",
 
+                  // ==================================================
+                  // HIREHUB
+                  // ==================================================
+
+                  Text(
+                    "Saved Jobs",
                     style: TextStyle(
                       fontSize: fontSize,
                       fontWeight: fontweight,
-                      color: Color(0xFF17233B),
+                      color: navyColor,
                     ),
                   ),
 
                   const Spacer(),
 
-                  InkWell(
-                    onTap: (){
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ProfilePage()));
+                  // ==================================================
+                  // PROFILE ICON
+                  // ==================================================
+
+                  GestureDetector(
+                    onTap: () {
+
                     },
+
                     child: Container(
-                      width: 36,
-                      height: 36,
+                      width: 40,
+                      height: 40,
 
                       decoration: const BoxDecoration(
                         color: Color(0xFF3D687A),
@@ -249,7 +258,6 @@ class _SavedPageState extends State<SavedPage> {
                       child: const Center(
                         child: Text(
                           "RS",
-
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 11,
@@ -318,15 +326,6 @@ class _SavedPageState extends State<SavedPage> {
                               vertical: 8,
                             ),
 
-                            child: Text(
-                              "View All Saved Jobs →",
-
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w600,
-                                color: blueColor,
-                              ),
-                            ),
                           ),
                         ),
                       ),

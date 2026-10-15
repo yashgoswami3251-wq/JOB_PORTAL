@@ -1,12 +1,62 @@
+
 import 'package:flutter/material.dart';
-import 'package:job_portal/Employe_side/settings.dart' hide SettingsPage;
+import 'package:job_portal/User_side/login.dart';
+
 import '../User_side/edit_profile.dart';
-import '../User_side/settings_page.dart';
 import '../references/reference.dart';
 import 'homepage.dart';
 
 class CompanyProfilePage extends StatelessWidget {
   const CompanyProfilePage({super.key});
+
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          title: Text(
+            'Logout',
+            style: TextStyle(
+              color: textColor,
+              fontWeight: fontweight,
+            ),
+          ),
+          content: Text(
+            'Are you sure you want to logout?',
+            style: TextStyle(
+              color: greyColor,
+              fontSize: 14,
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(dialogContext);
+              },
+              child: Text(
+                'Cancel',
+                style: TextStyle(color: greyColor),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: redColor,
+                elevation: 0,
+              ),
+              child: const Text(
+                'Logout',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,14 +65,8 @@ class CompanyProfilePage extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            // ============================================================
-            // APP BAR
-            // ============================================================
             _buildHeader(context),
 
-            // ============================================================
-            // PROFILE CONTENT
-            // ============================================================
             Expanded(
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
@@ -30,20 +74,47 @@ class CompanyProfilePage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Company Profile Card
                     _buildCompanyHeaderCard(context),
 
                     const SizedBox(height: 18),
 
-                    // Business Details
                     _buildBusinessDetailsCard(),
 
                     const SizedBox(height: 18),
 
-                    // About Company
                     _buildAboutCard(),
 
                     const SizedBox(height: 20),
+
+                    // Logout Button
+                    SizedBox(
+                      width: double.infinity,
+                      height: 46,
+                      child: OutlinedButton.icon(
+                        onPressed: () {
+                          _showLogoutDialog(context);
+                        },
+                        icon: Icon(
+                          Icons.logout,
+                          color: redColor,
+                          size: 20,
+                        ),
+                        label: Text(
+                          'Logout',
+                          style: TextStyle(
+                            color: redColor,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        style: OutlinedButton.styleFrom(
+                          side: BorderSide(color: redColor),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -73,8 +144,13 @@ class CompanyProfilePage extends StatelessWidget {
       child: Row(
         children: [
           InkWell(
-            onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>EmployeeHomePage()));
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EmployeeHomePage(),
+                ),
+              );
             },
             child: Icon(
               Icons.arrow_back_ios,
@@ -82,10 +158,9 @@ class CompanyProfilePage extends StatelessWidget {
               color: blueColor,
             ),
           ),
-          SizedBox(width: 5,),
-          // ----------------------------------------------------------
-          // TITLE
-          // ----------------------------------------------------------
+
+          const SizedBox(width: 5),
+
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,28 +185,20 @@ class CompanyProfilePage extends StatelessWidget {
             ),
           ),
 
-          // ----------------------------------------------------------
-          // SETTINGS BUTTON
-          // ----------------------------------------------------------
-          InkWell(
-            onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>CompanyProfilePage()));
-            },
-            child: Container(
-              width: profileSize,
-              height: profileSize,
-              decoration: BoxDecoration(
-                color: avatarColor,
-                shape: BoxShape.circle,
-              ),
-              alignment: Alignment.center,
-              child: const Text(
-                'TCS',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 11,
-                  fontWeight: FontWeight.bold,
-                ),
+          Container(
+            width: profileSize,
+            height: profileSize,
+            decoration: BoxDecoration(
+              color: avatarColor,
+              shape: BoxShape.circle,
+            ),
+            alignment: Alignment.center,
+            child: const Text(
+              'TCS',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 11,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),
@@ -151,9 +218,7 @@ class CompanyProfilePage extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          color: borderColor,
-        ),
+        border: Border.all(color: borderColor),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.03),
@@ -164,13 +229,8 @@ class CompanyProfilePage extends StatelessWidget {
       ),
       child: Column(
         children: [
-          // ----------------------------------------------------------
-          // COMPANY INFORMATION
-          // ----------------------------------------------------------
           Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Company Logo
               Container(
                 height: 52,
                 width: 52,
@@ -191,7 +251,6 @@ class CompanyProfilePage extends StatelessWidget {
 
               const SizedBox(width: 14),
 
-              // Company Name
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -224,24 +283,21 @@ class CompanyProfilePage extends StatelessWidget {
 
           const SizedBox(height: 14),
 
-          // Divider
-          Divider(
-            height: 1,
-            color: borderColor,
-          ),
+          Divider(height: 1, color: borderColor),
 
           const SizedBox(height: 14),
 
-          // ----------------------------------------------------------
-          // EDIT PROFILE BUTTON
-          // ----------------------------------------------------------
           SizedBox(
             width: double.infinity,
             height: 42,
             child: ElevatedButton(
               onPressed: () {
-                // Add edit Profile page
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>EditProfilePage()));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditProfilePage(),
+                  ),
+                );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: blueColor,
@@ -276,16 +332,11 @@ class CompanyProfilePage extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          color: borderColor,
-        ),
+        border: Border.all(color: borderColor),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // ----------------------------------------------------------
-          // CARD TITLE
-          // ----------------------------------------------------------
           Text(
             'Business Details',
             style: TextStyle(
@@ -297,7 +348,6 @@ class CompanyProfilePage extends StatelessWidget {
 
           const SizedBox(height: 14),
 
-          // Industry
           _buildDetailItem(
             title: 'Industry',
             value: 'Information Technology',
@@ -305,7 +355,6 @@ class CompanyProfilePage extends StatelessWidget {
 
           const SizedBox(height: 10),
 
-          // Company Size
           _buildDetailItem(
             title: 'Company Size',
             value: '250-500 Employees',
@@ -313,7 +362,6 @@ class CompanyProfilePage extends StatelessWidget {
 
           const SizedBox(height: 10),
 
-          // Location
           _buildDetailItem(
             title: 'Location',
             value: 'Mumbai, Maharashtra',
@@ -321,7 +369,6 @@ class CompanyProfilePage extends StatelessWidget {
 
           const SizedBox(height: 10),
 
-          // Website
           _buildDetailItem(
             title: 'Website',
             value: 'www.techsolutions.com',
@@ -351,7 +398,9 @@ class CompanyProfilePage extends StatelessWidget {
             color: greyColor,
           ),
         ),
+
         const SizedBox(height: 2),
+
         Text(
           value,
           style: TextStyle(
@@ -371,25 +420,19 @@ class CompanyProfilePage extends StatelessWidget {
   Widget _buildAboutCard() {
     return Container(
       width: double.infinity,
-      height: 250,
       padding: const EdgeInsets.all(13),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          color: borderColor,
-        ),
+        border: Border.all(color: borderColor),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // ----------------------------------------------------------
-          // TITLE
-          // ----------------------------------------------------------
           Text(
             'About TechSolutions',
             style: TextStyle(
-              fontSize: 15  ,
+              fontSize: 15,
               fontWeight: FontWeight.bold,
               color: textColor,
             ),
@@ -397,9 +440,6 @@ class CompanyProfilePage extends StatelessWidget {
 
           const SizedBox(height: 10),
 
-          // ----------------------------------------------------------
-          // DESCRIPTION
-          // ----------------------------------------------------------
           Text(
             'TechSolutions Pvt Ltd is an enterprise-oriented '
                 'consultancy delivering innovative technology '
@@ -418,5 +458,4 @@ class CompanyProfilePage extends StatelessWidget {
       ),
     );
   }
-
 }

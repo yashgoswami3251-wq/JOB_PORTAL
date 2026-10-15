@@ -51,43 +51,64 @@ class ProfilePage extends ConsumerWidget {
                 child: Row(
                   children: [
 
-                     Text(
-                      "HireHub",
+                    // ==================================================
+                    // HIREHUB
+                    // ==================================================
+
+                    InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      borderRadius: BorderRadius.circular(20),
+                      child: Padding(
+                        padding: const EdgeInsets.all(4),
+                        child: Icon(
+                          Icons.arrow_back_ios_new,
+                          size: 18,
+                          color: textColor,
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(width: 10,),
+                    Text(
+                      "My Profile",
                       style: TextStyle(
                         fontSize: fontSize,
                         fontWeight: fontweight,
-                        color: textColor,
-                        letterSpacing: -0.3,
+                        color: navyColor,
                       ),
                     ),
 
                     const Spacer(),
 
-                    // SETTINGS BUTTON
-                    InkWell(
+                    // ==================================================
+                    // PROFILE ICON
+                    // ==================================================
+
+                    GestureDetector(
                       onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                SettingsPage(),
-                          ),
-                        );
+
                       },
 
                       child: Container(
-                        width: 32,
-                        height: 32,
+                        width: 40,
+                        height: 40,
 
                         decoration: const BoxDecoration(
-                          color: Color(0xFF376B7D),
+                          color: Color(0xFF3D687A),
                           shape: BoxShape.circle,
                         ),
 
-                        child: const Icon(
-                          Icons.settings,
-                          size: 19,
-                          color: Colors.white,
+                        child: const Center(
+                          child: Text(
+                            "RS",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 11,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -117,20 +138,6 @@ class ProfilePage extends ConsumerWidget {
                     CrossAxisAlignment.start,
 
                     children: [
-
-                      // ==================================================
-                      // MY PROFILE
-                      // ==================================================
-
-                       Text(
-                        "My Profile",
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.w700,
-                          color: textColor,
-                          letterSpacing: -0.4,
-                        ),
-                      ),
 
                       const SizedBox(height: 15),
 

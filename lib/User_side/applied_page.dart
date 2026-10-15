@@ -175,47 +175,54 @@ color: Color(0xFFE8E8E8),
 ),
 
 child: Row(
-children: [
+  children: [
 
-const Text(
-"My Applications",
+    // ==================================================
+    // HIREHUB
+    // ==================================================
 
-style: TextStyle(
-fontSize: fontSize,
-fontWeight: fontweight,
-color: Color(0xFF17233B),
-),
-),
+    Text(
+      "My Application",
+      style: TextStyle(
+        fontSize: fontSize,
+        fontWeight: fontweight,
+        color: navyColor,
+      ),
+    ),
 
-const Spacer(),
+    const Spacer(),
 
-InkWell(
-  onTap: (){
-    Navigator.push(context, MaterialPageRoute(builder: (context)=>ProfilePage()));
-  },
-  child: Container(
-  width: 36,
-  height: 36,
+    // ==================================================
+    // PROFILE ICON
+    // ==================================================
 
-  decoration: const BoxDecoration(
-  color: Color(0xFF3D687A),
-  shape: BoxShape.circle,
-  ),
+    GestureDetector(
+      onTap: () {
 
-  child: const Center(
-  child: Text(
-  "RS",
+      },
 
-  style: TextStyle(
-  color: Colors.white,
-  fontSize: 12,
-  fontWeight: FontWeight.bold,
-  ),
-  ),
-  ),
-  ),
-),
-],
+      child: Container(
+        width: 40,
+        height: 40,
+
+        decoration: const BoxDecoration(
+          color: Color(0xFF3D687A),
+          shape: BoxShape.circle,
+        ),
+
+        child: const Center(
+          child: Text(
+            "RS",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 11,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+    ),
+  ],
 ),
 ),
 
@@ -322,15 +329,6 @@ selectedFilter = 0;
 });
 },
 
-child: Text(
-"View All Applications →",
-
-style: TextStyle(
-fontSize: 16,
-fontWeight: FontWeight.w600,
-color: blueColor,
-),
-),
 ),
 ),
 ],
@@ -579,68 +577,3 @@ color: Color(0xFF17233B),
 );
 }
 }
-/*
-```
-
-### ⚠️ One change is still required in `HomePage`
-
-The above `AppliedPages` is intentionally **without any footer**.
-
-Your HomePage should contain:
-
-```dart
-IndexedStack(
-index: selectedIndex,
-children: [
-_buildHomePage(),
-const findjobes(),
-const AppliedPages(),
-const SavedPage(),
-const ProfilePage(),
-],
-)
-```
-
-and your existing footer:
-
-```dart
-void _onBottomItemTap(int index) {
-setState(() {
-selectedIndex = index;
-});
-}
-```
-
-Then **do not do this from Job Details**:
-
-```dart
-Navigator.push(
-context,
-MaterialPageRoute(
-builder: (context) => const AppliedPages(),
-),
-);
-```
-
-because that creates the second page/navigation stack.
-
-Instead, **HomePage should remain the parent**, and `AppliedPages` should simply be the third child (`index 2`) of your existing navigation.
-
-So the final result is:
-
-**Home → Applied**
-
-```text
-┌─────────────────────────┐
-│   My Applications       │
-│                         │
-│   Applied Jobs...       │
-│                         │
-│                         │
-├─────────────────────────┤
-│ Home Find Applied ...   │ ← YOUR ONE EXISTING FOOTER
-└─────────────────────────┘
-```
-
-No second footer, no double navigation, and your existing HomePage navigation remains the only navigation.
-*/
