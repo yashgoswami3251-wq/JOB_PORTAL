@@ -95,14 +95,14 @@ class CompanyProfilePage extends StatelessWidget {
                   style: TextStyle(
                     fontSize: fontSize,
                     fontWeight: fontweight,
-                    color: textColor,
+                    color: navyColor,
                   ),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   'Verify and update business information',
                   style: TextStyle(
-                    fontSize: 12,
+                    fontSize: 11,
                     color: greyColor,
                   ),
                 ),
@@ -113,22 +113,25 @@ class CompanyProfilePage extends StatelessWidget {
           // ----------------------------------------------------------
           // SETTINGS BUTTON
           // ----------------------------------------------------------
-          Container(
-            height: 38,
-            width: 38,
-            decoration: BoxDecoration(
-              color: avatarColor,
-              shape: BoxShape.circle,
-            ),
-            child: IconButton(
-              padding: EdgeInsets.zero,
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>EMPSettingsPage()));
-              },
-              icon: const Icon(
-                Icons.settings_outlined,
-                size: 21,
-                color: Colors.white,
+          InkWell(
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>CompanyProfilePage()));
+            },
+            child: Container(
+              width: profileSize,
+              height: profileSize,
+              decoration: BoxDecoration(
+                color: avatarColor,
+                shape: BoxShape.circle,
+              ),
+              alignment: Alignment.center,
+              child: const Text(
+                'TCS',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 11,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),

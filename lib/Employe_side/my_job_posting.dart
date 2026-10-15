@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:job_portal/Employe_side/profile.dart';
 import '../references/reference.dart';
+import 'homepage.dart';
 
 class MyJobPostingsPage extends StatefulWidget {
   const MyJobPostingsPage({super.key});
@@ -94,6 +96,17 @@ class _MyJobPostingsPageState extends State<MyJobPostingsPage> {
       color: backgroundColor,
       child: Row(
         children: [
+          InkWell(
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>EmployeeHomePage()));
+            },
+            child: Icon(
+              Icons.arrow_back_ios,
+              size: 20,
+              color: blueColor,
+            ),
+          ),
+          const SizedBox(width: 5),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,7 +125,7 @@ class _MyJobPostingsPageState extends State<MyJobPostingsPage> {
                 Text(
                   "Manage and track your job postings",
                   style: TextStyle(
-                    fontSize: 10,
+                    fontSize: 11,
                     color: greyColor,
                   ),
                 ),
@@ -130,20 +143,25 @@ class _MyJobPostingsPageState extends State<MyJobPostingsPage> {
           const SizedBox(width: 12),
 
           // Profile
-          Container(
-            width: profileSize,
-            height: profileSize,
-            decoration: BoxDecoration(
-              color: bottomColor,
-              shape: BoxShape.circle,
-            ),
-            alignment: Alignment.center,
-            child: const Text(
-              "TCS",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 9,
-                fontWeight: FontWeight.bold,
+          InkWell(
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>CompanyProfilePage()));
+            },
+            child: Container(
+              width: profileSize,
+              height: profileSize,
+              decoration: BoxDecoration(
+                color: avatarColor,
+                shape: BoxShape.circle,
+              ),
+              alignment: Alignment.center,
+              child: const Text(
+                'TCS',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 11,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),

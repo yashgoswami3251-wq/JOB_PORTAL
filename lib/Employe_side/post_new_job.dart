@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:job_portal/Employe_side/profile.dart';
 
 // Use your existing common variables file
 import '../references/reference.dart';
@@ -347,10 +348,16 @@ class _PostNewJobPageState extends State<PostNewJobPage> {
       child: Row(
         children: [
           InkWell(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>EmployeeHomePage()));
-              }, child: Icon(Icons.arrow_circle_left)),
-          SizedBox(width: 10,),
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>EmployeeHomePage()));
+            },
+            child: Icon(
+              Icons.arrow_back_ios,
+              size: 20,
+              color: blueColor,
+            ),
+          ),
+          const SizedBox(width: 5),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -358,8 +365,8 @@ class _PostNewJobPageState extends State<PostNewJobPage> {
                 Text(
                   "Post New Job",
                   style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                    fontSize: fontSize,
+                    fontWeight: fontweight,
                     color: navyColor,
                   ),
                 ),
@@ -369,7 +376,7 @@ class _PostNewJobPageState extends State<PostNewJobPage> {
                 Text(
                   "Create a new job posting",
                   style: TextStyle(
-                    fontSize: 10,
+                    fontSize: 11,
                     color: greyColor,
                   ),
                 ),
@@ -385,22 +392,25 @@ class _PostNewJobPageState extends State<PostNewJobPage> {
           ),
 
           const SizedBox(width: 12),
-
-          // Profile circle
-          Container(
-            width: profileSize,
-            height: profileSize,
-            decoration: BoxDecoration(
-              color: bottomColor,
-              shape: BoxShape.circle,
-            ),
-            alignment: Alignment.center,
-            child: const Text(
-              "TCS",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 9,
-                fontWeight: FontWeight.bold,
+          InkWell(
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>CompanyProfilePage()));
+            },
+            child: Container(
+              width: profileSize,
+              height: profileSize,
+              decoration: BoxDecoration(
+                color: avatarColor,
+                shape: BoxShape.circle,
+              ),
+              alignment: Alignment.center,
+              child: const Text(
+                'TCS',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 11,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),

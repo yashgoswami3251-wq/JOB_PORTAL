@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:job_portal/Employe_side/profile.dart';
 
 import '../references/reference.dart';
 import 'homepage.dart';
@@ -485,17 +486,17 @@ class _ApplicationPageState extends State<ApplicationPage> {
                   Text(
                     "Applications",
                     style: TextStyle(
-                      color: navyColor,
                       fontSize: fontSize,
                       fontWeight: fontweight,
+                      color: navyColor,
                     ),
                   ),
 
                   Text(
                     "Senior React Developer",
                     style: TextStyle(
+                      fontSize: 11,
                       color: greyColor,
-                      fontSize: 10,
                     ),
                   ),
                 ],
@@ -511,20 +512,25 @@ class _ApplicationPageState extends State<ApplicationPage> {
 
               const SizedBox(width: 12),
 
-              Container(
-                width: profileSize,
-                height: profileSize,
-                decoration: BoxDecoration(
-                  color: bottomColor,
-                  shape: BoxShape.circle,
-                ),
-                alignment: Alignment.center,
-                child: const Text(
-                  "TCS",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 9,
-                    fontWeight: FontWeight.bold,
+              InkWell(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>CompanyProfilePage()));
+                },
+                child: Container(
+                  width: profileSize,
+                  height: profileSize,
+                  decoration: BoxDecoration(
+                    color: avatarColor,
+                    shape: BoxShape.circle,
+                  ),
+                  alignment: Alignment.center,
+                  child: const Text(
+                    'TCS',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
