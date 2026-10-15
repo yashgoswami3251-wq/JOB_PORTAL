@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../references/reference.dart';
+import 'admin_profile.dart';
 import 'job_detail.dart';
 
 class JobsPage extends StatefulWidget {
@@ -152,33 +153,50 @@ class _JobsPageState extends State<JobsPage> {
         elevation: 0,
         surfaceTintColor: Colors.transparent,
         titleSpacing: 16,
-        title: Text(
-          'Manage Jobs',
-          style: TextStyle(
-            color: textColor,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.notifications_none_rounded,
-                color: greyColor, size: 22),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 14),
-            child: CircleAvatar(
-              radius: 15,
-              backgroundColor: avatarColor,
-              child: const Text('SA',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold)),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Manage Jobs',
+              style: TextStyle(
+                color: textColor,
+                fontSize: fontSize,
+                fontWeight: fontweight,
+              ),
             ),
-          ),
-        ],
+            Row(
+              children: [
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(Icons.notifications_none_rounded,
+                      color: greyColor, size: 22),
+                ),
+                InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>MyProfilePage()));
+                  },
+                  child: Container(
+                    width: profileSize,
+                    height: profileSize,
+                    decoration: BoxDecoration(
+                      color: avatarColor,
+                      shape: BoxShape.circle,
+                    ),
+                    alignment: Alignment.center,
+                    child: const Text(
+                      'SA',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            )
+          ],
+        )
       ),
       body: Column(
         children: [

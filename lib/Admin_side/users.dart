@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../references/reference.dart';
+import 'admin_profile.dart';
 import 'detail_user.dart';
 import 'edit_user.dart';
 
@@ -165,9 +166,9 @@ class _UsersPageState extends State<UsersPage> {
         title: Text(
           'Manage Users',
           style: TextStyle(
+            color: textColor,
             fontSize: fontSize,
             fontWeight: fontweight,
-            color: textColor,
           ),
         ),
         actions: [
@@ -179,21 +180,26 @@ class _UsersPageState extends State<UsersPage> {
           const SizedBox(width: 10),
 
           // Profile Circle
-          Container(
-            width: 34,
-            height: 34,
-            margin: const EdgeInsets.only(right: 12),
-            decoration: BoxDecoration(
-              color: avatarColor,
-              shape: BoxShape.circle,
-            ),
-            child: const Center(
-              child: Text(
-                'SA',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
+          InkWell(
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>MyProfilePage()));
+            },
+            child: Container(
+              width: 34,
+              height: 34,
+              margin: const EdgeInsets.only(right: 12),
+              decoration: BoxDecoration(
+                color: avatarColor,
+                shape: BoxShape.circle,
+              ),
+              child: const Center(
+                child: Text(
+                  'SA',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
@@ -316,20 +322,6 @@ class _UsersPageState extends State<UsersPage> {
 
                 return buildUserCard(user);
               },
-            ),
-          ),
-
-          // =====================================================
-          // FOOTER COUNT
-          // =====================================================
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 5),
-            child: Text(
-              'Showing ${filteredUsers.length} of ${users.length} users',
-              style: TextStyle(
-                fontSize: 10,
-                color: greyColor,
-              ),
             ),
           ),
         ],

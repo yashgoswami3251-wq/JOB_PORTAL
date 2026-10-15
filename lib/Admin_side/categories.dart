@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../references/reference.dart';
 import 'add_categories.dart';
+import 'admin_profile.dart';
+import 'edit_categories.dart';
 
 class CategoriesPage extends StatefulWidget {
   const CategoriesPage({Key? key}) : super(key: key);
@@ -28,34 +30,50 @@ class _CategoriesPageState extends State<CategoriesPage> {
         backgroundColor: backgroundColor,
         elevation: 0,
         automaticallyImplyLeading: false, // No back arrow since it's a main panel tab
-        title: Text(
-          'Categories',
-          style: TextStyle(
-            fontSize: fontSize,
-            fontWeight: fontweight,
-            color: navyColor,
-          ),
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.notifications_outlined, color: navyColor),
-            onPressed: () {},
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: CircleAvatar(
-              radius: profileSize / 2,
-              backgroundColor: avatarColor,
-              child: const Text(
-                'SA',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Categories',
+              style: TextStyle(
+                color: textColor,
+                fontSize: fontSize,
+                fontWeight: fontweight,
               ),
             ),
-          ),
-        ],
+            Row(
+              children: [
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(Icons.notifications_none_rounded,
+                      color: greyColor, size: 22),
+                ),
+                InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>MyProfilePage()));
+                  },
+                  child: Container(
+                    width: profileSize,
+                    height: profileSize,
+                    decoration: BoxDecoration(
+                      color: avatarColor,
+                      shape: BoxShape.circle,
+                    ),
+                    alignment: Alignment.center,
+                    child: const Text(
+                      'SA',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            )
+          ],
+        )
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -153,7 +171,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                                 color: blueColor,
                               ),
                               onPressed: () {
-                                // Edit category action
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>EditCategoryPage()));
                               },
                               constraints: const BoxConstraints(),
                               padding: const EdgeInsets.all(6),

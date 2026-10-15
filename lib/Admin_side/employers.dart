@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../references/reference.dart';
+import 'admin_profile.dart';
 import 'edit_employe.dart';
 import 'employe_detail.dart';
 
@@ -190,9 +191,9 @@ class _EmployersPageState extends State<EmployersPage> {
               child: Text(
                 'Employers',
                 style: TextStyle(
+                  color: textColor,
                   fontSize: fontSize,
                   fontWeight: fontweight,
-                  color: navyColor,
                 ),
               ),
             ),
@@ -211,20 +212,25 @@ class _EmployersPageState extends State<EmployersPage> {
             const SizedBox(width: 2),
 
             // Profile
-            Container(
-              width: profileSize,
-              height: profileSize,
-              decoration: BoxDecoration(
-                color: avatarColor,
-                shape: BoxShape.circle,
-              ),
-              alignment: Alignment.center,
-              child: const Text(
-                'SA',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 11,
-                  fontWeight: FontWeight.bold,
+            InkWell(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>MyProfilePage()));
+              },
+              child: Container(
+                width: profileSize,
+                height: profileSize,
+                decoration: BoxDecoration(
+                  color: avatarColor,
+                  shape: BoxShape.circle,
+                ),
+                alignment: Alignment.center,
+                child: const Text(
+                  'SA',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 11,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
@@ -311,15 +317,6 @@ class _EmployersPageState extends State<EmployersPage> {
           padding: const EdgeInsets.only(
             bottom: 7,
             top: 2,
-          ),
-          child: Text(
-            _searchText.isEmpty
-                ? 'Showing 1-${list.length} of 456 employers'
-                : 'Showing ${list.length} employers',
-            style: TextStyle(
-              fontSize: 9.5,
-              color: greyColor,
-            ),
           ),
         ),
       ],

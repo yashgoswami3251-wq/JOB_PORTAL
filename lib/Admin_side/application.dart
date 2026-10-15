@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'admin_profile.dart';
 import 'application_detail.dart';
 
 
@@ -60,31 +61,50 @@ class _AppsPageState extends State<AppsPage> {
       appBar: AppBar(
         backgroundColor: backgroundColor,
         elevation: 0,
-        title: Text(
-          'Manage Applications',
-          style: TextStyle(
-            fontSize: fontSize,
-            fontWeight: fontweight,
-            color: navyColor,
-          ),
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.notifications_outlined, color: navyColor),
-            onPressed: () {},
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: CircleAvatar(
-              radius: profileSize / 2,
-              backgroundColor: avatarColor,
-              child: const Text(
-                'SA',
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Manage Applications',
+              style: TextStyle(
+                color: textColor,
+                fontSize: fontSize,
+                fontWeight: fontweight,
               ),
             ),
-          ),
-        ],
+            Row(
+              children: [
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(Icons.notifications_none_rounded,
+                      color: greyColor, size: 22),
+                ),
+                InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>MyProfilePage()));
+                  },
+                  child: Container(
+                    width: profileSize,
+                    height: profileSize,
+                    decoration: BoxDecoration(
+                      color: avatarColor,
+                      shape: BoxShape.circle,
+                    ),
+                    alignment: Alignment.center,
+                    child: const Text(
+                      'SA',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            )
+          ],
+        )
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
