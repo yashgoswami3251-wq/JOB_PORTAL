@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:job_portal/User_side/home_page.dart';
 
+import '../Admin_side/application_detail.dart';
+import '../references/reference.dart';
+
 class ApplyJobPage extends StatefulWidget {
   final Map<String, dynamic>? job;
 
@@ -14,19 +17,8 @@ class ApplyJobPage extends StatefulWidget {
 }
 
 class _ApplyJobPageState extends State<ApplyJobPage> {
-  // ============================================================
-  // COLORS - HIREHUB THEME
-  // ============================================================
 
-  static const Color backgroundColor = Color(0xFFFFFCF7);
-  static const Color navyColor = Color(0xFF17233B);
-  static const Color blueColor = Color(0xFF2864E8);
-  static const Color borderColor = Color(0xFFE1E5EB);
   static const Color hintColor = Color(0xFF7A8494);
-
-  // ============================================================
-  // FORM CONTROLLERS
-  // ============================================================
 
   final _formKey = GlobalKey<FormState>();
 
@@ -99,7 +91,7 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
-            colorScheme: const ColorScheme.light(
+            colorScheme: ColorScheme.light(
               primary: blueColor,
               onPrimary: Colors.white,
               surface: Colors.white,
@@ -166,7 +158,7 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
   // ============================================================
 
   TextStyle get labelStyle {
-    return const TextStyle(
+    return  TextStyle(
       fontSize: 14,
       fontWeight: FontWeight.w600,
       color: navyColor,
@@ -174,7 +166,7 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
   }
 
   TextStyle get inputTextStyle {
-    return const TextStyle(
+    return  TextStyle(
       fontSize: 14,
       color: navyColor,
     );
@@ -190,7 +182,7 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
   }) {
     return InputDecoration(
       hintText: hintText,
-      hintStyle: const TextStyle(
+      hintStyle:  TextStyle(
         color: hintColor,
         fontSize: 14,
       ),
@@ -204,21 +196,21 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
 
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(6),
-        borderSide: const BorderSide(
+        borderSide:  BorderSide(
           color: borderColor,
         ),
       ),
 
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(6),
-        borderSide: const BorderSide(
+        borderSide:  BorderSide(
           color: borderColor,
         ),
       ),
 
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(6),
-        borderSide: const BorderSide(
+        borderSide:  BorderSide(
           color: blueColor,
           width: 1.5,
         ),
@@ -312,7 +304,7 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(
+               Icon(
                 Icons.picture_as_pdf_outlined,
                 size: 30,
                 color: blueColor,
@@ -323,7 +315,7 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
               Text(
                 staticResumeName,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
+                style:  TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
                   color: navyColor,
@@ -332,7 +324,7 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
 
               const SizedBox(height: 5),
 
-              const Text(
+               Text(
                 "Resume attached",
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -357,7 +349,7 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
         Navigator.pop(context);
       },
       borderRadius: BorderRadius.circular(5),
-      child: const Padding(
+      child:  Padding(
         padding: EdgeInsets.symmetric(
           vertical: 4,
           horizontal: 2,
@@ -731,7 +723,7 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
                         hintText: "DD/MM/YYYY",
                         readOnly: true,
                         onTap: selectDate,
-                        suffixIcon: const Icon(
+                        suffixIcon:  Icon(
                           Icons.calendar_today_outlined,
                           size: 19,
                           color: hintColor,

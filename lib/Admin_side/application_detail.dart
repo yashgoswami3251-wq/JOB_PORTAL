@@ -1,20 +1,7 @@
 import 'package:flutter/material.dart';
 
-// Reference Variables
-const double fontSize = 22;
-const FontWeight fontweight = FontWeight.bold;
-final Color backgroundColor = const Color(0xFFFFFCF7);
-final Color navyColor = const Color(0xFF17233B);
-final Color borderColor = const Color(0xFFE1E5EB);
-final Color greenColor = const Color(0xFF138A43);
-final Color blueColor = const Color(0xFF2864E8);
-final Color textColor = Color(0xFF17233B);
-final Color greyColor = Color(0xFF737B87);
-final Color avatarColor = Color(0xFF397184);
-final Color chipColor = Color(0xFFF0F5FF);
-const Color redColor = Color(0xFFF04444);
-const double profileSize = 38;
-final Color primaryBlue = const Color(0xFF2864E8);
+import '../references/reference.dart';
+
 
 class ApplicationDetail extends StatelessWidget {
   final Map<String, dynamic> appData;

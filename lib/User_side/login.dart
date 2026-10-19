@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:job_portal/User_side/register_page.dart';
+import 'package:job_portal/User_side/splashscreen.dart';
 
 import '../Admin_side/AdminHomePage.dart';
 import '../Employe_side/homepage.dart';
@@ -24,7 +25,9 @@ void main() {
     ),
   );
 
-  runApp(ProviderScope(child: const MyApp()));
+  runApp(ProviderScope(child: MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: const SplashScreen())));
 }
 
 // ============================================================
@@ -157,7 +160,7 @@ class _LoginPageState extends State<LoginPage> {
       // ======================================================
 
       if (selectedRole == "User") {
-        if (email == "yash@gmail.com" &&
+        if (email == "marmik@gmail.com" &&
             password == "123456") {
           Navigator.pushReplacement(
             context,
@@ -177,7 +180,7 @@ class _LoginPageState extends State<LoginPage> {
       // ======================================================
 
       else if (selectedRole == "Employee") {
-        if (email == "marmik@gmail.com" &&
+        if (email == "yash@gmail.com" &&
             password == "123456") {
           Navigator.pushReplacement(
             context,
@@ -282,52 +285,13 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment:
                     MainAxisAlignment.center,
 
-                    children: const [
-
-                      Icon(
-                        Icons.business_center,
-                        color: Colors.white,
-                        size: 27,
-                      ),
-
-                      SizedBox(width: 7),
-
-                      Text(
-                        "HireHub",
-
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 21,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                    children: [
+                      Image.asset(
+                        'assets/images/logo.png',
+                        width: 200,
+                        height: 200,
+                      )
                     ],
-                  ),
-
-                  const SizedBox(height: 18),
-
-                  // ==================================================
-                  // HEADER TITLE
-                  // ==================================================
-
-                  const Text(
-                    "Build Your Career.",
-
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-
-                  const Text(
-                    "Shape Your Future.",
-
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
                   ),
 
                   const SizedBox(height: 8),
@@ -458,109 +422,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
 
-                      const SizedBox(height: 22),
-
-                      // ==================================================
-                      // ROLE INFORMATION
-                      // ==================================================
-
-                      Container(
-                        width: double.infinity,
-
-                        padding:
-                        const EdgeInsets.all(12),
-
-                        decoration: BoxDecoration(
-                          color: const Color(
-                            0xFFF3F7FF,
-                          ),
-
-                          borderRadius:
-                          BorderRadius.circular(9),
-
-                          border: Border.all(
-                            color: const Color(
-                              0xFFDCE8FF,
-                            ),
-                          ),
-                        ),
-
-                        child: Row(
-                          children: [
-
-                            Container(
-                              width: 38,
-                              height: 38,
-
-                              decoration:
-                              BoxDecoration(
-                                color: Colors.white,
-
-                                borderRadius:
-                                BorderRadius
-                                    .circular(8),
-                              ),
-
-                              child: Icon(
-                                selectedRole == "Admin"
-                                    ? Icons
-                                    .admin_panel_settings
-                                    : selectedRole ==
-                                    "Employee"
-                                    ? Icons
-                                    .badge_outlined
-                                    : Icons
-                                    .person,
-
-                                color: blueColor,
-
-                                size: 21,
-                              ),
-                            ),
-
-                            const SizedBox(width: 10),
-
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment:
-                                CrossAxisAlignment
-                                    .start,
-
-                                children: [
-
-                                  Text(
-                                    "$selectedRole Login",
-
-                                    style:
-                                     TextStyle(
-                                      fontSize: 12,
-                                      fontWeight:
-                                      FontWeight.bold,
-                                      color:
-                                      navyColor,
-                                    ),
-                                  ),
-
-                                  const SizedBox(height: 3),
-
-                                  Text(
-                                    _getRoleDescription(),
-
-                                    style:
-                                    const TextStyle(
-                                      fontSize: 9,
-                                      color:
-                                      Colors.grey,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 25),
 
                       // ==================================================
                       // EMAIL
@@ -715,29 +577,6 @@ class _LoginPageState extends State<LoginPage> {
                               Colors.blueGrey,
                             ),
 
-                            suffixIcon:
-                            IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  hidePassword =
-                                  !hidePassword;
-                                });
-                              },
-
-                              icon: Icon(
-                                hidePassword
-                                    ? Icons
-                                    .visibility_off_outlined
-                                    : Icons
-                                    .visibility_outlined,
-
-                                size: 19,
-
-                                color:
-                                Colors.blueGrey,
-                              ),
-                            ),
-
                             contentPadding:
                             const EdgeInsets
                                 .symmetric(
@@ -796,39 +635,8 @@ class _LoginPageState extends State<LoginPage> {
                       Row(
                         children: [
 
-                          SizedBox(
-                            width: 24,
-                            height: 24,
-
-                            child: Checkbox(
-                              value: keepSignedIn,
-
-                              onChanged: (value) {
-                                setState(() {
-                                  keepSignedIn =
-                                      value ?? false;
-                                });
-                              },
-
-                              activeColor:
-                              blueColor,
-
-                              materialTapTargetSize:
-                              MaterialTapTargetSize
-                                  .shrinkWrap,
-                            ),
-                          ),
 
                           const SizedBox(width: 5),
-
-                          const Text(
-                            "Keep me signed in",
-
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.grey,
-                            ),
-                          ),
 
                           const Spacer(),
 
@@ -950,7 +758,7 @@ class _LoginPageState extends State<LoginPage> {
                                     MaterialPageRoute(
                                       builder:
                                           (context) =>
-                                      const RegisterPage(),
+                                      const RegisterApp(),
                                     ),
                                   );
                                 } else {
@@ -1038,21 +846,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  // ============================================================
-  // ROLE DESCRIPTION
-  // ============================================================
 
-  String _getRoleDescription() {
-    if (selectedRole == "Admin") {
-      return "Manage users, employees, jobs and platform activities.";
-    }
-
-    if (selectedRole == "Employee") {
-      return "Manage job postings and review job applications.";
-    }
-
-    return "Find jobs, apply and manage your applications.";
-  }
 
   // ============================================================
   // EMAIL HINT

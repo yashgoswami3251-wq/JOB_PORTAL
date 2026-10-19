@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
-import 'package:job_portal/User_side/settings_page.dart';
 import 'package:job_portal/Riverpod/profileprovider.dart';
+import 'package:job_portal/User_side/settings_page.dart';
 import '../references/reference.dart';
 import 'edit_profile.dart';
+import 'home_page.dart';
 import 'resume_page.dart';
 
 class ProfilePage extends ConsumerWidget {
@@ -57,7 +57,7 @@ class ProfilePage extends ConsumerWidget {
 
                     InkWell(
                       onTap: () {
-                        Navigator.pop(context);
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
                       },
                       borderRadius: BorderRadius.circular(20),
                       child: Padding(
@@ -91,23 +91,21 @@ class ProfilePage extends ConsumerWidget {
 
                       },
 
-                      child: Container(
-                        width: 40,
-                        height: 40,
+                      child: InkWell(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>SettingsPage()));
+                        },
+                        child: Container(
+                          width: 40,
+                          height: 40,
 
-                        decoration: const BoxDecoration(
-                          color: Color(0xFF3D687A),
-                          shape: BoxShape.circle,
-                        ),
+                          decoration: const BoxDecoration(
+                            color: Color(0xFF3D687A),
+                            shape: BoxShape.circle,
+                          ),
 
-                        child: const Center(
-                          child: Text(
-                            "RS",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 11,
-                              fontWeight: FontWeight.bold,
-                            ),
+                          child: const Center(
+                            child: Icon(Icons.settings,color: Colors.white,)
                           ),
                         ),
                       ),

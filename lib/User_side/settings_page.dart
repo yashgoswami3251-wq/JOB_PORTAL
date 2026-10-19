@@ -460,7 +460,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
             TextButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>MyApp()));
               },
 
               child: const Text(

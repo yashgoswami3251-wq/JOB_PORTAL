@@ -16,10 +16,10 @@ final Color borderColor = const Color(0xFFE1E5EB);
 final Color greenColor = const Color(0xFF138A43);
 
 // Button Color
-final Color blueColor = const Color(0xFF2864E8);
+final Color blueColor = const Color(0xFF1F2E4D);
 
 //bottom Naviagation background Color
-final Color bottomColor = const Color(0xFF17445B);
+final Color bottomColor = const Color(0xFF1F2E4D);
 
 // User Profile design
 final Color textColor = Color(0xFF17233B);
