@@ -290,6 +290,7 @@ class _LoginPageState extends State<LoginPage> {
                         'assets/images/logo.png',
                         width: 200,
                         height: 200,
+                        alignment: AlignmentGeometry.topCenter,
                       )
                     ],
                   ),

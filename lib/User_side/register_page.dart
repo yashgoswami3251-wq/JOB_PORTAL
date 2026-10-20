@@ -304,7 +304,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                          Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Image.asset("assets/images/logo.png",height: 200,width: 200,)
+                            Image.asset("assets/images/logo.png",height: 200,width: 200,alignment: AlignmentGeometry.topCenter,)
                           ],
                         ),
                       ],
@@ -313,6 +313,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       'Explore trusted job opportunities and apply easily.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
+
                         color: Colors.white70,
                         fontSize: 12,
                       ),
