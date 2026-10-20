@@ -266,7 +266,7 @@ class _AppsPageState extends State<AppsPage> {
           selectedFilter = label;
         });
       },
-      selectedColor: primaryBlue,
+      selectedColor: blueColor,
       backgroundColor: Colors.white,
       labelStyle: TextStyle(
         color: isSelected ? Colors.white : textColor,
