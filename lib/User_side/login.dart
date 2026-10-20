@@ -854,14 +854,14 @@ class _LoginPageState extends State<LoginPage> {
 
   String _getEmailHint() {
     if (selectedRole == "Admin") {
-      return "admin@hirehub.com";
+      return "Admin@gmail.com";
     }
 
     if (selectedRole == "Employee") {
-      return "employee@hirehub.com";
+      return "Employee@hirehub.com";
     }
 
-    return "sureshkumar12@gmail.com";
+    return "User@gmail.com";
   }
 }
 
