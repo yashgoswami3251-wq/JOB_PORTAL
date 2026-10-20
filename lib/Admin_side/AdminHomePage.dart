@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:job_portal/Admin_side/users.dart';
 import '../references/reference.dart';
@@ -17,8 +16,6 @@ class AdminDashboard extends StatelessWidget {
       length: 6,
       child: Scaffold(
         backgroundColor: backgroundColor,
-
-        // ================= BODY =================
         body: const TabBarView(
           physics: NeverScrollableScrollPhysics(),
           children: [
@@ -30,8 +27,6 @@ class AdminDashboard extends StatelessWidget {
             CategoriesPage(),
           ],
         ),
-
-        // ============== BOTTOM NAVIGATION ==============
         bottomNavigationBar: Container(
           decoration: BoxDecoration(
             color: bottomColor,
@@ -123,10 +118,6 @@ class AdminDashboard extends StatelessWidget {
   }
 }
 
-// ================================================================
-// DASHBOARD TAB
-// ================================================================
-
 class DashboardTab extends StatelessWidget {
   const DashboardTab({super.key});
 
@@ -134,7 +125,6 @@ class DashboardTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-
       appBar: AppBar(
         backgroundColor: backgroundColor,
         elevation: 0,
@@ -184,14 +174,12 @@ class DashboardTab extends StatelessWidget {
           ),
         ],
       ),
-
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(14, 12, 14, 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Welcome
               Text(
                 'Welcome back, Admin!',
                 style: TextStyle(
@@ -209,8 +197,6 @@ class DashboardTab extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 14),
-
-              // Statistics row 1
               Row(
                 children: [
                   Expanded(
@@ -235,8 +221,6 @@ class DashboardTab extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 10),
-
-              // Statistics row 2
               Row(
                 children: [
                   Expanded(
@@ -261,8 +245,6 @@ class DashboardTab extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 14),
-
-              // Quick actions
               _SectionContainer(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -307,8 +289,6 @@ class DashboardTab extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 14),
-
-              // Recent activities
               _SectionContainer(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -349,10 +329,6 @@ class DashboardTab extends StatelessWidget {
     );
   }
 }
-
-// ================================================================
-// STAT CARD
-// ================================================================
 
 class _StatCard extends StatelessWidget {
   final String title;
@@ -430,10 +406,6 @@ class _StatCard extends StatelessWidget {
   }
 }
 
-// ================================================================
-// SECTION CONTAINER
-// ================================================================
-
 class _SectionContainer extends StatelessWidget {
   final Widget child;
 
@@ -458,10 +430,6 @@ class _SectionContainer extends StatelessWidget {
     );
   }
 }
-
-// ================================================================
-// ACTION BUTTON
-// ================================================================
 
 class _ActionButton extends StatelessWidget {
   final String title;
@@ -503,10 +471,6 @@ class _ActionButton extends StatelessWidget {
     );
   }
 }
-
-// ================================================================
-// ACTIVITY ITEM
-// ================================================================
 
 class _ActivityItem extends StatelessWidget {
   final String title;
@@ -559,4 +523,3 @@ class _ActivityItem extends StatelessWidget {
     );
   }
 }
-

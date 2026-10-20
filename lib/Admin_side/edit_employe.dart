@@ -77,9 +77,6 @@ class _EditEmployerPageState extends State<EditEmployerPage> {
     super.dispose();
   }
 
-  // ------------------------------------------------------------
-  // VALIDATION
-  // ------------------------------------------------------------
 
   String? _requiredValidator(
       String? value,
@@ -140,9 +137,6 @@ class _EditEmployerPageState extends State<EditEmployerPage> {
     return null;
   }
 
-  // ------------------------------------------------------------
-  // SAVE
-  // ------------------------------------------------------------
 
   void _saveEmployer() {
     FocusScope.of(context).unfocus();
@@ -153,7 +147,6 @@ class _EditEmployerPageState extends State<EditEmployerPage> {
 
     final companyName = _companyNameController.text.trim();
 
-    // Automatically create logo from company name
     String newLogo = _logo;
 
     if (companyName.isNotEmpty) {
@@ -193,9 +186,6 @@ class _EditEmployerPageState extends State<EditEmployerPage> {
     );
   }
 
-  // ------------------------------------------------------------
-  // MAIN UI
-  // ------------------------------------------------------------
 
   @override
   Widget build(BuildContext context) {
@@ -332,9 +322,6 @@ class _EditEmployerPageState extends State<EditEmployerPage> {
     );
   }
 
-  // ------------------------------------------------------------
-  // HEADER
-  // ------------------------------------------------------------
 
   Widget _buildHeader() {
     return Container(
@@ -367,7 +354,7 @@ class _EditEmployerPageState extends State<EditEmployerPage> {
 
             const SizedBox(width: 1),
 
-             Expanded(
+            Expanded(
               child: Text(
                 'Edit Employer',
                 style: TextStyle(
@@ -413,9 +400,6 @@ class _EditEmployerPageState extends State<EditEmployerPage> {
     );
   }
 
-  // ------------------------------------------------------------
-  // PAGE TITLE
-  // ------------------------------------------------------------
 
   Widget _buildPageTitle() {
     return Container(
@@ -450,7 +434,7 @@ class _EditEmployerPageState extends State<EditEmployerPage> {
 
           const SizedBox(width: 10),
 
-           Expanded(
+          Expanded(
             child: Column(
               crossAxisAlignment:
               CrossAxisAlignment.start,
@@ -479,9 +463,6 @@ class _EditEmployerPageState extends State<EditEmployerPage> {
     );
   }
 
-  // ------------------------------------------------------------
-  // TEXT FIELD
-  // ------------------------------------------------------------
 
   Widget _buildTextField({
     required TextEditingController controller,
@@ -575,15 +556,12 @@ class _EditEmployerPageState extends State<EditEmployerPage> {
     );
   }
 
-  // ------------------------------------------------------------
-  // STATUS DROPDOWN
-  // ------------------------------------------------------------
 
   Widget _buildStatusDropdown() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-         Text(
+        Text(
           'Status',
           style: TextStyle(
             color: navyColor,
@@ -649,9 +627,6 @@ class _EditEmployerPageState extends State<EditEmployerPage> {
     );
   }
 
-  // ------------------------------------------------------------
-  // BUTTONS
-  // ------------------------------------------------------------
 
   Widget _buildButtons() {
     return Row(

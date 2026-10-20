@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:job_portal/Admin_side/jobs_edit.dart';
 import '../references/reference.dart';
@@ -38,13 +37,11 @@ class _JobDetailPageState extends State<JobDetailPage> {
         ),
         actions: [
           TextButton(
-            onPressed: () =>
-                Navigator.pop(dialogContext, false),
+            onPressed: () => Navigator.pop(dialogContext, false),
             child: const Text('Cancel'),
           ),
           FilledButton(
-            onPressed: () =>
-                Navigator.pop(dialogContext, true),
+            onPressed: () => Navigator.pop(dialogContext, true),
             child: Text(
               _status == 'Active' ? 'Deactivate' : 'Activate',
             ),
@@ -94,13 +91,10 @@ class _JobDetailPageState extends State<JobDetailPage> {
     final job = widget.job;
 
     final requirements =
-        (job['requirements'] as List?)?.cast<String>() ??
-            <String>[];
+        (job['requirements'] as List?)?.cast<String>() ?? <String>[];
 
     return Scaffold(
       backgroundColor: backgroundColor,
-
-      // APP BAR
       appBar: AppBar(
         backgroundColor: backgroundColor,
         elevation: 0,
@@ -147,13 +141,10 @@ class _JobDetailPageState extends State<JobDetailPage> {
           ),
         ],
       ),
-
-      // JOB DETAILS CONTENT
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.fromLTRB(14, 4, 14, 14),
           children: [
-            // JOB INFORMATION CARD
             _DetailCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -163,12 +154,10 @@ class _JobDetailPageState extends State<JobDetailPage> {
                     children: [
                       Expanded(
                         child: Column(
-                          crossAxisAlignment:
-                          CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              job['title']?.toString() ??
-                                  'Job title',
+                              job['title']?.toString() ?? 'Job title',
                               style: TextStyle(
                                 color: textColor,
                                 fontSize: 15,
@@ -177,8 +166,7 @@ class _JobDetailPageState extends State<JobDetailPage> {
                             ),
                             const SizedBox(height: 3),
                             Text(
-                              job['company']?.toString() ??
-                                  'Company',
+                              job['company']?.toString() ?? 'Company',
                               style: TextStyle(
                                 color: greyColor,
                                 fontSize: 11,
@@ -233,10 +221,7 @@ class _JobDetailPageState extends State<JobDetailPage> {
                 ],
               ),
             ),
-
             const SizedBox(height: 10),
-
-            // DESCRIPTION AND REQUIREMENTS
             _DetailCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -284,8 +269,7 @@ class _JobDetailPageState extends State<JobDetailPage> {
                           (requirement) => Padding(
                         padding: const EdgeInsets.only(bottom: 5),
                         child: Row(
-                          crossAxisAlignment:
-                          CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(top: 4),
@@ -313,18 +297,20 @@ class _JobDetailPageState extends State<JobDetailPage> {
                 ],
               ),
             ),
-
             const SizedBox(height: 10),
-
-            // ACTION BUTTONS
             Row(
               children: [
                 Expanded(
                   child: SizedBox(
                     height: 42,
                     child: ElevatedButton(
-                      onPressed: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>EditJobPage()));
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EditJobPage(),
+                          ),
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: blueColor,
@@ -378,10 +364,6 @@ class _JobDetailPageState extends State<JobDetailPage> {
   }
 }
 
-// ================================================================
-// DETAIL CARD
-// ================================================================
-
 class _DetailCard extends StatelessWidget {
   final Widget child;
 
@@ -400,10 +382,6 @@ class _DetailCard extends StatelessWidget {
     );
   }
 }
-
-// ================================================================
-// LABEL AND VALUE
-// ================================================================
 
 class _DetailLabelValue extends StatelessWidget {
   final String label;
@@ -443,10 +421,6 @@ class _DetailLabelValue extends StatelessWidget {
     );
   }
 }
-
-// ================================================================
-// BOTTOM NAVIGATION
-// ================================================================
 
 class _DetailBottomBar extends StatelessWidget {
   final VoidCallback onJobsTap;
@@ -498,9 +472,7 @@ class _DetailBottomBar extends StatelessWidget {
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: selected
-                          ? avatarColor
-                          : Colors.transparent,
+                      color: selected ? avatarColor : Colors.transparent,
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: Column(

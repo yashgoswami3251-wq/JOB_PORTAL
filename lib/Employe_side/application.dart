@@ -3,17 +3,9 @@ import 'package:job_portal/Employe_side/profile.dart';
 
 import '../references/reference.dart';
 import 'homepage.dart';
-import 'my_job_posting.dart';
-
-class ApplicationPage extends StatefulWidget {
-  const ApplicationPage({super.key});
-
-  @override
-  State<ApplicationPage> createState() => _ApplicationPageState();
-}
 
 // ============================================================
-// APPLICATION MODEL
+// APPLICANT MODEL
 // ============================================================
 
 class Applicant {
@@ -23,12 +15,10 @@ class Applicant {
   String experience;
   String skills;
   String status;
-
   String email;
   String phone;
   String currentCompany;
   String position;
-
   List<String> skillList;
   String coverLetter;
 
@@ -52,16 +42,15 @@ class Applicant {
 // APPLICATION PAGE
 // ============================================================
 
+class ApplicationPage extends StatefulWidget {
+  const ApplicationPage({super.key});
+
+  @override
+  State<ApplicationPage> createState() => _ApplicationPageState();
+}
+
 class _ApplicationPageState extends State<ApplicationPage> {
-  // ----------------------------------------------------------
-  // Current Filter
-  // ----------------------------------------------------------
-
   String selectedFilter = "All";
-
-  // ----------------------------------------------------------
-  // Applicant List
-  // ----------------------------------------------------------
 
   final List<Applicant> applicants = [
     Applicant(
@@ -86,7 +75,6 @@ class _ApplicationPageState extends State<ApplicationPage> {
       coverLetter:
       "I am highly passionate about developing accessible and robust web interfaces. My focus over the last three years has been building composable architectures in React. I am excited about the prospect of joining TCS to deliver exceptional digital experiences.",
     ),
-
     Applicant(
       name: "Deepika Nair",
       initials: "DN",
@@ -108,7 +96,6 @@ class _ApplicationPageState extends State<ApplicationPage> {
       coverLetter:
       "I enjoy creating clean and user-friendly digital experiences. My experience includes designing responsive interfaces, prototypes and user journeys while working closely with development teams.",
     ),
-
     Applicant(
       name: "Arjun Mehta",
       initials: "AM",
@@ -132,40 +119,31 @@ class _ApplicationPageState extends State<ApplicationPage> {
     ),
   ];
 
-  // ==========================================================
-  // FILTER APPLICANTS
-  // ==========================================================
-
   List<Applicant> get filteredApplicants {
-    if (selectedFilter == "All") {
-      return applicants;
-    }
+    switch (selectedFilter) {
+      case "New":
+        return applicants
+            .where(
+              (a) =>
+          a.status != "Shortlisted" &&
+              a.status != "Rejected",
+        )
+            .toList();
 
-    if (selectedFilter == "New") {
-      return applicants.where((applicant) {
-        return applicant.status != "Shortlisted" &&
-            applicant.status != "Rejected";
-      }).toList();
-    }
+      case "Shortlisted":
+        return applicants
+            .where((a) => a.status == "Shortlisted")
+            .toList();
 
-    if (selectedFilter == "Shortlisted") {
-      return applicants
-          .where((applicant) => applicant.status == "Shortlisted")
-          .toList();
-    }
+      case "Rejected":
+        return applicants
+            .where((a) => a.status == "Rejected")
+            .toList();
 
-    if (selectedFilter == "Rejected") {
-      return applicants
-          .where((applicant) => applicant.status == "Rejected")
-          .toList();
+      default:
+        return applicants;
     }
-
-    return applicants;
   }
-
-  // ==========================================================
-  // UPDATE APPLICANT STATUS
-  // ==========================================================
 
   void updateApplicantStatus(
       Applicant applicant,
@@ -176,27 +154,24 @@ class _ApplicationPageState extends State<ApplicationPage> {
     });
   }
 
-  // ==========================================================
-  // OPEN APPLICANT DETAILS
-  // ==========================================================
-
   void openApplicantDetails(Applicant applicant) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ApplicantProfilePage(applicant: applicant, onStatusChanged: (newStatus) {updateApplicantStatus(applicant, newStatus,);
+        builder: (context) => ApplicantProfilePage(
+          applicant: applicant,
+          onStatusChanged: (newStatus) {
+            updateApplicantStatus(applicant, newStatus);
           },
         ),
       ),
-    );
+    ).then((_) {
+      if (mounted) setState(() {});
+    });
   }
 
-  // ==========================================================
-  // FILTER BUTTON
-  // ==========================================================
-
   Widget filterButton(String title) {
-    final bool isSelected = selectedFilter == title;
+    final isSelected = selectedFilter == title;
 
     return GestureDetector(
       onTap: () {
@@ -206,8 +181,8 @@ class _ApplicationPageState extends State<ApplicationPage> {
       },
       child: Container(
         padding: const EdgeInsets.symmetric(
-          horizontal: 15,
-          vertical: 7,
+          horizontal: 12,
+          vertical: 6,
         ),
         decoration: BoxDecoration(
           color: isSelected
@@ -215,50 +190,46 @@ class _ApplicationPageState extends State<ApplicationPage> {
               : Colors.white,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: isSelected
-                ? const Color(0xFF17445B)
-                : borderColor,
+            color: isSelected ? const Color(0xFF17445B) : borderColor,
           ),
         ),
         child: Text(
           title,
           style: TextStyle(
-            fontSize: 12,
+            fontSize: 11,
             fontWeight: FontWeight.w500,
-            color: isSelected
-                ? Colors.white
-                : greyColor,
+            color: isSelected ? Colors.white : greyColor,
           ),
         ),
       ),
     );
   }
 
-  // ==========================================================
-  // STATUS BADGE
-  // ==========================================================
-
   Widget statusBadge(String status) {
     Color bgColor;
     Color textColor;
 
-    if (status == "Shortlisted") {
-      bgColor = const Color(0xFFDCEBFF);
-      textColor = blueColor;
-    } else if (status == "Rejected") {
-      bgColor = const Color(0xFFFFDDDD);
-      textColor = redColor;
-    } else if (status == "Interview Scheduled") {
-      bgColor = const Color(0xFFD7F7E5);
-      textColor = greenColor;
-    } else {
-      bgColor = const Color(0xFFECEFF3);
-      textColor = greyColor;
+    switch (status) {
+      case "Shortlisted":
+        bgColor = const Color(0xFFDCEBFF);
+        textColor = blueColor;
+        break;
+      case "Rejected":
+        bgColor = const Color(0xFFFFDDDD);
+        textColor = redColor;
+        break;
+      case "Interview Scheduled":
+        bgColor = const Color(0xFFD7F7E5);
+        textColor = greenColor;
+        break;
+      default:
+        bgColor = const Color(0xFFECEFF3);
+        textColor = greyColor;
     }
 
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: 8,
+        horizontal: 7,
         vertical: 4,
       ),
       decoration: BoxDecoration(
@@ -268,7 +239,7 @@ class _ApplicationPageState extends State<ApplicationPage> {
       child: Text(
         status,
         style: TextStyle(
-          fontSize: 10,
+          fontSize: 9,
           fontWeight: FontWeight.w500,
           color: textColor,
         ),
@@ -276,73 +247,58 @@ class _ApplicationPageState extends State<ApplicationPage> {
     );
   }
 
-  // ==========================================================
-  // APPLICANT CARD
-  // ==========================================================
-
   Widget applicantCard(Applicant applicant) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 10),
-      padding: const EdgeInsets.all(13),
+      margin: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.all(11),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(7),
-        border: Border.all(
-          color: borderColor,
-        ),
+        border: Border.all(color: borderColor),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.03),
-            blurRadius: 5,
-            offset: const Offset(0, 2),
+            blurRadius: 4,
+            offset: const Offset(0, 1),
           ),
         ],
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // --------------------------------------------------
-          // APPLICANT NAME
-          // --------------------------------------------------
-
           Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CircleAvatar(
-                radius: 17,
+                radius: 16,
                 backgroundColor: const Color(0xFFE8EBF0),
                 child: Text(
                   applicant.initials,
                   style: TextStyle(
                     color: navyColor,
-                    fontSize: 11,
+                    fontSize: 10,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
-
-              const SizedBox(width: 10),
-
+              const SizedBox(width: 9),
               Expanded(
                 child: Column(
-                  crossAxisAlignment:
-                  CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       applicant.name,
                       style: TextStyle(
                         color: navyColor,
-                        fontSize: 13,
+                        fontSize: 12,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-
-                    const SizedBox(height: 3),
-
+                    const SizedBox(height: 2),
                     Text(
                       "Applied on ${applicant.appliedDate}",
                       style: TextStyle(
                         color: greyColor,
-                        fontSize: 10,
+                        fontSize: 9,
                       ),
                     ),
                   ],
@@ -350,85 +306,55 @@ class _ApplicationPageState extends State<ApplicationPage> {
               ),
             ],
           ),
-
-          const SizedBox(height: 10),
-
-          // --------------------------------------------------
-          // EXPERIENCE + SKILLS
-          // --------------------------------------------------
-
-          Align(
-            alignment: Alignment.centerLeft,
-            child: RichText(
-              text: TextSpan(
-                style: TextStyle(
-                  color: greyColor,
-                  fontSize: 11,
-                ),
-                children: [
-                  const TextSpan(
-                    text: "Experience: ",
-                  ),
-
-                  TextSpan(
-                    text: applicant.experience,
-                    style: TextStyle(
-                      color: navyColor,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-
-                  TextSpan(
-                    text: " • ${applicant.skills}",
-                    style: TextStyle(
-                      color: navyColor,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
+          const SizedBox(height: 9),
+          RichText(
+            text: TextSpan(
+              style: TextStyle(
+                color: greyColor,
+                fontSize: 10,
               ),
+              children: [
+                const TextSpan(text: "Experience: "),
+                TextSpan(
+                  text: applicant.experience,
+                  style: TextStyle(
+                    color: navyColor,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                TextSpan(
+                  text: " • ${applicant.skills}",
+                  style: TextStyle(
+                    color: navyColor,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
             ),
           ),
-
-          const SizedBox(height: 9),
-
-          Divider(
-            height: 1,
-            color: borderColor,
-          ),
-
-          const SizedBox(height: 9),
-
-          // --------------------------------------------------
-          // STATUS + VIEW DETAILS
-          // --------------------------------------------------
-
+          const SizedBox(height: 8),
+          Divider(height: 1, color: borderColor),
+          const SizedBox(height: 8),
           Row(
-            mainAxisAlignment:
-            MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              statusBadge(applicant.status),
-
+              Flexible(child: statusBadge(applicant.status)),
               GestureDetector(
-                onTap: () {
-                  openApplicantDetails(applicant);
-                },
+                onTap: () => openApplicantDetails(applicant),
                 child: Row(
                   children: [
                     Text(
                       "View Details",
                       style: TextStyle(
                         color: blueColor,
-                        fontSize: 11,
+                        fontSize: 10,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-
-                    const SizedBox(width: 4),
-
+                    const SizedBox(width: 3),
                     Icon(
                       Icons.arrow_forward,
-                      size: 14,
+                      size: 13,
                       color: blueColor,
                     ),
                   ],
@@ -441,18 +367,9 @@ class _ApplicationPageState extends State<ApplicationPage> {
     );
   }
 
-  // ==========================================================
-  // TOP BAR
-  // ==========================================================
-
   Widget topBar() {
     return Container(
-      padding: const EdgeInsets.fromLTRB(
-        14,
-        8,
-        14,
-        10,
-      ),
+      padding: const EdgeInsets.fromLTRB(12, 7, 12, 9),
       decoration: BoxDecoration(
         color: backgroundColor,
         border: Border(
@@ -462,142 +379,112 @@ class _ApplicationPageState extends State<ApplicationPage> {
           ),
         ),
       ),
-      child: Column(
-        crossAxisAlignment:
-        CrossAxisAlignment.start,
+      child: Row(
         children: [
-          Row(
-            children: [
-              InkWell(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>EmployeeHomePage()));
-                },
-                child: Icon(
-                  Icons.arrow_back_ios,
-                  size: 20,
-                  color: blueColor,
+          InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EmployeeHomePage(),
                 ),
-              ),
-
-              const SizedBox(width: 5),
-
-              Column(
-                children: [
-                  Text(
-                    "Applications",
-                    style: TextStyle(
-                      fontSize: fontSize,
-                      fontWeight: fontweight,
-                      color: navyColor,
-                    ),
-                  ),
-
-                  Text(
-                    "Senior React Developer",
-                    style: TextStyle(
-                      fontSize: 11,
-                      color: greyColor,
-                    ),
-                  ),
-                ],
-              ),
-
-              const Spacer(),
-
-              Icon(
-                Icons.notifications_none,
-                size: 22,
-                color: greyColor,
-              ),
-
-              const SizedBox(width: 12),
-
-              InkWell(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>CompanyProfilePage()));
-                },
-                child: Container(
-                  width: profileSize,
-                  height: profileSize,
-                  decoration: BoxDecoration(
-                    color: avatarColor,
-                    shape: BoxShape.circle,
-                  ),
-                  alignment: Alignment.center,
-                  child: const Text(
-                    'TCS',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 11,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ],
+              );
+            },
+            child: Icon(
+              Icons.arrow_back_ios,
+              size: 18,
+              color: blueColor,
+            ),
           ),
-
-          const SizedBox(height: 2),
-
-
+          const SizedBox(width: 5),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Applications",
+                  style: TextStyle(
+                    fontSize: fontSize,
+                    fontWeight: fontweight,
+                    color: navyColor,
+                  ),
+                ),
+                Text(
+                  "Senior React Developer",
+                  style: TextStyle(
+                    fontSize: 10,
+                    color: greyColor,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Icon(
+            Icons.notifications_none,
+            size: 21,
+            color: greyColor,
+          ),
+          const SizedBox(width: 10),
+          InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CompanyProfilePage(),
+                ),
+              );
+            },
+            child: Container(
+              width: profileSize,
+              height: profileSize,
+              decoration: BoxDecoration(
+                color: avatarColor,
+                shape: BoxShape.circle,
+              ),
+              alignment: Alignment.center,
+              child: const Text(
+                "TCS",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
   }
 
-  // ==========================================================
-  // BUILD APPLICATION PAGE
-  // ==========================================================
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-
       body: SafeArea(
         child: Column(
           children: [
-            // ------------------------------------------------
-            // TOP BAR
-            // ------------------------------------------------
-
             topBar(),
-
-            // ------------------------------------------------
-            // FILTERS
-            // ------------------------------------------------
-
             Container(
               padding: const EdgeInsets.symmetric(
-                horizontal: 14,
-                vertical: 10,
+                horizontal: 12,
+                vertical: 8,
               ),
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
                     filterButton("All"),
-
-                    const SizedBox(width: 8),
-
+                    const SizedBox(width: 7),
                     filterButton("New"),
-
-                    const SizedBox(width: 8),
-
+                    const SizedBox(width: 7),
                     filterButton("Shortlisted"),
-
-                    const SizedBox(width: 8),
-
+                    const SizedBox(width: 7),
                     filterButton("Rejected"),
                   ],
                 ),
               ),
             ),
-
-            // ------------------------------------------------
-            // APPLICANT LIST
-            // ------------------------------------------------
-
             Expanded(
               child: filteredApplicants.isEmpty
                   ? Center(
@@ -605,25 +492,19 @@ class _ApplicationPageState extends State<ApplicationPage> {
                   "No applications found",
                   style: TextStyle(
                     color: greyColor,
-                    fontSize: 13,
+                    fontSize: 12,
                   ),
                 ),
               )
                   : ListView.builder(
-                padding:
-                const EdgeInsets.symmetric(
-                  horizontal: 14,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
                   vertical: 2,
                 ),
-                itemCount:
-                filteredApplicants.length,
-                itemBuilder:
-                    (context, index) {
-                  final applicant =
-                  filteredApplicants[index];
-
+                itemCount: filteredApplicants.length,
+                itemBuilder: (context, index) {
                   return applicantCard(
-                    applicant,
+                    filteredApplicants[index],
                   );
                 },
               ),
@@ -641,7 +522,6 @@ class _ApplicationPageState extends State<ApplicationPage> {
 
 class ApplicantProfilePage extends StatefulWidget {
   final Applicant applicant;
-
   final Function(String) onStatusChanged;
 
   const ApplicantProfilePage({
@@ -651,21 +531,13 @@ class ApplicantProfilePage extends StatefulWidget {
   });
 
   @override
-  State<ApplicantProfilePage> createState() => _ApplicantProfilePageState();
+  State<ApplicantProfilePage> createState() =>
+      _ApplicantProfilePageState();
 }
 
 class _ApplicantProfilePageState
     extends State<ApplicantProfilePage> {
-  // ----------------------------------------------------------
-  // Colors
-  // ----------------------------------------------------------
-
   final Color greenColor = const Color(0xFF138A43);
-
-
-  // ==========================================================
-  // CHANGE STATUS
-  // ==========================================================
 
   void changeStatus(String status) {
     setState(() {
@@ -674,30 +546,19 @@ class _ApplicantProfilePageState
 
     widget.onStatusChanged(status);
 
-    ScaffoldMessenger.of(context)
-        .showSnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
           "${widget.applicant.name} marked as $status",
         ),
-        duration:
-        const Duration(seconds: 1),
+        duration: const Duration(seconds: 1),
       ),
     );
   }
 
-  // ==========================================================
-  // TOP BAR
-  // ==========================================================
-
   Widget topBar() {
     return Container(
-      padding: const EdgeInsets.fromLTRB(
-        14,
-        8,
-        14,
-        10,
-      ),
+      padding: const EdgeInsets.fromLTRB(12, 7, 12, 9),
       decoration: BoxDecoration(
         color: backgroundColor,
         border: Border(
@@ -708,79 +569,65 @@ class _ApplicantProfilePageState
         ),
       ),
       child: Column(
-        crossAxisAlignment:
-        CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
               GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
+                onTap: () => Navigator.pop(context),
                 child: Row(
                   children: [
                     Icon(
                       Icons.arrow_back_ios,
-                      size: 14,
+                      size: 13,
                       color: blueColor,
                     ),
-
                     Text(
                       "Back to Apps",
                       style: TextStyle(
                         color: blueColor,
-                        fontSize: 12,
-                        fontWeight:
-                        FontWeight.w500,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ],
                 ),
               ),
-
               const Spacer(),
-
               Icon(
                 Icons.notifications_none,
-                size: 22,
+                size: 21,
                 color: greyColor,
               ),
-
-              const SizedBox(width: 12),
-
-              CircleAvatar(
-                radius: 14,
-                backgroundColor:
-                const Color(0xFF397184),
-                child: const Text(
+              const SizedBox(width: 10),
+              const CircleAvatar(
+                radius: 13,
+                backgroundColor: Color(0xFF397184),
+                child: Text(
                   "TCS",
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 9,
-                    fontWeight:
-                    FontWeight.w600,
+                    fontSize: 8,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
             ],
           ),
-
-          const SizedBox(height: 3),
-
+          const SizedBox(height: 5),
           Text(
             "Applicant Profile",
             style: TextStyle(
               color: navyColor,
-              fontSize: 16,
+              fontSize: 15,
               fontWeight: FontWeight.bold,
             ),
           ),
-
           Text(
             "Detailed breakdown of candidate",
             style: TextStyle(
               color: greyColor,
-              fontSize: 10,
+              fontSize: 9,
             ),
           ),
         ],
@@ -788,85 +635,86 @@ class _ApplicantProfilePageState
     );
   }
 
-  // ==========================================================
-  // PROFILE INFORMATION CARD
-  // ==========================================================
+  Widget infoItem(String title, String value) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: TextStyle(
+            color: greyColor,
+            fontSize: 9,
+          ),
+        ),
+        const SizedBox(height: 3),
+        Text(
+          value,
+          style: TextStyle(
+            color: navyColor,
+            fontSize: 10,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ],
+    );
+  }
 
   Widget profileInformationCard() {
     final applicant = widget.applicant;
 
     return Container(
-      margin: const EdgeInsets.fromLTRB(
-        14,
-        10,
-        14,
-        0,
-      ),
-      padding: const EdgeInsets.all(14),
+      margin: const EdgeInsets.fromLTRB(12, 9, 12, 0),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius:
-        BorderRadius.circular(7),
-        border: Border.all(
-          color: borderColor,
-        ),
+        borderRadius: BorderRadius.circular(7),
+        border: Border.all(color: borderColor),
       ),
       child: Column(
         children: [
           Row(
             children: [
               CircleAvatar(
-                radius: 23,
+                radius: 21,
                 backgroundColor: navyColor,
                 child: Text(
                   applicant.initials,
                   style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 16,
-                    fontWeight:
-                    FontWeight.w600,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
-
-              const SizedBox(width: 12),
-
+              const SizedBox(width: 10),
               Expanded(
                 child: Column(
-                  crossAxisAlignment:
-                  CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       applicant.name,
                       style: TextStyle(
                         color: navyColor,
-                        fontSize: 16,
-                        fontWeight:
-                        FontWeight.bold,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-
                     const SizedBox(height: 3),
-
                     RichText(
                       text: TextSpan(
                         style: TextStyle(
                           color: greyColor,
-                          fontSize: 10,
+                          fontSize: 9,
                         ),
                         children: [
                           const TextSpan(
-                            text:
-                            "Position Applied:  ",
+                            text: "Position Applied: ",
                           ),
-
                           TextSpan(
-                            text:
-                            applicant.position,
+                            text: applicant.position,
                             style: TextStyle(
                               color: blueColor,
-                              fontWeight:
-                              FontWeight.w600,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ],
@@ -877,36 +725,20 @@ class _ApplicantProfilePageState
               ),
             ],
           ),
-
-          const SizedBox(height: 13),
-
-          Divider(
-            height: 1,
-            color: borderColor,
-          ),
-
-          const SizedBox(height: 12),
-
+          const SizedBox(height: 11),
+          Divider(height: 1, color: borderColor),
+          const SizedBox(height: 11),
           Row(
             children: [
               Expanded(
-                child: infoItem(
-                  "Email",
-                  applicant.email,
-                ),
+                child: infoItem("Email", applicant.email),
               ),
-
               Expanded(
-                child: infoItem(
-                  "Phone",
-                  applicant.phone,
-                ),
+                child: infoItem("Phone", applicant.phone),
               ),
             ],
           ),
-
-          const SizedBox(height: 12),
-
+          const SizedBox(height: 11),
           Row(
             children: [
               Expanded(
@@ -915,7 +747,6 @@ class _ApplicantProfilePageState
                   applicant.experience,
                 ),
               ),
-
               Expanded(
                 child: infoItem(
                   "Current Company",
@@ -929,64 +760,17 @@ class _ApplicantProfilePageState
     );
   }
 
-  // ==========================================================
-  // INFO ITEM
-  // ==========================================================
-
-  Widget infoItem(
-      String title,
-      String value,
-      ) {
-    return Column(
-      crossAxisAlignment:
-      CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: TextStyle(
-            color: greyColor,
-            fontSize: 9,
-          ),
-        ),
-
-        const SizedBox(height: 3),
-
-        Text(
-          value,
-          style: TextStyle(
-            color: navyColor,
-            fontSize: 10,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ],
-    );
-  }
-
-  // ==========================================================
-  // SKILLS CARD
-  // ==========================================================
-
   Widget skillsCard() {
     return Container(
-      margin: const EdgeInsets.fromLTRB(
-        14,
-        10,
-        14,
-        0,
-      ),
-      padding: const EdgeInsets.all(13),
+      margin: const EdgeInsets.fromLTRB(12, 9, 12, 0),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius:
-        BorderRadius.circular(7),
-        border: Border.all(
-          color: borderColor,
-        ),
+        borderRadius: BorderRadius.circular(7),
+        border: Border.all(color: borderColor),
       ),
       child: Column(
-        crossAxisAlignment:
-        CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             "Skills",
@@ -996,68 +780,46 @@ class _ApplicantProfilePageState
               fontWeight: FontWeight.bold,
             ),
           ),
-
-          const SizedBox(height: 9),
-
+          const SizedBox(height: 8),
           Wrap(
             spacing: 6,
             runSpacing: 6,
-            children: widget.applicant.skillList
-                .map(
-                  (skill) {
-                return Container(
-                  padding:
-                  const EdgeInsets.symmetric(
-                    horizontal: 9,
-                    vertical: 6,
+            children: widget.applicant.skillList.map((skill) {
+              return Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8,
+                  vertical: 5,
+                ),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF0F3F7),
+                  borderRadius: BorderRadius.circular(3),
+                ),
+                child: Text(
+                  skill,
+                  style: TextStyle(
+                    color: navyColor,
+                    fontSize: 9,
                   ),
-                  decoration: BoxDecoration(
-                    color:
-                    const Color(0xFFF0F3F7),
-                    borderRadius:
-                    BorderRadius.circular(3),
-                  ),
-                  child: Text(
-                    skill,
-                    style: TextStyle(
-                      color: navyColor,
-                      fontSize: 9,
-                    ),
-                  ),
-                );
-              },
-            )
-                .toList(),
+                ),
+              );
+            }).toList(),
           ),
         ],
       ),
     );
   }
 
-  // ==========================================================
-  // COVER LETTER
-  // ==========================================================
-
   Widget coverLetterCard() {
     return Container(
-      margin: const EdgeInsets.fromLTRB(
-        14,
-        10,
-        14,
-        0,
-      ),
-      padding: const EdgeInsets.all(13),
+      margin: const EdgeInsets.fromLTRB(12, 9, 12, 0),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius:
-        BorderRadius.circular(7),
-        border: Border.all(
-          color: borderColor,
-        ),
+        borderRadius: BorderRadius.circular(7),
+        border: Border.all(color: borderColor),
       ),
       child: Column(
-        crossAxisAlignment:
-        CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             "Cover Letter Summary",
@@ -1067,15 +829,13 @@ class _ApplicantProfilePageState
               fontWeight: FontWeight.bold,
             ),
           ),
-
-          const SizedBox(height: 9),
-
+          const SizedBox(height: 8),
           Text(
             widget.applicant.coverLetter,
             style: TextStyle(
               color: greyColor,
-              fontSize: 10.5,
-              height: 1.45,
+              fontSize: 10,
+              height: 1.4,
             ),
           ),
         ],
@@ -1083,57 +843,39 @@ class _ApplicantProfilePageState
     );
   }
 
-  // ==========================================================
-  // RESUME CARD
-  // ==========================================================
-
   Widget resumeCard() {
     return Container(
-      margin: const EdgeInsets.fromLTRB(
-        14,
-        10,
-        14,
-        0,
-      ),
+      margin: const EdgeInsets.fromLTRB(12, 9, 12, 0),
       padding: const EdgeInsets.symmetric(
-        horizontal: 11,
-        vertical: 9,
+        horizontal: 10,
+        vertical: 8,
       ),
       decoration: BoxDecoration(
         color: const Color(0xFFF8FAFC),
-        borderRadius:
-        BorderRadius.circular(5),
-        border: Border.all(
-          color: borderColor,
-        ),
+        borderRadius: BorderRadius.circular(5),
+        border: Border.all(color: borderColor),
       ),
       child: Row(
         children: [
           Icon(
             Icons.insert_drive_file_outlined,
             color: blueColor,
-            size: 20,
+            size: 19,
           ),
-
-          const SizedBox(width: 10),
-
+          const SizedBox(width: 9),
           Expanded(
             child: Column(
-              crossAxisAlignment:
-              CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   "${widget.applicant.name.replaceAll(" ", "_")}_Resume.pdf",
                   style: TextStyle(
                     color: navyColor,
-                    fontSize: 10,
-                    fontWeight:
-                    FontWeight.w600,
+                    fontSize: 9,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-
                 const SizedBox(height: 2),
-
                 Text(
                   "1.4 MB • PDF Document",
                   style: TextStyle(
@@ -1144,20 +886,15 @@ class _ApplicantProfilePageState
               ],
             ),
           ),
-
           Container(
-            padding:
-            const EdgeInsets.symmetric(
-              horizontal: 10,
-              vertical: 6,
+            padding: const EdgeInsets.symmetric(
+              horizontal: 9,
+              vertical: 5,
             ),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius:
-              BorderRadius.circular(4),
-              border: Border.all(
-                color: borderColor,
-              ),
+              borderRadius: BorderRadius.circular(4),
+              border: Border.all(color: borderColor),
             ),
             child: Text(
               "Download",
@@ -1173,139 +910,82 @@ class _ApplicantProfilePageState
     );
   }
 
-  // ==========================================================
-  // ACTION BUTTONS
-  // ==========================================================
-
   Widget actionButtons() {
     return Container(
-      padding: const EdgeInsets.fromLTRB(
-        14,
-        10,
-        14,
-        10,
-      ),
+      padding: const EdgeInsets.fromLTRB(12, 9, 12, 9),
       color: backgroundColor,
       child: Row(
         children: [
-          // --------------------------------------------------
-          // SHORTLIST
-          // --------------------------------------------------
-
           Expanded(
             child: SizedBox(
-              height: 34,
+              height: 33,
               child: ElevatedButton(
-                onPressed: () {
-                  changeStatus(
-                    "Shortlisted",
-                  );
-                },
-                style:
-                ElevatedButton.styleFrom(
-                  backgroundColor:
-                  greenColor,
-                  foregroundColor:
-                  Colors.white,
+                onPressed: () => changeStatus("Shortlisted"),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: greenColor,
+                  foregroundColor: Colors.white,
                   elevation: 0,
-                  shape:
-                  RoundedRectangleBorder(
-                    borderRadius:
-                    BorderRadius.circular(
-                      4,
-                    ),
+                  padding: EdgeInsets.zero,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4),
                   ),
                 ),
                 child: const Text(
                   "Shortlist",
                   style: TextStyle(
-                    fontSize: 11,
-                    fontWeight:
-                    FontWeight.w600,
+                    fontSize: 10,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
             ),
           ),
-
-          const SizedBox(width: 8),
-
-          // --------------------------------------------------
-          // SCHEDULE
-          // --------------------------------------------------
-
+          const SizedBox(width: 7),
           Expanded(
             child: SizedBox(
-              height: 34,
+              height: 33,
               child: ElevatedButton(
-                onPressed: () {
-                  changeStatus(
-                    "Interview Scheduled",
-                  );
-                },
-                style:
-                ElevatedButton.styleFrom(
-                  backgroundColor:
-                  blueColor,
-                  foregroundColor:
-                  Colors.white,
+                onPressed: () =>
+                    changeStatus("Interview Scheduled"),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: blueColor,
+                  foregroundColor: Colors.white,
                   elevation: 0,
-                  shape:
-                  RoundedRectangleBorder(
-                    borderRadius:
-                    BorderRadius.circular(
-                      4,
-                    ),
+                  padding: EdgeInsets.zero,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4),
                   ),
                 ),
                 child: const Text(
                   "Schedule",
                   style: TextStyle(
-                    fontSize: 11,
-                    fontWeight:
-                    FontWeight.w600,
+                    fontSize: 10,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
             ),
           ),
-
-          const SizedBox(width: 8),
-
-          // --------------------------------------------------
-          // REJECT
-          // --------------------------------------------------
-
+          const SizedBox(width: 7),
           Expanded(
             child: SizedBox(
-              height: 34,
+              height: 33,
               child: ElevatedButton(
-                onPressed: () {
-                  changeStatus(
-                    "Rejected",
-                  );
-                },
-                style:
-                ElevatedButton.styleFrom(
-                  backgroundColor:
-                  redColor,
-                  foregroundColor:
-                  Colors.white,
+                onPressed: () => changeStatus("Rejected"),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: redColor,
+                  foregroundColor: Colors.white,
                   elevation: 0,
-                  shape:
-                  RoundedRectangleBorder(
-                    borderRadius:
-                    BorderRadius.circular(
-                      4,
-                    ),
+                  padding: EdgeInsets.zero,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4),
                   ),
                 ),
                 child: const Text(
                   "Reject",
                   style: TextStyle(
-                    fontSize: 11,
-                    fontWeight:
-                    FontWeight.w600,
+                    fontSize: 10,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
@@ -1316,50 +996,27 @@ class _ApplicantProfilePageState
     );
   }
 
-  // ==========================================================
-  // BUILD PROFILE PAGE
-  // ==========================================================
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-
       body: SafeArea(
         child: Column(
           children: [
-            // ------------------------------------------------
-            // TOP BAR
-            // ------------------------------------------------
-
             topBar(),
-
-            // ------------------------------------------------
-            // PROFILE CONTENT
-            // ------------------------------------------------
-
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
                   children: [
                     profileInformationCard(),
-
                     skillsCard(),
-
                     coverLetterCard(),
-
                     resumeCard(),
-
-                    const SizedBox(height: 2),
+                    const SizedBox(height: 10),
                   ],
                 ),
               ),
             ),
-
-            // ------------------------------------------------
-            // ACTION BUTTONS
-            // ------------------------------------------------
-
             actionButtons(),
           ],
         ),

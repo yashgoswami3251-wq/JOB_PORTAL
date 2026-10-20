@@ -16,10 +16,6 @@ class EmployeeHomePage extends StatefulWidget {
 class _EmployeeHomePageState extends State<EmployeeHomePage> {
   int selectedIndex = 0;
 
-  // ---------------------------------------------------------
-  // Dashboard Data
-  // ---------------------------------------------------------
-
   final List<Map<String, dynamic>> dashboardStats = [
     {
       'title': 'Posted Jobs',
@@ -51,10 +47,6 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
     },
   ];
 
-  // ---------------------------------------------------------
-  // Bottom Navigation Pages
-  // ---------------------------------------------------------
-
   Widget getCurrentPage() {
     switch (selectedIndex) {
       case 0:
@@ -77,16 +69,11 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
     }
   }
 
-  // ---------------------------------------------------------
-  // Main Dashboard
-  // ---------------------------------------------------------
-
   Widget _buildDashboard() {
     return SafeArea(
       child: Column(
         children: [
           _buildHeader(),
-
           Expanded(
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
@@ -95,15 +82,10 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildStatistics(),
-
                   const SizedBox(height: 18),
-
                   _buildQuickActions(),
-
                   const SizedBox(height: 18),
-
                   _buildRecentUpdates(),
-
                   const SizedBox(height: 20),
                 ],
               ),
@@ -113,10 +95,6 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
       ),
     );
   }
-
-  // ---------------------------------------------------------
-  // Header
-  // ---------------------------------------------------------
 
   Widget _buildHeader() {
     return Container(
@@ -145,9 +123,7 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
                     color: navyColor,
                   ),
                 ),
-
                 const SizedBox(height: 2),
-
                 Text(
                   'Welcome back, TCS Recruiter',
                   style: TextStyle(
@@ -158,8 +134,6 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
               ],
             ),
           ),
-
-          // Notification
           IconButton(
             onPressed: () {
               _showMessage('No new notifications');
@@ -175,35 +149,27 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
               size: 24,
             ),
           ),
-
           const SizedBox(width: 4),
-
-          // Profile Avatar
           GestureDetector(
             onTap: () {
               setState(() {
                 selectedIndex = 4;
               });
             },
-            child: InkWell(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>CompanyProfilePage()));
-              },
-              child: Container(
-                width: profileSize,
-                height: profileSize,
-                decoration: BoxDecoration(
-                  color: avatarColor,
-                  shape: BoxShape.circle,
-                ),
-                alignment: Alignment.center,
-                child: const Text(
-                  'TCS',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 11,
-                    fontWeight: FontWeight.bold,
-                  ),
+            child: Container(
+              width: profileSize,
+              height: profileSize,
+              decoration: BoxDecoration(
+                color: avatarColor,
+                shape: BoxShape.circle,
+              ),
+              alignment: Alignment.center,
+              child: const Text(
+                'TCS',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 11,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
@@ -212,10 +178,6 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
       ),
     );
   }
-
-  // ---------------------------------------------------------
-  // Statistics Cards
-  // ---------------------------------------------------------
 
   Widget _buildStatistics() {
     return GridView.builder(
@@ -280,9 +242,7 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
               size: 19,
             ),
           ),
-
           const SizedBox(width: 10),
-
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -297,9 +257,7 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
                     color: greyColor,
                   ),
                 ),
-
                 const SizedBox(height: 3),
-
                 Text(
                   value,
                   style: TextStyle(
@@ -315,10 +273,6 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
       ),
     );
   }
-
-  // ---------------------------------------------------------
-  // Quick Actions
-  // ---------------------------------------------------------
 
   Widget _buildQuickActions() {
     return Container(
@@ -342,9 +296,7 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
               color: navyColor,
             ),
           ),
-
           const SizedBox(height: 10),
-
           Row(
             children: [
               Expanded(
@@ -352,7 +304,9 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
                   height: 35,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>PostNewJobPage()));
+                      setState(() {
+                        selectedIndex = 1;
+                      });
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: blueColor,
@@ -375,9 +329,7 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
                   ),
                 ),
               ),
-
               const SizedBox(width: 8),
-
               Expanded(
                 child: SizedBox(
                   height: 35,
@@ -416,10 +368,6 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
     );
   }
 
-  // ---------------------------------------------------------
-  // Recent Updates
-  // ---------------------------------------------------------
-
   Widget _buildRecentUpdates() {
     return Container(
       width: double.infinity,
@@ -443,26 +391,21 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
               color: navyColor,
             ),
           ),
-
           const SizedBox(height: 7),
-
           _buildUpdateItem(
             title:
             'New candidate Arjun Mehta applied for Senior React Developer',
             time: '12 mins ago',
             showDivider: true,
           ),
-
           _buildUpdateItem(
             title:
             'Scheduled interview with Deepika Nair for UI/UX Designer',
             time: '1 hour ago',
             showDivider: true,
           ),
-
           _buildUpdateItem(
-            title:
-            'You shortlisted Rahul Verma for Lead Developer',
+            title: 'You shortlisted Rahul Verma for Lead Developer',
             time: '3 hours ago',
             showDivider: false,
           ),
@@ -500,9 +443,7 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
               height: 1.25,
             ),
           ),
-
           const SizedBox(height: 3),
-
           Text(
             time,
             style: TextStyle(
@@ -514,85 +455,6 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
       ),
     );
   }
-
-  // ---------------------------------------------------------
-  // Other Pages
-  // ---------------------------------------------------------
-
-  Widget _simplePage({
-    required String title,
-    required IconData icon,
-  }) {
-    return SafeArea(
-      child: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border(
-                bottom: BorderSide(
-                  color: borderColor,
-                ),
-              ),
-            ),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                title,
-                style: TextStyle(
-                  fontSize: fontSize,
-                  fontWeight: fontweight,
-                  color: navyColor,
-                ),
-              ),
-            ),
-          ),
-
-          Expanded(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    icon,
-                    size: 55,
-                    color: iconColor,
-                  ),
-
-                  const SizedBox(height: 12),
-
-                  Text(
-                    title,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: navyColor,
-                    ),
-                  ),
-
-                  const SizedBox(height: 6),
-
-                  Text(
-                    '$title page',
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: greyColor,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // ---------------------------------------------------------
-  // Bottom Navigation
-  // ---------------------------------------------------------
 
   Widget _buildBottomNavigationBar() {
     return Container(
@@ -619,28 +481,24 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
                 activeIcon: Icons.home_rounded,
                 label: 'Dashboard',
               ),
-
               _buildNavItem(
                 index: 1,
                 icon: Icons.add_circle_outline,
                 activeIcon: Icons.add_circle,
                 label: 'Post Job',
               ),
-
               _buildNavItem(
                 index: 2,
                 icon: Icons.business_center_outlined,
                 activeIcon: Icons.business_center,
                 label: 'My Jobs',
               ),
-
               _buildNavItem(
                 index: 3,
                 icon: Icons.people_outline,
                 activeIcon: Icons.people,
                 label: 'Applications',
               ),
-
               _buildNavItem(
                 index: 4,
                 icon: Icons.person_outline,
@@ -679,9 +537,7 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
                 vertical: 4,
               ),
               decoration: BoxDecoration(
-                color: isSelected
-                    ? avatarColor
-                    : Colors.transparent,
+                color: isSelected ? avatarColor : Colors.transparent,
                 borderRadius: BorderRadius.circular(5),
               ),
               child: Icon(
@@ -690,9 +546,7 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
                 size: 19,
               ),
             ),
-
             const SizedBox(height: 2),
-
             Text(
               label,
               maxLines: 1,
@@ -710,10 +564,6 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
     );
   }
 
-  // ---------------------------------------------------------
-  // Message
-  // ---------------------------------------------------------
-
   void _showMessage(String message) {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
@@ -725,19 +575,11 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
     );
   }
 
-  // ---------------------------------------------------------
-  // Build
-  // ---------------------------------------------------------
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-
-      // Current selected page
       body: getCurrentPage(),
-
-      // Employee Panel Bottom Navigation
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
   }

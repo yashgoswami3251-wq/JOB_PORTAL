@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
 import '../references/reference.dart';
-
 
 class ApplicationDetail extends StatelessWidget {
   final Map<String, dynamic> appData;
@@ -39,7 +37,10 @@ class ApplicationDetail extends StatelessWidget {
               backgroundColor: avatarColor,
               child: const Text(
                 'SA',
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
@@ -50,7 +51,6 @@ class ApplicationDetail extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Top Card: Applicant Details
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -98,7 +98,8 @@ class ApplicationDetail extends StatelessWidget {
                                 ),
                                 children: [
                                   TextSpan(
-                                    text: appData['role'] ?? 'Senior React Developer',
+                                    text: appData['role'] ??
+                                        'Senior React Developer',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: primaryBlue,
@@ -111,7 +112,10 @@ class ApplicationDetail extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 4,
+                        ),
                         decoration: BoxDecoration(
                           color: const Color(0xFFFEF9C3),
                           borderRadius: BorderRadius.circular(6),
@@ -172,7 +176,6 @@ class ApplicationDetail extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            // Submitted Documents Card
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -201,14 +204,19 @@ class ApplicationDetail extends StatelessWidget {
                     ),
                     child: Row(
                       children: [
-                        Icon(Icons.insert_drive_file, color: blueColor, size: 28),
+                        Icon(
+                          Icons.insert_drive_file,
+                          color: blueColor,
+                          size: 28,
+                        ),
                         const SizedBox(width: 12),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                appData['resumeName'] ?? 'Amit_Patel_Resume.pdf',
+                                appData['resumeName'] ??
+                                    'Amit_Patel_Resume.pdf',
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
@@ -234,7 +242,10 @@ class ApplicationDetail extends StatelessWidget {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(6),
                             ),
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 8,
+                            ),
                           ),
                           child: const Text('Download'),
                         ),
@@ -245,7 +256,6 @@ class ApplicationDetail extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-            // Action Buttons
             SizedBox(
               width: double.infinity,
               height: 48,

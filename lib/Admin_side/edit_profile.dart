@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../references/reference.dart';
 
 class EditProfilePage extends StatefulWidget {
@@ -17,12 +16,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
   late TextEditingController _phoneController;
   late TextEditingController _roleController;
 
-  // Controllers for Change Password section
   late TextEditingController _currentPasswordController;
   late TextEditingController _newPasswordController;
   late TextEditingController _confirmPasswordController;
 
-  // Visibility toggles for password fields
   bool _obscureCurrentPassword = true;
   bool _obscureNewPassword = true;
   bool _obscureConfirmPassword = true;
@@ -30,10 +27,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   void initState() {
     super.initState();
+
     _nameController = TextEditingController(text: 'Suresh Kumar');
-    _emailController = TextEditingController(text: 'suresh.kumar@hirehub.com');
+    _emailController =
+        TextEditingController(text: 'suresh.kumar@hirehub.com');
     _phoneController = TextEditingController(text: '+91 98765 43210');
-    _roleController = TextEditingController(text: 'Super Administrator');
+    _roleController =
+        TextEditingController(text: 'Super Administrator');
 
     _currentPasswordController = TextEditingController();
     _newPasswordController = TextEditingController();
@@ -78,7 +78,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
           key: _formKey,
           child: Column(
             children: [
-              // Avatar edit section
               Center(
                 child: Stack(
                   children: [
@@ -103,14 +102,19 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         decoration: BoxDecoration(
                           color: blueColor,
                           shape: BoxShape.circle,
-                          border: Border.all(color: Colors.white, width: 2),
+                          border: Border.all(
+                            color: Colors.white,
+                            width: 2,
+                          ),
                         ),
                         child: IconButton(
                           padding: EdgeInsets.zero,
-                          icon: const Icon(Icons.camera_alt, size: 16, color: Colors.white),
-                          onPressed: () {
-                            // Add image picker code here
-                          },
+                          icon: const Icon(
+                            Icons.camera_alt,
+                            size: 16,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {},
                         ),
                       ),
                     ),
@@ -118,8 +122,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 ),
               ),
               const SizedBox(height: 24),
-
-              // Personal Information Form Container
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(20.0),
@@ -139,36 +141,58 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         color: textColor,
                       ),
                     ),
-                    Divider(height: 24, thickness: 1, color: borderColor),
-
-                    _buildTextField('FULL NAME', _nameController, (value) {
-                      if (value == null || value.isEmpty) return 'Please enter your name';
-                      return null;
-                    }),
+                    Divider(
+                      height: 24,
+                      thickness: 1,
+                      color: borderColor,
+                    ),
+                    _buildTextField(
+                      'FULL NAME',
+                      _nameController,
+                          (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your name';
+                        }
+                        return null;
+                      },
+                    ),
                     const SizedBox(height: 16),
-
-                    _buildTextField('EMAIL ADDRESS', _emailController, (value) {
-                      if (value == null || !value.contains('@')) return 'Please enter a valid email';
-                      return null;
-                    }),
+                    _buildTextField(
+                      'EMAIL ADDRESS',
+                      _emailController,
+                          (value) {
+                        if (value == null || !value.contains('@')) {
+                          return 'Please enter a valid email';
+                        }
+                        return null;
+                      },
+                    ),
                     const SizedBox(height: 16),
-
-                    _buildTextField('PHONE NUMBER', _phoneController, (value) {
-                      if (value == null || value.isEmpty) return 'Please enter your phone number';
-                      return null;
-                    }),
+                    _buildTextField(
+                      'PHONE NUMBER',
+                      _phoneController,
+                          (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your phone number';
+                        }
+                        return null;
+                      },
+                    ),
                     const SizedBox(height: 16),
-
-                    _buildTextField('ROLE TIER', _roleController, (value) {
-                      if (value == null || value.isEmpty) return 'Please enter role tier';
-                      return null;
-                    }),
+                    _buildTextField(
+                      'ROLE TIER',
+                      _roleController,
+                          (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter role tier';
+                        }
+                        return null;
+                      },
+                    ),
                   ],
                 ),
               ),
               const SizedBox(height: 24),
-
-              // Change Password Form Container
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(20.0),
@@ -188,20 +212,24 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         color: textColor,
                       ),
                     ),
-                    Divider(height: 24, thickness: 1, color: borderColor),
-
+                    Divider(
+                      height: 24,
+                      thickness: 1,
+                      color: borderColor,
+                    ),
                     _buildPasswordField(
                       'CURRENT PASSWORD',
                       _currentPasswordController,
                       _obscureCurrentPassword,
                           () {
                         setState(() {
-                          _obscureCurrentPassword = !_obscureCurrentPassword;
+                          _obscureCurrentPassword =
+                          !_obscureCurrentPassword;
                         });
                       },
                           (value) {
-                        // Validate only if user has typed something in new or confirm password
-                        if ((_newPasswordController.text.isNotEmpty || _confirmPasswordController.text.isNotEmpty) &&
+                        if ((_newPasswordController.text.isNotEmpty ||
+                            _confirmPasswordController.text.isNotEmpty) &&
                             (value == null || value.isEmpty)) {
                           return 'Please enter current password';
                         }
@@ -209,7 +237,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       },
                     ),
                     const SizedBox(height: 16),
-
                     _buildPasswordField(
                       'NEW PASSWORD',
                       _newPasswordController,
@@ -220,25 +247,27 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         });
                       },
                           (value) {
-                        if (_currentPasswordController.text.isNotEmpty && (value == null || value.length < 6)) {
+                        if (_currentPasswordController.text.isNotEmpty &&
+                            (value == null || value.length < 6)) {
                           return 'Password must be at least 6 characters';
                         }
                         return null;
                       },
                     ),
                     const SizedBox(height: 16),
-
                     _buildPasswordField(
                       'CONFIRM NEW PASSWORD',
                       _confirmPasswordController,
                       _obscureConfirmPassword,
                           () {
                         setState(() {
-                          _obscureConfirmPassword = !_obscureConfirmPassword;
+                          _obscureConfirmPassword =
+                          !_obscureConfirmPassword;
                         });
                       },
                           (value) {
-                        if (_newPasswordController.text.isNotEmpty && value != _newPasswordController.text) {
+                        if (_newPasswordController.text.isNotEmpty &&
+                            value != _newPasswordController.text) {
                           return 'Passwords do not match';
                         }
                         return null;
@@ -248,8 +277,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 ),
               ),
               const SizedBox(height: 24),
-
-              // Save Changes Button
               SizedBox(
                 width: double.infinity,
                 height: 50,
@@ -264,7 +291,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Profile updated successfully!')),
+                        const SnackBar(
+                          content: Text('Profile updated successfully!'),
+                        ),
                       );
                       Navigator.pop(context);
                     }
@@ -313,7 +342,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
             color: textColor,
           ),
           decoration: InputDecoration(
-            contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 12,
+              vertical: 14,
+            ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.0),
               borderSide: BorderSide(color: borderColor),
@@ -324,11 +356,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.0),
-              borderSide: BorderSide(color: blueColor, width: 1.5),
+              borderSide: BorderSide(
+                color: blueColor,
+                width: 1.5,
+              ),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.0),
-              borderSide: const BorderSide(color: Colors.red, width: 1),
+              borderSide: const BorderSide(
+                color: Colors.red,
+                width: 1,
+              ),
             ),
             filled: true,
             fillColor: Colors.white,
@@ -368,10 +406,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
             color: textColor,
           ),
           decoration: InputDecoration(
-            contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 12,
+              vertical: 14,
+            ),
             suffixIcon: IconButton(
               icon: Icon(
-                obscureText ? Icons.visibility_off : Icons.visibility,
+                obscureText
+                    ? Icons.visibility_off
+                    : Icons.visibility,
                 color: greyColor,
                 size: 20,
               ),
@@ -387,11 +430,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.0),
-              borderSide: BorderSide(color: blueColor, width: 1.5),
+              borderSide: BorderSide(
+                color: blueColor,
+                width: 1.5,
+              ),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.0),
-              borderSide: const BorderSide(color: Colors.red, width: 1),
+              borderSide: const BorderSide(
+                color: Colors.red,
+                width: 1,
+              ),
             ),
             filled: true,
             fillColor: Colors.white,

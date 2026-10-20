@@ -122,13 +122,10 @@ class _EmployersPageState extends State<EmployersPage> {
     switch (status.toLowerCase()) {
       case 'active':
         return const Color(0xFFE1F8EA);
-
       case 'pending':
         return const Color(0xFFFFF3CD);
-
       case 'blocked':
         return const Color(0xFFFFE3E3);
-
       default:
         return lightGrey;
     }
@@ -138,13 +135,10 @@ class _EmployersPageState extends State<EmployersPage> {
     switch (status.toLowerCase()) {
       case 'active':
         return greenColor;
-
       case 'pending':
         return const Color(0xFFB78103);
-
       case 'blocked':
         return const Color(0xFFD22B2B);
-
       default:
         return greyColor;
     }
@@ -167,10 +161,6 @@ class _EmployersPageState extends State<EmployersPage> {
     );
   }
 
-  // ------------------------------------------------------------
-  // TOP HEADER
-  // ------------------------------------------------------------
-
   Widget _buildTopHeader() {
     return Container(
       height: 62,
@@ -187,7 +177,7 @@ class _EmployersPageState extends State<EmployersPage> {
         padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Row(
           children: [
-             Expanded(
+            Expanded(
               child: Text(
                 'Employers',
                 style: TextStyle(
@@ -197,8 +187,6 @@ class _EmployersPageState extends State<EmployersPage> {
                 ),
               ),
             ),
-
-            // Notification
             IconButton(
               onPressed: () {},
               splashRadius: 20,
@@ -208,13 +196,15 @@ class _EmployersPageState extends State<EmployersPage> {
                 size: 21,
               ),
             ),
-
             const SizedBox(width: 2),
-
-            // Profile
             InkWell(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>MyProfilePage()));
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MyProfilePage(),
+                  ),
+                );
               },
               child: Container(
                 width: profileSize,
@@ -240,16 +230,11 @@ class _EmployersPageState extends State<EmployersPage> {
     );
   }
 
-  // ------------------------------------------------------------
-  // EMPLOYER LIST
-  // ------------------------------------------------------------
-
   Widget _buildEmployerList() {
     final list = filteredEmployers;
 
     return Column(
       children: [
-        // Search
         Padding(
           padding: const EdgeInsets.fromLTRB(12, 12, 12, 8),
           child: Container(
@@ -263,7 +248,7 @@ class _EmployersPageState extends State<EmployersPage> {
             ),
             child: TextField(
               controller: _searchController,
-              style:  TextStyle(
+              style: TextStyle(
                 fontSize: 11,
                 color: navyColor,
               ),
@@ -299,7 +284,6 @@ class _EmployersPageState extends State<EmployersPage> {
             ),
           ),
         ),
-
         Expanded(
           child: list.isEmpty
               ? _buildEmptySearch()
@@ -311,8 +295,6 @@ class _EmployersPageState extends State<EmployersPage> {
             },
           ),
         ),
-
-        // Footer count
         Padding(
           padding: const EdgeInsets.only(
             bottom: 7,
@@ -347,10 +329,6 @@ class _EmployersPageState extends State<EmployersPage> {
     );
   }
 
-  // ------------------------------------------------------------
-  // EMPLOYER CARD
-  // ------------------------------------------------------------
-
   Widget _buildEmployerCard(Map<String, dynamic> employer) {
     final String status = employer['status'];
 
@@ -374,7 +352,6 @@ class _EmployersPageState extends State<EmployersPage> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Company logo
                   Container(
                     width: 30,
                     height: 30,
@@ -392,10 +369,7 @@ class _EmployersPageState extends State<EmployersPage> {
                       ),
                     ),
                   ),
-
                   const SizedBox(width: 8),
-
-                  // Company name/contact
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -404,7 +378,7 @@ class _EmployersPageState extends State<EmployersPage> {
                           employer['name'],
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style:  TextStyle(
+                          style: TextStyle(
                             color: navyColor,
                             fontSize: 11.5,
                             fontWeight: FontWeight.bold,
@@ -423,8 +397,6 @@ class _EmployersPageState extends State<EmployersPage> {
                       ],
                     ),
                   ),
-
-                  // Status
                   Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 7,
@@ -445,16 +417,12 @@ class _EmployersPageState extends State<EmployersPage> {
                   ),
                 ],
               ),
-
               const SizedBox(height: 8),
-
               Divider(
                 height: 1,
                 color: borderColor,
               ),
-
               const SizedBox(height: 7),
-
               Row(
                 children: [
                   Expanded(
@@ -468,7 +436,7 @@ class _EmployersPageState extends State<EmployersPage> {
                         children: [
                           TextSpan(
                             text: '${employer['postedJobs']} jobs',
-                            style:  TextStyle(
+                            style: TextStyle(
                               color: navyColor,
                               fontSize: 9.5,
                               fontWeight: FontWeight.bold,
@@ -478,11 +446,16 @@ class _EmployersPageState extends State<EmployersPage> {
                       ),
                     ),
                   ),
-
-                  // Edit
                   InkWell(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>EditEmployerPage(employer: employer,)));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EditEmployerPage(
+                            employer: employer,
+                          ),
+                        ),
+                      );
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(3),
@@ -493,10 +466,7 @@ class _EmployersPageState extends State<EmployersPage> {
                       ),
                     ),
                   ),
-
                   const SizedBox(width: 7),
-
-                  // Delete
                   InkWell(
                     onTap: () {
                       _showDeleteDialog(employer);
@@ -518,15 +488,13 @@ class _EmployersPageState extends State<EmployersPage> {
       ),
     );
   }
-  // ------------------------------------------------------------
-  // DELETE
-  // ------------------------------------------------------------
+
   void _showDeleteDialog(Map<String, dynamic> employer) {
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title:  Text(
+          title: Text(
             'Delete Employer',
             style: TextStyle(
               color: navyColor,
@@ -573,8 +541,6 @@ class _EmployersPageState extends State<EmployersPage> {
       },
     );
   }
-
-
 
   Widget _bottomItem({
     required IconData icon,

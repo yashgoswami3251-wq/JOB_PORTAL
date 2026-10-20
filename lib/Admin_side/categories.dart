@@ -12,7 +12,6 @@ class CategoriesPage extends StatefulWidget {
 }
 
 class _CategoriesPageState extends State<CategoriesPage> {
-  // Sample Job Categories Data
   final List<Map<String, dynamic>> categories = [
     {'title': 'IT & Software', 'count': 234},
     {'title': 'Marketing', 'count': 156},
@@ -29,7 +28,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
       appBar: AppBar(
         backgroundColor: backgroundColor,
         elevation: 0,
-        automaticallyImplyLeading: false, // No back arrow since it's a main panel tab
+        automaticallyImplyLeading: false,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -45,12 +44,20 @@ class _CategoriesPageState extends State<CategoriesPage> {
               children: [
                 IconButton(
                   onPressed: () {},
-                  icon: Icon(Icons.notifications_none_rounded,
-                      color: greyColor, size: 22),
+                  icon: Icon(
+                    Icons.notifications_none_rounded,
+                    color: greyColor,
+                    size: 22,
+                  ),
                 ),
                 InkWell(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>MyProfilePage()));
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MyProfilePage(),
+                      ),
+                    );
                   },
                   child: Container(
                     width: profileSize,
@@ -71,15 +78,17 @@ class _CategoriesPageState extends State<CategoriesPage> {
                   ),
                 ),
               ],
-            )
+            ),
           ],
-        )
+        ),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16.0,
+          vertical: 8.0,
+        ),
         child: Column(
           children: [
-            // Row for "Job Categories" Title and "+ Add Category" Button
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -93,9 +102,18 @@ class _CategoriesPageState extends State<CategoriesPage> {
                 ),
                 ElevatedButton.icon(
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>AddCategoryPage()));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AddCategoryPage(),
+                      ),
+                    );
                   },
-                  icon: const Icon(Icons.add, size: 18, color: Colors.white),
+                  icon: const Icon(
+                    Icons.add,
+                    size: 18,
+                    color: Colors.white,
+                  ),
                   label: const Text(
                     'Add Category',
                     style: TextStyle(
@@ -119,12 +137,12 @@ class _CategoriesPageState extends State<CategoriesPage> {
               ],
             ),
             const SizedBox(height: 16),
-            // Category Items List
             Expanded(
               child: ListView.builder(
                 itemCount: categories.length,
                 itemBuilder: (context, index) {
                   final category = categories[index];
+
                   return Container(
                     margin: const EdgeInsets.only(bottom: 12),
                     padding: const EdgeInsets.symmetric(
@@ -139,7 +157,6 @@ class _CategoriesPageState extends State<CategoriesPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        // Category Title & Jobs Count
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -161,7 +178,6 @@ class _CategoriesPageState extends State<CategoriesPage> {
                             ),
                           ],
                         ),
-                        // Action Icons (Edit & Delete)
                         Row(
                           children: [
                             IconButton(
@@ -171,7 +187,13 @@ class _CategoriesPageState extends State<CategoriesPage> {
                                 color: blueColor,
                               ),
                               onPressed: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=>EditCategoryPage()));
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        EditCategoryPage(),
+                                  ),
+                                );
                               },
                               constraints: const BoxConstraints(),
                               padding: const EdgeInsets.all(6),
@@ -183,9 +205,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                                 size: 20,
                                 color: redColor,
                               ),
-                              onPressed: () {
-                                // Delete category action
-                              },
+                              onPressed: () {},
                               constraints: const BoxConstraints(),
                               padding: const EdgeInsets.all(6),
                             ),

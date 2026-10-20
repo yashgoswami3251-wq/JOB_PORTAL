@@ -91,10 +91,10 @@ class _UsersPageState extends State<UsersPage> {
   }
 
   List<Map<String, dynamic>> get filteredUsers {
-    String search = searchController.text.toLowerCase().trim();
+    final String search = searchController.text.toLowerCase().trim();
 
     return users.where((user) {
-      final matchesSearch =
+      final bool matchesSearch =
           user['name'].toString().toLowerCase().contains(search) ||
               user['email'].toString().toLowerCase().contains(search);
 
@@ -123,13 +123,10 @@ class _UsersPageState extends State<UsersPage> {
     switch (status) {
       case 'Active':
         return const Color(0xFFDDF8E8);
-
       case 'Inactive':
         return const Color(0xFFFFDDDD);
-
       case 'Pending':
         return const Color(0xFFFFF1B8);
-
       default:
         return Colors.grey.shade200;
     }
@@ -139,13 +136,10 @@ class _UsersPageState extends State<UsersPage> {
     switch (status) {
       case 'Active':
         return const Color(0xFF1B9B54);
-
       case 'Inactive':
         return const Color(0xFFD93636);
-
       case 'Pending':
         return const Color(0xFF9A7900);
-
       default:
         return Colors.grey;
     }
@@ -155,10 +149,6 @@ class _UsersPageState extends State<UsersPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-
-      // =========================================================
-      // APP BAR
-      // =========================================================
       appBar: AppBar(
         backgroundColor: backgroundColor,
         elevation: 0,
@@ -178,11 +168,14 @@ class _UsersPageState extends State<UsersPage> {
             size: 23,
           ),
           const SizedBox(width: 10),
-
-          // Profile Circle
           InkWell(
-            onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>MyProfilePage()));
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MyProfilePage(),
+                ),
+              );
             },
             child: Container(
               width: 34,
@@ -206,59 +199,40 @@ class _UsersPageState extends State<UsersPage> {
           ),
         ],
       ),
-
-      // =========================================================
-      // BODY
-      // =========================================================
       body: Column(
         children: [
-          // Search + Add button
           Padding(
             padding: const EdgeInsets.fromLTRB(12, 4, 12, 8),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(7),
-                      border: Border.all(
-                        color: borderColor,
-                      ),
-                    ),
-                    child: TextField(
-                      controller: searchController,
-                      onChanged: (_) {
-                        setState(() {});
-                      },
-                      style: const TextStyle(fontSize: 12),
-                      decoration: InputDecoration(
-                        hintText: 'Search users...',
-                        hintStyle: TextStyle(
-                          fontSize: 12,
-                          color: greyColor,
-                        ),
-                        prefixIcon: Icon(
-                          Icons.circle,
-                          size: 9,
-                          color: greyColor,
-                        ),
-                        border: InputBorder.none,
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 12,
-                        ),
-                      ),
-                    ),
+            child: Container(
+              height: 40,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(7),
+                border: Border.all(color: borderColor),
+              ),
+              child: TextField(
+                controller: searchController,
+                onChanged: (_) {
+                  setState(() {});
+                },
+                style: const TextStyle(fontSize: 12),
+                decoration: InputDecoration(
+                  hintText: 'Search users...',
+                  hintStyle: TextStyle(
+                    fontSize: 12,
+                    color: greyColor,
                   ),
+                  prefixIcon: Icon(
+                    Icons.search,
+                    size: 18,
+                    color: greyColor,
+                  ),
+                  border: InputBorder.none,
+                  contentPadding: const EdgeInsets.symmetric(vertical: 12),
                 ),
-              ],
+              ),
             ),
           ),
-
-          // =====================================================
-          // FILTER TABS
-          // =====================================================
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Container(
@@ -276,12 +250,7 @@ class _UsersPageState extends State<UsersPage> {
               ),
             ),
           ),
-
           const SizedBox(height: 8),
-
-          // =====================================================
-          // USER LIST
-          // =====================================================
           Expanded(
             child: filteredUsers.isEmpty
                 ? Center(
@@ -298,20 +267,14 @@ class _UsersPageState extends State<UsersPage> {
               itemCount: filteredUsers.length,
               itemBuilder: (context, index) {
                 final user = filteredUsers[index];
-
                 return buildUserCard(user);
               },
             ),
           ),
         ],
       ),
-
     );
   }
-
-  // =============================================================
-  // FILTER BUTTON
-  // =============================================================
 
   Widget buildFilterButton(String title, int index) {
     final bool selected = selectedFilter == index;
@@ -345,10 +308,6 @@ class _UsersPageState extends State<UsersPage> {
     );
   }
 
-  // =============================================================
-  // USER CARD
-  // =============================================================
-
   Widget buildUserCard(Map<String, dynamic> user) {
     final String status = user['status'];
 
@@ -362,23 +321,17 @@ class _UsersPageState extends State<UsersPage> {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(7),
-          border: Border.all(
-            color: borderColor,
-          ),
+          border: Border.all(color: borderColor),
         ),
         child: Column(
           children: [
-            // -----------------------------------------------------
-            // TOP SECTION
-            // -----------------------------------------------------
             Row(
               children: [
-                // Avatar
                 Container(
                   width: 34,
                   height: 34,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFE6EBF3),
+                  decoration: const BoxDecoration(
+                    color: Color(0xFFE6EBF3),
                     shape: BoxShape.circle,
                   ),
                   child: Center(
@@ -392,10 +345,7 @@ class _UsersPageState extends State<UsersPage> {
                     ),
                   ),
                 ),
-
                 const SizedBox(width: 8),
-
-                // Name + Email
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -419,8 +369,6 @@ class _UsersPageState extends State<UsersPage> {
                     ],
                   ),
                 ),
-
-                // Status
                 Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 8,
@@ -441,19 +389,9 @@ class _UsersPageState extends State<UsersPage> {
                 ),
               ],
             ),
-
             const SizedBox(height: 9),
-
-            Divider(
-              height: 1,
-              color: borderColor,
-            ),
-
+            Divider(height: 1, color: borderColor),
             const SizedBox(height: 7),
-
-            // -----------------------------------------------------
-            // BOTTOM SECTION
-            // -----------------------------------------------------
             Row(
               children: [
                 Text(
@@ -471,13 +409,15 @@ class _UsersPageState extends State<UsersPage> {
                     color: textColor,
                   ),
                 ),
-
                 const Spacer(),
-
-                // Edit
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>EditUserPage(user: user,)));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EditUserPage(user: user),
+                      ),
+                    );
                   },
                   child: Icon(
                     Icons.edit_outlined,
@@ -485,10 +425,7 @@ class _UsersPageState extends State<UsersPage> {
                     color: primaryBlue,
                   ),
                 ),
-
                 const SizedBox(width: 12),
-
-                // Delete
                 GestureDetector(
                   onTap: () {
                     showDeleteDialog(user);
@@ -507,20 +444,14 @@ class _UsersPageState extends State<UsersPage> {
     );
   }
 
-  // =============================================================
-  // DELETE DIALOG
-  // =============================================================
-
   void showDeleteDialog(Map<String, dynamic> user) {
     showDialog(
       context: context,
-      builder: (context) {
+      builder: (dialogContext) {
         return AlertDialog(
           title: const Text(
             'Delete User',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
           content: Text(
             'Are you sure you want to delete ${user['name']}?',
@@ -528,7 +459,7 @@ class _UsersPageState extends State<UsersPage> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.pop(dialogContext);
               },
               child: const Text('Cancel'),
             ),
@@ -541,7 +472,7 @@ class _UsersPageState extends State<UsersPage> {
                   users.remove(user);
                 });
 
-                Navigator.pop(context);
+                Navigator.pop(dialogContext);
               },
               child: const Text(
                 'Delete',

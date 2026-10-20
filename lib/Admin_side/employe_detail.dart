@@ -19,18 +19,17 @@ class _EmployerDetailPageState extends State<EmployerDetailPage> {
   @override
   void initState() {
     super.initState();
-
-    currentStatus = widget.employer['status'];
+    currentStatus = widget.employer['status']?.toString() ?? 'Pending';
   }
 
   Color _getStatusBackground(String status) {
     switch (status.toLowerCase()) {
-      case 'active':return const Color(0xFFE1F8EA);
-
-      case 'pending':return const Color(0xFFFFF3CD);
-
-      case 'blocked':return const Color(0xFFFFE3E3);
-
+      case 'active':
+        return const Color(0xFFE1F8EA);
+      case 'pending':
+        return const Color(0xFFFFF3CD);
+      case 'blocked':
+        return const Color(0xFFFFE3E3);
       default:
         return lightGrey;
     }
@@ -40,21 +39,14 @@ class _EmployerDetailPageState extends State<EmployerDetailPage> {
     switch (status.toLowerCase()) {
       case 'active':
         return greenColor;
-
       case 'pending':
         return const Color(0xFFB78103);
-
       case 'blocked':
         return const Color(0xFFD22B2B);
-
       default:
         return greyColor;
     }
   }
-
-  // ------------------------------------------------------------
-  // APPROVE POSTS
-  // ------------------------------------------------------------
 
   void _approvePosts() {
     setState(() {
@@ -69,16 +61,12 @@ class _EmployerDetailPageState extends State<EmployerDetailPage> {
     );
   }
 
-  // ------------------------------------------------------------
-  // BLOCK ACCOUNT
-  // ------------------------------------------------------------
-
   void _blockAccount() {
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title:  Text(
+          title: Text(
             'Block Account',
             style: TextStyle(
               color: navyColor,
@@ -133,10 +121,6 @@ class _EmployerDetailPageState extends State<EmployerDetailPage> {
     );
   }
 
-  // ------------------------------------------------------------
-  // MAIN
-  // ------------------------------------------------------------
-
   @override
   Widget build(BuildContext context) {
     final employer = widget.employer;
@@ -147,25 +131,15 @@ class _EmployerDetailPageState extends State<EmployerDetailPage> {
         child: Column(
           children: [
             _buildHeader(),
-
             Expanded(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.fromLTRB(
-                  12,
-                  12,
-                  12,
-                  14,
-                ),
+                padding: const EdgeInsets.fromLTRB(12, 12, 12, 14),
                 child: Column(
                   children: [
                     _buildCompanyProfile(employer),
-
                     const SizedBox(height: 12),
-
                     _buildCorporateDetails(employer),
-
                     const SizedBox(height: 12),
-
                     _buildActionButtons(),
                   ],
                 ),
@@ -176,10 +150,6 @@ class _EmployerDetailPageState extends State<EmployerDetailPage> {
       ),
     );
   }
-
-  // ------------------------------------------------------------
-  // HEADER
-  // ------------------------------------------------------------
 
   Widget _buildHeader() {
     return Container(
@@ -193,9 +163,7 @@ class _EmployerDetailPageState extends State<EmployerDetailPage> {
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 8,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 8),
         child: Row(
           children: [
             IconButton(
@@ -209,10 +177,8 @@ class _EmployerDetailPageState extends State<EmployerDetailPage> {
                 size: 25,
               ),
             ),
-
             const SizedBox(width: 1),
-
-             Expanded(
+            Expanded(
               child: Text(
                 'Employer Profile',
                 style: TextStyle(
@@ -222,7 +188,6 @@ class _EmployerDetailPageState extends State<EmployerDetailPage> {
                 ),
               ),
             ),
-
             IconButton(
               onPressed: () {},
               splashRadius: 20,
@@ -232,9 +197,7 @@ class _EmployerDetailPageState extends State<EmployerDetailPage> {
                 size: 21,
               ),
             ),
-
             const SizedBox(width: 2),
-
             Container(
               width: profileSize,
               height: profileSize,
@@ -258,10 +221,6 @@ class _EmployerDetailPageState extends State<EmployerDetailPage> {
     );
   }
 
-  // ------------------------------------------------------------
-  // COMPANY PROFILE
-  // ------------------------------------------------------------
-
   Widget _buildCompanyProfile(Map<String, dynamic> employer) {
     return Container(
       width: double.infinity,
@@ -278,7 +237,6 @@ class _EmployerDetailPageState extends State<EmployerDetailPage> {
       ),
       child: Column(
         children: [
-          // Company Logo
           Container(
             width: 48,
             height: 48,
@@ -288,7 +246,7 @@ class _EmployerDetailPageState extends State<EmployerDetailPage> {
             ),
             alignment: Alignment.center,
             child: Text(
-              employer['logo'],
+              employer['logo']?.toString() ?? '',
               style: TextStyle(
                 color: primaryBlue,
                 fontSize: employer['logo'] == 'TCS' ? 18 : 22,
@@ -296,34 +254,25 @@ class _EmployerDetailPageState extends State<EmployerDetailPage> {
               ),
             ),
           ),
-
           const SizedBox(height: 10),
-
-          // Company Name
           Text(
-            employer['name'],
+            employer['name']?.toString() ?? '',
             textAlign: TextAlign.center,
-            style:  TextStyle(
+            style: TextStyle(
               color: navyColor,
               fontSize: 15,
               fontWeight: FontWeight.bold,
             ),
           ),
-
           const SizedBox(height: 3),
-
-          // Company Type
           Text(
-            employer['companyType'],
+            employer['companyType']?.toString() ?? '',
             style: TextStyle(
               color: greyColor,
               fontSize: 9.5,
             ),
           ),
-
           const SizedBox(height: 7),
-
-          // Status
           Container(
             padding: const EdgeInsets.symmetric(
               horizontal: 8,
@@ -347,21 +296,10 @@ class _EmployerDetailPageState extends State<EmployerDetailPage> {
     );
   }
 
-  // ------------------------------------------------------------
-  // CORPORATE DETAILS
-  // ------------------------------------------------------------
-
-  Widget _buildCorporateDetails(
-      Map<String, dynamic> employer,
-      ) {
+  Widget _buildCorporateDetails(Map<String, dynamic> employer) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.fromLTRB(
-        12,
-        12,
-        12,
-        13,
-      ),
+      padding: const EdgeInsets.fromLTRB(12, 12, 12, 13),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(7),
@@ -372,7 +310,7 @@ class _EmployerDetailPageState extends State<EmployerDetailPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-           Text(
+          Text(
             'Corporate Details',
             style: TextStyle(
               color: navyColor,
@@ -380,33 +318,25 @@ class _EmployerDetailPageState extends State<EmployerDetailPage> {
               fontWeight: FontWeight.bold,
             ),
           ),
-
           const SizedBox(height: 10),
-
           _detailItem(
             title: 'HR CONTACT EMAIL',
-            value: employer['email'],
+            value: employer['email']?.toString() ?? '',
           ),
-
           const SizedBox(height: 9),
-
           _detailItem(
             title: 'CONTACT PHONE',
-            value: employer['phone'],
+            value: employer['phone']?.toString() ?? '',
           ),
-
           const SizedBox(height: 9),
-
           _detailItem(
             title: 'LOCATIONS',
-            value: employer['location'],
+            value: employer['location']?.toString() ?? '',
           ),
-
           const SizedBox(height: 9),
-
           _detailItem(
             title: 'POSTED JOBS COUNT',
-            value: '${employer['postedJobs']} Active Jobs',
+            value: '${employer['postedJobs'] ?? 0} Active Jobs',
             valueColor: primaryBlue,
           ),
         ],
@@ -445,10 +375,6 @@ class _EmployerDetailPageState extends State<EmployerDetailPage> {
     );
   }
 
-  // ------------------------------------------------------------
-  // ACTION BUTTONS
-  // ------------------------------------------------------------
-
   Widget _buildActionButtons() {
     return Row(
       children: [
@@ -475,9 +401,7 @@ class _EmployerDetailPageState extends State<EmployerDetailPage> {
             ),
           ),
         ),
-
         const SizedBox(width: 9),
-
         Expanded(
           child: SizedBox(
             height: 38,
@@ -505,7 +429,6 @@ class _EmployerDetailPageState extends State<EmployerDetailPage> {
       ],
     );
   }
-
 
   Widget _bottomItem({
     required IconData icon,

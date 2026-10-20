@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import '../references/reference.dart';
 import 'profile.dart';
@@ -28,9 +27,9 @@ class EditJobPage extends StatefulWidget {
     this.jobType = 'Full-time',
     this.description =
     'Develop and maintain modern web applications using React.',
-    this.requirements =
-    'React, JavaScript, HTML, CSS, REST APIs',
-    this.qualifications = 'B.Tech / B.E in Computer Science or equivalent',
+    this.requirements = 'React, JavaScript, HTML, CSS, REST APIs',
+    this.qualifications =
+    'B.Tech / B.E in Computer Science or equivalent',
     this.deadline = '',
     this.status = 'Active',
   });
@@ -144,7 +143,10 @@ class _EditJobPageState extends State<EditJobPage> {
   }) {
     return InputDecoration(
       hintText: hint,
-      hintStyle: TextStyle(fontSize: 12, color: greyColor),
+      hintStyle: TextStyle(
+        fontSize: 12,
+        color: greyColor,
+      ),
       suffixIcon: suffixIcon,
       filled: true,
       fillColor: Colors.white,
@@ -232,7 +234,10 @@ class _EditJobPageState extends State<EditJobPage> {
           items: items.map((item) {
             return DropdownMenuItem<String>(
               value: item,
-              child: Text(item, style: inputStyle),
+              child: Text(
+                item,
+                style: inputStyle,
+              ),
             );
           }).toList(),
           onChanged: onChanged,
@@ -245,6 +250,7 @@ class _EditJobPageState extends State<EditJobPage> {
     if (value == null || value.trim().isEmpty) {
       return 'This field is required';
     }
+
     return null;
   }
 
@@ -295,7 +301,6 @@ class _EditJobPageState extends State<EditJobPage> {
 
     DateTime initialDate = now;
 
-    // If a previously selected date is available, use it.
     final parts = deadlineController.text.split('/');
 
     if (parts.length == 3) {
@@ -309,7 +314,9 @@ class _EditJobPageState extends State<EditJobPage> {
         if (parsed.year == year &&
             parsed.month == month &&
             parsed.day == day &&
-            !parsed.isBefore(DateTime(now.year, now.month, now.day))) {
+            !parsed.isBefore(
+              DateTime(now.year, now.month, now.day),
+            )) {
           initialDate = parsed;
         }
       }
@@ -322,7 +329,7 @@ class _EditJobPageState extends State<EditJobPage> {
       lastDate: DateTime(2100),
     );
 
-    if (date != null) {
+    if (date != null && mounted) {
       setState(() {
         deadlineController.text =
         '${date.day.toString().padLeft(2, '0')}/'
@@ -357,7 +364,7 @@ class _EditJobPageState extends State<EditJobPage> {
     };
 
     // Save updatedJob to your database or API here.
-    // Return the updatedJob to the previous page when integrating storage.
+    // This example currently validates the form and shows a message.
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
@@ -447,7 +454,12 @@ class _EditJobPageState extends State<EditJobPage> {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: const EdgeInsets.fromLTRB(16, 4, 16, 30),
+                  padding: const EdgeInsets.fromLTRB(
+                    16,
+                    4,
+                    16,
+                    30,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -473,7 +485,9 @@ class _EditJobPageState extends State<EditJobPage> {
                         items: categories,
                         onChanged: (value) {
                           if (value != null) {
-                            setState(() => selectedCategory = value);
+                            setState(() {
+                              selectedCategory = value;
+                            });
                           }
                         },
                       ),
@@ -525,7 +539,9 @@ class _EditJobPageState extends State<EditJobPage> {
                         items: jobTypes,
                         onChanged: (value) {
                           if (value != null) {
-                            setState(() => selectedJobType = value);
+                            setState(() {
+                              selectedJobType = value;
+                            });
                           }
                         },
                       ),
@@ -579,7 +595,9 @@ class _EditJobPageState extends State<EditJobPage> {
                         items: statuses,
                         onChanged: (value) {
                           if (value != null) {
-                            setState(() => selectedStatus = value);
+                            setState(() {
+                              selectedStatus = value;
+                            });
                           }
                         },
                       ),

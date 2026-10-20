@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:job_portal/User_side/login.dart';
 
@@ -86,7 +85,6 @@ class CompanyProfilePage extends StatelessWidget {
 
                     const SizedBox(height: 20),
 
-                    // Logout Button
                     SizedBox(
                       width: double.infinity,
                       height: 46,
@@ -124,10 +122,6 @@ class CompanyProfilePage extends StatelessWidget {
       ),
     );
   }
-
-  // ==============================================================
-  // HEADER
-  // ==============================================================
 
   Widget _buildHeader(BuildContext context) {
     return Container(
@@ -206,10 +200,6 @@ class CompanyProfilePage extends StatelessWidget {
       ),
     );
   }
-
-  // ==============================================================
-  // COMPANY HEADER CARD
-  // ==============================================================
 
   Widget _buildCompanyHeaderCard(BuildContext context) {
     return Container(
@@ -321,10 +311,6 @@ class CompanyProfilePage extends StatelessWidget {
     );
   }
 
-  // ==============================================================
-  // BUSINESS DETAILS CARD
-  // ==============================================================
-
   Widget _buildBusinessDetailsCard() {
     return Container(
       width: double.infinity,
@@ -379,10 +365,6 @@ class CompanyProfilePage extends StatelessWidget {
     );
   }
 
-  // ==============================================================
-  // DETAIL ITEM
-  // ==============================================================
-
   Widget _buildDetailItem({
     required String title,
     required String value,
@@ -412,10 +394,6 @@ class CompanyProfilePage extends StatelessWidget {
       ],
     );
   }
-
-  // ==============================================================
-  // ABOUT COMPANY CARD
-  // ==============================================================
 
   Widget _buildAboutCard() {
     return Container(
