@@ -4,10 +4,6 @@ import 'package:job_portal/Employe_side/profile.dart';
 import '../User_side/login.dart';
 import '../references/reference.dart';
 
-// ============================================================
-// SETTINGS PAGE
-// ============================================================
-
 class EMPSettingsPage extends StatefulWidget {
   const EMPSettingsPage({super.key});
 
@@ -16,26 +12,15 @@ class EMPSettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<EMPSettingsPage> {
-  // ==========================================================
-  // VARIABLES
-  // ==========================================================
-
   int selectedIndex = 4;
 
-  // Which setting is currently expanded
   String? expandedSetting;
 
-  // Switch values
   bool pushNotification = true;
   bool emailNotification = true;
   bool privateProfile = false;
 
-  // Selected language
   String selectedLanguage = "English";
-
-  // ==========================================================
-  // EXPAND / COLLAPSE
-  // ==========================================================
 
   void toggleSetting(String setting) {
     setState(() {
@@ -47,19 +32,11 @@ class _SettingsPageState extends State<EMPSettingsPage> {
     });
   }
 
-  // ==========================================================
-  // BOTTOM NAVIGATION
-  // ==========================================================
-
   void onBottomNavigationTap(int index) {
     setState(() {
       selectedIndex = index;
     });
   }
-
-  // ==========================================================
-  // LOGOUT DIALOG
-  // ==========================================================
 
   void showLogoutDialog() {
     showDialog(
@@ -122,10 +99,6 @@ class _SettingsPageState extends State<EMPSettingsPage> {
     );
   }
 
-  // ==========================================================
-  // DELETE ACCOUNT DIALOG
-  // ==========================================================
-
   void showDeleteAccountDialog() {
     showDialog(
       context: context,
@@ -165,8 +138,6 @@ class _SettingsPageState extends State<EMPSettingsPage> {
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
-
-                // Add delete account logic here
               },
               child: Text(
                 "Delete",
@@ -182,35 +153,24 @@ class _SettingsPageState extends State<EMPSettingsPage> {
     );
   }
 
-  // ==========================================================
-  // BUILD
-  // ==========================================================
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
       backgroundColor: backgroundColor,
-
-      // ======================================================
-      // APP BAR
-      // ======================================================
-
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: backgroundColor,
         elevation: 0,
         surfaceTintColor: Colors.transparent,
         titleSpacing: 0,
-
         title: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: size.width * 0.045,
           ),
           child: Row(
             children: [
-              // BACK BUTTON
               InkWell(
                 onTap: () {
                   Navigator.push(
@@ -226,10 +186,7 @@ class _SettingsPageState extends State<EMPSettingsPage> {
                   color: blueColor,
                 ),
               ),
-
               const SizedBox(width: 5),
-
-              // HIREHUB
               Text(
                 "HireHub",
                 style: TextStyle(
@@ -238,13 +195,15 @@ class _SettingsPageState extends State<EMPSettingsPage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-
               const Spacer(),
-
-              // COMPANY AVATAR
               InkWell(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>CompanyProfilePage()));
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CompanyProfilePage(),
+                    ),
+                  );
                 },
                 child: Container(
                   width: 30,
@@ -268,11 +227,6 @@ class _SettingsPageState extends State<EMPSettingsPage> {
           ),
         ),
       ),
-
-      // ======================================================
-      // BODY
-      // ======================================================
-
       body: SafeArea(
         top: false,
         child: Column(
@@ -289,10 +243,6 @@ class _SettingsPageState extends State<EMPSettingsPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // ==================================================
-                    // PAGE TITLE
-                    // ==================================================
-
                     Text(
                       "Settings",
                       style: TextStyle(
@@ -301,37 +251,18 @@ class _SettingsPageState extends State<EMPSettingsPage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-
                     SizedBox(
                       height: size.height * 0.018,
                     ),
-
-                    // ==================================================
-                    // ACCOUNT SETTINGS
-                    // ==================================================
-
                     _buildAccountSettingsCard(),
-
                     SizedBox(
                       height: size.height * 0.018,
                     ),
-
-                    // ==================================================
-                    // SUPPORT
-                    // ==================================================
-
                     _buildSupportCard(),
-
                     SizedBox(
                       height: size.height * 0.018,
                     ),
-
-                    // ==================================================
-                    // ACCOUNT ACTIONS
-                    // ==================================================
-
                     _buildAccountActionsCard(),
-
                     const SizedBox(height: 10),
                   ],
                 ),
@@ -342,10 +273,6 @@ class _SettingsPageState extends State<EMPSettingsPage> {
       ),
     );
   }
-
-  // ============================================================
-  // ACCOUNT SETTINGS CARD
-  // ============================================================
 
   Widget _buildAccountSettingsCard() {
     return Container(
@@ -375,40 +302,28 @@ class _SettingsPageState extends State<EMPSettingsPage> {
               fontWeight: FontWeight.bold,
             ),
           ),
-
           const SizedBox(height: 8),
-
-          // EDIT PROFILE
           _buildExpandableSetting(
             icon: Icons.person_outline_rounded,
             title: "Edit Profile",
             settingKey: "profile",
             child: _buildProfileDetails(),
           ),
-
           _buildDivider(),
-
-          // NOTIFICATIONS
           _buildExpandableSetting(
             icon: Icons.notifications_none_rounded,
             title: "Notification Settings",
             settingKey: "notification",
             child: _buildNotificationDetails(),
           ),
-
           _buildDivider(),
-
-          // PRIVACY
           _buildExpandableSetting(
             icon: Icons.shield_outlined,
             title: "Privacy Settings",
             settingKey: "privacy",
             child: _buildPrivacyDetails(),
           ),
-
           _buildDivider(),
-
-          // LANGUAGE
           _buildExpandableSetting(
             icon: Icons.language_rounded,
             title: "Language",
@@ -419,10 +334,6 @@ class _SettingsPageState extends State<EMPSettingsPage> {
       ),
     );
   }
-
-  // ============================================================
-  // SUPPORT CARD
-  // ============================================================
 
   Widget _buildSupportCard() {
     return Container(
@@ -452,9 +363,7 @@ class _SettingsPageState extends State<EMPSettingsPage> {
               fontWeight: FontWeight.bold,
             ),
           ),
-
           const SizedBox(height: 8),
-
           _buildExpandableSetting(
             icon: Icons.help_outline_rounded,
             title: "Help & Support",
@@ -465,10 +374,6 @@ class _SettingsPageState extends State<EMPSettingsPage> {
       ),
     );
   }
-
-  // ============================================================
-  // EXPANDABLE SETTING ROW
-  // ============================================================
 
   Widget _buildExpandableSetting({
     required IconData icon,
@@ -489,7 +394,6 @@ class _SettingsPageState extends State<EMPSettingsPage> {
             height: 55,
             child: Row(
               children: [
-                // ICON
                 Container(
                   width: 22,
                   height: 22,
@@ -503,10 +407,7 @@ class _SettingsPageState extends State<EMPSettingsPage> {
                     color: iconColor,
                   ),
                 ),
-
                 const SizedBox(width: 10),
-
-                // TITLE
                 Expanded(
                   child: Text(
                     title,
@@ -517,8 +418,6 @@ class _SettingsPageState extends State<EMPSettingsPage> {
                     ),
                   ),
                 ),
-
-                // ARROW
                 AnimatedRotation(
                   turns: isExpanded ? 0.5 : 0,
                   duration: const Duration(
@@ -534,8 +433,6 @@ class _SettingsPageState extends State<EMPSettingsPage> {
             ),
           ),
         ),
-
-        // EXPANDED CONTENT
         AnimatedCrossFade(
           firstChild: const SizedBox.shrink(),
           secondChild: Container(
@@ -558,10 +455,6 @@ class _SettingsPageState extends State<EMPSettingsPage> {
     );
   }
 
-  // ============================================================
-  // PROFILE DETAILS
-  // ============================================================
-
   Widget _buildProfileDetails() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -573,25 +466,19 @@ class _SettingsPageState extends State<EMPSettingsPage> {
             fontSize: 12,
           ),
         ),
-
         const SizedBox(height: 10),
-
         _buildDetailItem(
           icon: Icons.business_outlined,
           title: "Company Name",
           value: "TCS",
         ),
-
         const SizedBox(height: 7),
-
         _buildDetailItem(
           icon: Icons.email_outlined,
           title: "Email",
           value: "company@tcs.com",
         ),
-
         const SizedBox(height: 10),
-
         SizedBox(
           height: 32,
           child: OutlinedButton(
@@ -625,10 +512,6 @@ class _SettingsPageState extends State<EMPSettingsPage> {
     );
   }
 
-  // ============================================================
-  // NOTIFICATION DETAILS
-  // ============================================================
-
   Widget _buildNotificationDetails() {
     return Column(
       children: [
@@ -642,9 +525,7 @@ class _SettingsPageState extends State<EMPSettingsPage> {
             });
           },
         ),
-
         const SizedBox(height: 8),
-
         _buildSwitchRow(
           title: "Email Notifications",
           subtitle: "Receive important updates by email.",
@@ -658,10 +539,6 @@ class _SettingsPageState extends State<EMPSettingsPage> {
       ],
     );
   }
-
-  // ============================================================
-  // PRIVACY DETAILS
-  // ============================================================
 
   Widget _buildPrivacyDetails() {
     return Column(
@@ -677,9 +554,7 @@ class _SettingsPageState extends State<EMPSettingsPage> {
             });
           },
         ),
-
         const SizedBox(height: 10),
-
         Text(
           "Your information is protected and only shared according to your account settings.",
           style: TextStyle(
@@ -692,10 +567,6 @@ class _SettingsPageState extends State<EMPSettingsPage> {
     );
   }
 
-  // ============================================================
-  // LANGUAGE DETAILS
-  // ============================================================
-
   Widget _buildLanguageDetails() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -707,27 +578,19 @@ class _SettingsPageState extends State<EMPSettingsPage> {
             fontSize: 12,
           ),
         ),
-
         const SizedBox(height: 8),
-
         _buildLanguageOption(
           "English",
         ),
-
         _buildLanguageOption(
           "Hindi",
         ),
-
         _buildLanguageOption(
           "Gujarati",
         ),
       ],
     );
   }
-
-  // ============================================================
-  // LANGUAGE OPTION
-  // ============================================================
 
   Widget _buildLanguageOption(String language) {
     return InkWell(
@@ -751,9 +614,7 @@ class _SettingsPageState extends State<EMPSettingsPage> {
                   ? blueColor
                   : greyColor,
             ),
-
             const SizedBox(width: 8),
-
             Text(
               language,
               style: TextStyle(
@@ -770,10 +631,6 @@ class _SettingsPageState extends State<EMPSettingsPage> {
     );
   }
 
-  // ============================================================
-  // SUPPORT DETAILS
-  // ============================================================
-
   Widget _buildSupportDetails() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -786,9 +643,7 @@ class _SettingsPageState extends State<EMPSettingsPage> {
             fontWeight: FontWeight.w600,
           ),
         ),
-
         const SizedBox(height: 6),
-
         Text(
           "Contact our support team for assistance with your account, jobs and applications.",
           style: TextStyle(
@@ -797,9 +652,7 @@ class _SettingsPageState extends State<EMPSettingsPage> {
             height: 1.4,
           ),
         ),
-
         const SizedBox(height: 10),
-
         Row(
           children: [
             Icon(
@@ -807,9 +660,7 @@ class _SettingsPageState extends State<EMPSettingsPage> {
               size: 16,
               color: iconColor,
             ),
-
             const SizedBox(width: 7),
-
             Text(
               "support@hirehub.com",
               style: TextStyle(
@@ -820,9 +671,7 @@ class _SettingsPageState extends State<EMPSettingsPage> {
             ),
           ],
         ),
-
         const SizedBox(height: 7),
-
         Row(
           children: [
             Icon(
@@ -830,9 +679,7 @@ class _SettingsPageState extends State<EMPSettingsPage> {
               size: 16,
               color: iconColor,
             ),
-
             const SizedBox(width: 7),
-
             Text(
               "+91 1800 123 4567",
               style: TextStyle(
@@ -845,10 +692,6 @@ class _SettingsPageState extends State<EMPSettingsPage> {
       ],
     );
   }
-
-  // ============================================================
-  // DETAIL ITEM
-  // ============================================================
 
   Widget _buildDetailItem({
     required IconData icon,
@@ -863,9 +706,7 @@ class _SettingsPageState extends State<EMPSettingsPage> {
           size: 16,
           color: iconColor,
         ),
-
         const SizedBox(width: 7),
-
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -877,9 +718,7 @@ class _SettingsPageState extends State<EMPSettingsPage> {
                   fontSize: 10,
                 ),
               ),
-
               const SizedBox(height: 2),
-
               Text(
                 value,
                 style: TextStyle(
@@ -894,10 +733,6 @@ class _SettingsPageState extends State<EMPSettingsPage> {
       ],
     );
   }
-
-  // ============================================================
-  // SWITCH ROW
-  // ============================================================
 
   Widget _buildSwitchRow({
     required String title,
@@ -920,9 +755,7 @@ class _SettingsPageState extends State<EMPSettingsPage> {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-
               const SizedBox(height: 2),
-
               Text(
                 subtitle,
                 style: TextStyle(
@@ -934,9 +767,7 @@ class _SettingsPageState extends State<EMPSettingsPage> {
             ],
           ),
         ),
-
         const SizedBox(width: 5),
-
         Switch(
           value: value,
           onChanged: onChanged,
@@ -951,10 +782,6 @@ class _SettingsPageState extends State<EMPSettingsPage> {
     );
   }
 
-  // ============================================================
-  // DIVIDER
-  // ============================================================
-
   Widget _buildDivider() {
     return Divider(
       height: 1,
@@ -962,10 +789,6 @@ class _SettingsPageState extends State<EMPSettingsPage> {
       color: borderColor,
     );
   }
-
-  // ============================================================
-  // ACCOUNT ACTIONS
-  // ============================================================
 
   Widget _buildAccountActionsCard() {
     return Container(
@@ -995,10 +818,7 @@ class _SettingsPageState extends State<EMPSettingsPage> {
               fontWeight: FontWeight.bold,
             ),
           ),
-
           const SizedBox(height: 13),
-
-          // LOGOUT
           SizedBox(
             width: double.infinity,
             height: 33,
@@ -1025,10 +845,7 @@ class _SettingsPageState extends State<EMPSettingsPage> {
               ),
             ),
           ),
-
           const SizedBox(height: 9),
-
-          // DELETE ACCOUNT
           SizedBox(
             width: double.infinity,
             height: 33,
@@ -1057,11 +874,6 @@ class _SettingsPageState extends State<EMPSettingsPage> {
       ),
     );
   }
-
-
-  // ============================================================
-  // NAV ITEM
-  // ============================================================
 
   Widget _buildNavItem({
     required int index,
@@ -1098,9 +910,7 @@ class _SettingsPageState extends State<EMPSettingsPage> {
                       : Colors.white70,
                   size: 19,
                 ),
-
                 const SizedBox(height: 3),
-
                 Text(
                   label,
                   maxLines: 1,

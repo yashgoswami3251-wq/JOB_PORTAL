@@ -12,15 +12,9 @@ class MyJobPostingsPage extends StatefulWidget {
 }
 
 class _MyJobPostingsPageState extends State<MyJobPostingsPage> {
-  // ------------------------------------------------------------
-  // Selected Filter
-  // ------------------------------------------------------------
 
   String selectedFilter = "All";
 
-  // ------------------------------------------------------------
-  // Job Data
-  // ------------------------------------------------------------
 
   final List<Map<String, dynamic>> jobs = [
     {
@@ -53,9 +47,6 @@ class _MyJobPostingsPageState extends State<MyJobPostingsPage> {
     },
   ];
 
-  // ------------------------------------------------------------
-  // Filter Count
-  // ------------------------------------------------------------
 
   int getCount(String filter) {
     if (filter == "All") {
@@ -67,9 +58,6 @@ class _MyJobPostingsPageState extends State<MyJobPostingsPage> {
     }).length;
   }
 
-  // ------------------------------------------------------------
-  // Filter Jobs
-  // ------------------------------------------------------------
 
   List<Map<String, dynamic>> get filteredJobs {
     if (selectedFilter == "All") {
@@ -81,9 +69,6 @@ class _MyJobPostingsPageState extends State<MyJobPostingsPage> {
     }).toList();
   }
 
-  // ------------------------------------------------------------
-  // Header
-  // ------------------------------------------------------------
 
   Widget buildHeader() {
     return Container(
@@ -134,7 +119,6 @@ class _MyJobPostingsPageState extends State<MyJobPostingsPage> {
             ),
           ),
 
-          // Notification
           Icon(
             Icons.notifications_none_rounded,
             size: 21,
@@ -143,7 +127,6 @@ class _MyJobPostingsPageState extends State<MyJobPostingsPage> {
 
           const SizedBox(width: 12),
 
-          // Profile
           InkWell(
             onTap: (){
               Navigator.push(context, MaterialPageRoute(builder: (context)=>CompanyProfilePage()));
@@ -171,9 +154,6 @@ class _MyJobPostingsPageState extends State<MyJobPostingsPage> {
     );
   }
 
-  // ------------------------------------------------------------
-  // Filter Tabs
-  // ------------------------------------------------------------
 
   Widget buildFilterTabs() {
     final filters = [
@@ -243,9 +223,6 @@ class _MyJobPostingsPageState extends State<MyJobPostingsPage> {
     );
   }
 
-  // ------------------------------------------------------------
-  // Status Badge
-  // ------------------------------------------------------------
 
   Widget buildStatusBadge(String status) {
     Color background;
@@ -282,9 +259,6 @@ class _MyJobPostingsPageState extends State<MyJobPostingsPage> {
     );
   }
 
-  // ------------------------------------------------------------
-  // Job Card
-  // ------------------------------------------------------------
 
   Widget buildJobCard(
       Map<String, dynamic> job,
@@ -317,9 +291,6 @@ class _MyJobPostingsPageState extends State<MyJobPostingsPage> {
       ),
       child: Column(
         children: [
-          // ------------------------------------------------------
-          // Top Section
-          // ------------------------------------------------------
 
           Padding(
             padding: const EdgeInsets.fromLTRB(
@@ -352,9 +323,6 @@ class _MyJobPostingsPageState extends State<MyJobPostingsPage> {
             ),
           ),
 
-          // ------------------------------------------------------
-          // Job Information
-          // ------------------------------------------------------
 
           Padding(
             padding: const EdgeInsets.symmetric(
@@ -362,7 +330,6 @@ class _MyJobPostingsPageState extends State<MyJobPostingsPage> {
             ),
             child: Row(
               children: [
-                // Location
                 Flexible(
                   child: Text(
                     location,
@@ -374,7 +341,6 @@ class _MyJobPostingsPageState extends State<MyJobPostingsPage> {
                   ),
                 ),
 
-                // Dot
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 8,
@@ -388,7 +354,6 @@ class _MyJobPostingsPageState extends State<MyJobPostingsPage> {
                   ),
                 ),
 
-                // Salary
                 Flexible(
                   child: Text(
                     salary,
@@ -400,7 +365,6 @@ class _MyJobPostingsPageState extends State<MyJobPostingsPage> {
                   ),
                 ),
 
-                // Dot
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 8,
@@ -414,7 +378,6 @@ class _MyJobPostingsPageState extends State<MyJobPostingsPage> {
                   ),
                 ),
 
-                // Applications
                 Flexible(
                   child: Text(
                     applications,
@@ -432,9 +395,6 @@ class _MyJobPostingsPageState extends State<MyJobPostingsPage> {
 
           const SizedBox(height: 10),
 
-          // ------------------------------------------------------
-          // Divider
-          // ------------------------------------------------------
 
           Divider(
             height: 1,
@@ -442,15 +402,11 @@ class _MyJobPostingsPageState extends State<MyJobPostingsPage> {
             color: borderColor,
           ),
 
-          // ------------------------------------------------------
-          // Bottom Actions
-          // ------------------------------------------------------
 
           SizedBox(
             height: 35,
             child: Row(
               children: [
-                // Edit
                 Expanded(
                   child: InkWell(
                     onTap: () {
@@ -483,7 +439,6 @@ class _MyJobPostingsPageState extends State<MyJobPostingsPage> {
                   ),
                 ),
 
-                // Deactivate
                 Expanded(
                   child: InkWell(
                     onTap: () {
@@ -527,9 +482,6 @@ class _MyJobPostingsPageState extends State<MyJobPostingsPage> {
     );
   }
 
-  // ------------------------------------------------------------
-  // Edit Job
-  // ------------------------------------------------------------
 
   void editJob(Map<String, dynamic> job) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -541,19 +493,8 @@ class _MyJobPostingsPageState extends State<MyJobPostingsPage> {
       ),
     );
 
-    // You can navigate here:
-    //
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (context) => EditJobPage(job: job),
-    //   ),
-    // );
   }
 
-  // ------------------------------------------------------------
-  // Deactivate Job
-  // ------------------------------------------------------------
 
   void deactivateJob(Map<String, dynamic> job) {
     showDialog(
@@ -612,9 +553,6 @@ class _MyJobPostingsPageState extends State<MyJobPostingsPage> {
     );
   }
 
-  // ------------------------------------------------------------
-  // Empty State
-  // ------------------------------------------------------------
 
   Widget buildEmptyState() {
     return Center(
@@ -656,9 +594,6 @@ class _MyJobPostingsPageState extends State<MyJobPostingsPage> {
     );
   }
 
-  // ------------------------------------------------------------
-  // Main Build
-  // ------------------------------------------------------------
 
   @override
   Widget build(BuildContext context) {
@@ -668,17 +603,14 @@ class _MyJobPostingsPageState extends State<MyJobPostingsPage> {
       body: SafeArea(
         child: Column(
           children: [
-            // Header
             buildHeader(),
 
             const SizedBox(height: 3),
 
-            // Filter tabs
             buildFilterTabs(),
 
             const SizedBox(height: 4),
 
-            // Job list
             Expanded(
               child: filteredJobs.isEmpty
                   ? buildEmptyState()

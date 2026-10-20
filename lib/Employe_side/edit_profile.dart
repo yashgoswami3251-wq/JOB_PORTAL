@@ -9,15 +9,7 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
-  // ============================================================
-  // FORM KEY
-  // ============================================================
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  // ============================================================
-  // RECRUITER CONTROLLERS
-  // ============================================================
 
   final TextEditingController recruiterNameController =
   TextEditingController(text: 'Priya Mehta');
@@ -34,21 +26,21 @@ class _EditProfilePageState extends State<EditProfilePage> {
   final TextEditingController locationController =
   TextEditingController(text: 'Mumbai, Maharashtra');
 
-  // ============================================================
-  // COMPANY CONTROLLERS
-  // ============================================================
+  final TextEditingController companyNameController =
+  TextEditingController(text: 'TechSolutions Pvt Ltd');
 
-  final TextEditingController companyNameController = TextEditingController(text: 'TechSolutions Pvt Ltd');
+  final TextEditingController industryController =
+  TextEditingController(text: 'Information Technology');
 
-  final TextEditingController industryController = TextEditingController(text: 'Information Technology');
+  final TextEditingController companySizeController =
+  TextEditingController(text: '250-500 Employees');
 
-  final TextEditingController companySizeController = TextEditingController(text: '250-500 Employees');
-
-  final TextEditingController companyDescriptionController = TextEditingController(
-    text:
-    'TechSolutions Pvt Ltd is an enterprise-oriented technology consultancy '
-        'delivering innovative technology integrations, cognitive processing '
-        'models, and modular software layers to international corporate clients.',
+  final TextEditingController companyDescriptionController =
+  TextEditingController(
+    text: 'TechSolutions Pvt Ltd is an enterprise-oriented technology '
+        'consultancy delivering innovative technology integrations, '
+        'cognitive processing models, and modular software layers '
+        'to international corporate clients.',
   );
 
   final TextEditingController websiteController =
@@ -64,10 +56,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
   TextEditingController(
     text: '123 Tech Park, Andheri East, Mumbai\n400069',
   );
-
-  // ============================================================
-  // DISPOSE
-  // ============================================================
 
   @override
   void dispose() {
@@ -89,50 +77,29 @@ class _EditProfilePageState extends State<EditProfilePage> {
     super.dispose();
   }
 
-  // ============================================================
-  // BUILD
-  // ============================================================
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-
-      // ==========================================================
-      // BODY
-      // ==========================================================
-
       body: SafeArea(
         child: Column(
           children: [
             _buildHeader(),
-
             Expanded(
               child: Form(
                 key: _formKey,
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: const EdgeInsets.fromLTRB(5, 8, 5, 20,),
+                  padding: const EdgeInsets.fromLTRB(5, 8, 5, 20),
                   child: Column(
                     children: [
-                      // Recruiter Information
                       _buildRecruiterInformation(),
-
                       const SizedBox(height: 10),
-
-                      // Company Information
                       _buildCompanyInformation(),
-
                       const SizedBox(height: 14),
-
-                      // Save Button
                       _buildSaveButton(),
-
                       const SizedBox(height: 6),
-
-                      // Change Password
                       _buildChangePasswordButton(),
-
                       const SizedBox(height: 5),
                     ],
                   ),
@@ -142,18 +109,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
           ],
         ),
       ),
-
-      // ==========================================================
-      // BOTTOM NAVIGATION
-      // ==========================================================
-
       bottomNavigationBar: _buildBottomNavigation(),
     );
   }
-
-  // ============================================================
-  // HEADER
-  // ============================================================
 
   Widget _buildHeader() {
     return Container(
@@ -170,11 +128,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
       ),
       child: Row(
         children: [
-          // Back Button
           InkWell(
-            onTap: () {
-              Navigator.pop(context);
-            },
+            onTap: () => Navigator.pop(context),
             borderRadius: BorderRadius.circular(20),
             child: Padding(
               padding: const EdgeInsets.all(4),
@@ -185,10 +140,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
             ),
           ),
-
           const SizedBox(width: 2),
-
-          // Title
           Expanded(
             child: Text(
               'Edit Profile',
@@ -199,8 +151,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
             ),
           ),
-
-          // Settings
           Container(
             height: 25,
             width: 25,
@@ -219,62 +169,40 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
-  // ============================================================
-  // RECRUITER INFORMATION
-  // ============================================================
-
   Widget _buildRecruiterInformation() {
     return _buildSectionCard(
       title: 'Recruiter Information',
       child: Column(
         children: [
-          // --------------------------------------------------------
-          // RECRUITER AVATAR
-          // --------------------------------------------------------
-
           _buildProfileAvatar(),
-
           const SizedBox(height: 8),
-
-          // Recruiter Name
           _buildTextField(
             controller: recruiterNameController,
             label: 'Recruiter Name',
             validatorMessage: 'Please enter recruiter name',
           ),
-
           const SizedBox(height: 6),
-
-          // Email
           _buildTextField(
             controller: emailController,
             label: 'Email Address',
             keyboardType: TextInputType.emailAddress,
             validatorMessage: 'Please enter email address',
+            emailValidation: true,
           ),
-
           const SizedBox(height: 6),
-
-          // Mobile
           _buildTextField(
             controller: mobileController,
             label: 'Mobile Number',
             keyboardType: TextInputType.phone,
             validatorMessage: 'Please enter mobile number',
           ),
-
           const SizedBox(height: 6),
-
-          // Designation
           _buildTextField(
             controller: designationController,
             label: 'Designation',
             validatorMessage: 'Please enter designation',
           ),
-
           const SizedBox(height: 6),
-
-          // Location
           _buildTextField(
             controller: locationController,
             label: 'Location',
@@ -284,10 +212,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
       ),
     );
   }
-
-  // ============================================================
-  // PROFILE AVATAR
-  // ============================================================
 
   Widget _buildProfileAvatar() {
     return Stack(
@@ -310,8 +234,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ),
           ),
         ),
-
-        // Small edit icon
         Positioned(
           right: -2,
           bottom: -1,
@@ -337,91 +259,60 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
-  // ============================================================
-  // COMPANY INFORMATION
-  // ============================================================
-
   Widget _buildCompanyInformation() {
     return _buildSectionCard(
       title: 'Company Information',
       child: Column(
         children: [
-          // --------------------------------------------------------
-          // COMPANY LOGO
-          // --------------------------------------------------------
-
           _buildCompanyLogo(),
-
           const SizedBox(height: 8),
-
-          // Company Name
           _buildTextField(
             controller: companyNameController,
             label: 'Company Name',
             validatorMessage: 'Please enter company name',
           ),
-
           const SizedBox(height: 6),
-
-          // Industry
           _buildTextField(
             controller: industryController,
             label: 'Industry',
             validatorMessage: 'Please enter industry',
           ),
-
           const SizedBox(height: 6),
-
-          // Company Size
           _buildTextField(
             controller: companySizeController,
             label: 'Company Size',
             validatorMessage: 'Please enter company size',
           ),
-
           const SizedBox(height: 6),
-
-          // Company Description
           _buildTextField(
             controller: companyDescriptionController,
             label: 'Company Description',
             maxLines: 4,
             validatorMessage: 'Please enter company description',
           ),
-
           const SizedBox(height: 6),
-
-          // Website
           _buildTextField(
             controller: websiteController,
             label: 'Website',
             keyboardType: TextInputType.url,
             validatorMessage: 'Please enter website',
           ),
-
           const SizedBox(height: 6),
-
-          // Company Email
           _buildTextField(
             controller: companyEmailController,
             label: 'Company Email',
             keyboardType: TextInputType.emailAddress,
             validatorMessage: 'Please enter company email',
+            emailValidation: true,
           ),
-
           const SizedBox(height: 6),
-
-          // Company Phone
           _buildTextField(
             controller: companyPhoneController,
             label: 'Company Phone',
             keyboardType: TextInputType.phone,
             validatorMessage: 'Please enter company phone',
           ),
-
           const SizedBox(height: 6),
-
-          // Company Address
           _buildTextField(
             controller: companyAddressController,
             label: 'Company Address',
@@ -432,10 +323,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
       ),
     );
   }
-
-  // ============================================================
-  // COMPANY LOGO
-  // ============================================================
 
   Widget _buildCompanyLogo() {
     return Stack(
@@ -458,7 +345,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ),
           ),
         ),
-
         Positioned(
           right: -2,
           bottom: -2,
@@ -484,22 +370,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
-  // ============================================================
-  // SECTION CARD
-  // ============================================================
-
   Widget _buildSectionCard({
     required String title,
     required Widget child,
   }) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.fromLTRB(
-        9,
-        8,
-        9,
-        9,
-      ),
+      padding: const EdgeInsets.fromLTRB(9, 8, 9, 9),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(5),
@@ -519,18 +396,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
               color: textColor,
             ),
           ),
-
           const SizedBox(height: 7),
-
           child,
         ],
       ),
     );
   }
-
-  // ============================================================
-  // TEXT FIELD
-  // ============================================================
 
   Widget _buildTextField({
     required TextEditingController controller,
@@ -538,11 +409,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
     required String validatorMessage,
     TextInputType keyboardType = TextInputType.text,
     int maxLines = 1,
+    bool emailValidation = false,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Field Label
         Padding(
           padding: const EdgeInsets.only(
             left: 1,
@@ -556,8 +427,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ),
           ),
         ),
-
-        // Text Form Field
         SizedBox(
           height: maxLines > 1 ? null : 27,
           child: TextFormField(
@@ -574,17 +443,22 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 return validatorMessage;
               }
 
+              if (emailValidation &&
+                  !RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$')
+                      .hasMatch(value.trim())) {
+                return 'Please enter a valid email address';
+              }
+
               return null;
             },
             decoration: InputDecoration(
               isDense: true,
-              contentPadding: EdgeInsets.symmetric(
+              contentPadding: const EdgeInsets.symmetric(
                 horizontal: 7,
-                vertical: maxLines > 1 ? 6 : 6,
+                vertical: 6,
               ),
               filled: true,
               fillColor: Colors.white,
-
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
                 borderSide: BorderSide(
@@ -592,7 +466,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   width: 0.7,
                 ),
               ),
-
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
                 borderSide: BorderSide(
@@ -600,7 +473,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   width: 0.7,
                 ),
               ),
-
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
                 borderSide: BorderSide(
@@ -608,7 +480,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   width: 1,
                 ),
               ),
-
               errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
                 borderSide: BorderSide(
@@ -616,7 +487,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   width: 0.8,
                 ),
               ),
-
               focusedErrorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
                 borderSide: BorderSide(
@@ -624,7 +494,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   width: 1,
                 ),
               ),
-
               errorStyle: TextStyle(
                 fontSize: 7,
                 color: redColor,
@@ -636,42 +505,31 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
-  // ============================================================
-  // SAVE BUTTON
-  // ============================================================
-
   Widget _buildSaveButton() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 0),
-      child: SizedBox(
-        width: double.infinity,
-        height: 31,
-        child: ElevatedButton(
-          onPressed: _saveProfile,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: bottomColor,
-            foregroundColor: Colors.white,
-            elevation: 0,
-            padding: EdgeInsets.zero,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(4),
-            ),
+    return SizedBox(
+      width: double.infinity,
+      height: 31,
+      child: ElevatedButton(
+        onPressed: _saveProfile,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: bottomColor,
+          foregroundColor: Colors.white,
+          elevation: 0,
+          padding: EdgeInsets.zero,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(4),
           ),
-          child: const Text(
-            'Save Changes',
-            style: TextStyle(
-              fontSize: 8,
-              fontWeight: FontWeight.w500,
-            ),
+        ),
+        child: const Text(
+          'Save Changes',
+          style: TextStyle(
+            fontSize: 8,
+            fontWeight: FontWeight.w500,
           ),
         ),
       ),
     );
   }
-
-  // ============================================================
-  // CHANGE PASSWORD
-  // ============================================================
 
   Widget _buildChangePasswordButton() {
     return TextButton(
@@ -695,10 +553,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
-  // ============================================================
-  // BOTTOM NAVIGATION
-  // ============================================================
-
   Widget _buildBottomNavigation() {
     return Container(
       height: 48,
@@ -717,25 +571,21 @@ class _EditProfilePageState extends State<EditProfilePage> {
             label: 'Dashboard',
             selected: false,
           ),
-
           _buildNavItem(
             icon: Icons.add_circle_outline,
             label: 'Post Job',
             selected: false,
           ),
-
           _buildNavItem(
             icon: Icons.business_center_outlined,
             label: 'My Jobs',
             selected: false,
           ),
-
           _buildNavItem(
             icon: Icons.people_outline,
             label: 'Applications',
             selected: false,
           ),
-
           _buildNavItem(
             icon: Icons.person_outline,
             label: 'Profile',
@@ -746,10 +596,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
-  // ============================================================
-  // BOTTOM NAV ITEM
-  // ============================================================
-
   Widget _buildNavItem({
     required IconData icon,
     required String label,
@@ -758,7 +604,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
     return Expanded(
       child: GestureDetector(
         onTap: () {
-          // Add your navigation logic here.
         },
         child: Container(
           margin: const EdgeInsets.symmetric(
@@ -766,9 +611,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             vertical: 4,
           ),
           decoration: BoxDecoration(
-            color: selected
-                ? avatarColor
-                : Colors.transparent,
+            color: selected ? avatarColor : Colors.transparent,
             borderRadius: BorderRadius.circular(5),
           ),
           child: Column(
@@ -779,9 +622,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 size: 14,
                 color: Colors.white,
               ),
-
               const SizedBox(height: 2),
-
               Text(
                 label,
                 style: const TextStyle(
@@ -796,19 +637,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
-  // ============================================================
-  // SAVE PROFILE
-  // ============================================================
-
   void _saveProfile() {
+    FocusScope.of(context).unfocus();
+
     if (_formKey.currentState!.validate()) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: const Text(
             'Profile updated successfully',
-            style: TextStyle(
-              fontSize: 12,
-            ),
+            style: TextStyle(fontSize: 12),
           ),
           backgroundColor: bottomColor,
           behavior: SnackBarBehavior.floating,
@@ -818,14 +655,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
     }
   }
 
-  // ============================================================
-  // CHANGE PASSWORD
-  // ============================================================
-
   void _changePassword() {
     showDialog(
       context: context,
-      builder: (context) {
+      builder: (dialogContext) {
         return AlertDialog(
           backgroundColor: backgroundColor,
           title: Text(
@@ -838,20 +671,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
           ),
           content: const Text(
             'Password change functionality can be added here.',
-            style: TextStyle(
-              fontSize: 12,
-            ),
+            style: TextStyle(fontSize: 12),
           ),
           actions: [
             TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
+              onPressed: () => Navigator.pop(dialogContext),
               child: Text(
                 'Close',
-                style: TextStyle(
-                  color: blueColor,
-                ),
+                style: TextStyle(color: blueColor),
               ),
             ),
           ],
