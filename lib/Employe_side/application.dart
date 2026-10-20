@@ -211,7 +211,7 @@ class _ApplicationPageState extends State<ApplicationPage> {
         ),
         decoration: BoxDecoration(
           color: isSelected
-              ? const Color(0xFF17445B)
+              ?blueColor
               : Colors.white,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(

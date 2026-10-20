@@ -114,7 +114,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     }
   }
 
-  // Form validators
+
 
   String? _validateRequired(String? value, String fieldName) {
     if (value == null || value.trim().isEmpty) {
@@ -321,7 +321,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 ),
               ),
 
-              // Registration form
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 24,
@@ -354,8 +353,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         ),
                       ),
                       const SizedBox(height: 24),
-
-                      // Role toggle
+// Role toggle
                       Container(
                         padding: const EdgeInsets.all(4),
                         decoration: BoxDecoration(
@@ -390,7 +388,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       ),
                       const SizedBox(height: 24),
 
-                      // Role-specific form fields
+
                       if (isJobSeeker)
                         _buildJobSeekerFields(isWide)
                       else
@@ -398,7 +396,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
                       const SizedBox(height: 16),
 
-                      // Terms and conditions
+
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -464,7 +462,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       ),
                       const SizedBox(height: 24),
 
-                      // Create account
+
                       SizedBox(
                         width: double.infinity,
                         height: 48,
@@ -489,7 +487,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       ),
                       const SizedBox(height: 20),
 
-                      // Login footer
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -526,7 +524,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     );
   }
 
-  // Job seeker fields
+
   Widget _buildJobSeekerFields(bool isWide) {
     final fields = <Widget>[
       _buildInputField(
@@ -599,7 +597,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     );
   }
 
-  // Employee fields
+
   Widget _buildEmployeeFields(bool isWide) {
     final fields = <Widget>[
       _buildInputField(
@@ -708,7 +706,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     );
   }
 
-  // Creates two-column rows on wide screens and single fields on mobile.
+
   Widget _buildResponsiveRows(List<Widget> fields, bool isWide) {
     if (!isWide) {
       return Column(

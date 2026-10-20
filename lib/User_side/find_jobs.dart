@@ -7,19 +7,9 @@ import '../Riverpod/profileprovider.dart';
 import '../references/reference.dart';
 import 'job_details_page.dart';
 
-// ============================================================
-// FILTER PROVIDER
-// 0 = All Jobs
-// 1 = Full Time
-// 2 = Part Time
-// 3 = Remote
-// ============================================================
 
 final selectedJobFilterProvider = StateProvider<int>((ref) => 0);
 
-// ============================================================
-// FIND JOBS PAGE
-// ============================================================
 
 class findjobes extends ConsumerWidget {
   final VoidCallback onApply;
@@ -29,9 +19,6 @@ class findjobes extends ConsumerWidget {
     required this.onApply,
   });
 
-  // ============================================================
-  // APPLY JOB TYPE FILTER
-  // ============================================================
 
   List<Map<String, dynamic>> applyJobTypeFilter(
       List<Map<String, dynamic>> jobs,
@@ -57,9 +44,6 @@ class findjobes extends ConsumerWidget {
     }).toList();
   }
 
-  // ============================================================
-  // OPEN JOB DETAILS
-  // ============================================================
 
   Future<void> openJobDetails(
       BuildContext context,
@@ -80,9 +64,6 @@ class findjobes extends ConsumerWidget {
     }
   }
 
-  // ============================================================
-  // BUILD
-  // ============================================================
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -101,9 +82,6 @@ class findjobes extends ConsumerWidget {
       body: SafeArea(
         child: Column(
           children: [
-            // ==================================================
-            // HEADER
-            // ==================================================
 
             Container(
               width: double.infinity,
@@ -162,9 +140,6 @@ class findjobes extends ConsumerWidget {
               ),
             ),
 
-            // ==================================================
-            // CONTENT
-            // ==================================================
 
             Expanded(
               child: SingleChildScrollView(
@@ -258,9 +233,6 @@ class findjobes extends ConsumerWidget {
 
                     const SizedBox(height: 20),
 
-                    // ==================================================
-                    // FILTER CHIPS
-                    // ==================================================
 
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
@@ -309,9 +281,6 @@ class findjobes extends ConsumerWidget {
 
                     const SizedBox(height: 20),
 
-                    // ==================================================
-                    // RESULTS COUNT
-                    // ==================================================
 
                     Text(
                       '${jobsList.length} Jobs Found',
@@ -350,9 +319,6 @@ class findjobes extends ConsumerWidget {
     );
   }
 
-  // ============================================================
-  // FILTER CHIP
-  // ============================================================
 
   Widget _filterChip({
     required WidgetRef ref,
@@ -402,9 +368,6 @@ class findjobes extends ConsumerWidget {
     );
   }
 
-  // ============================================================
-  // NO JOBS FOUND
-  // ============================================================
 
   Widget _noJobsWidget() {
     return Container(
@@ -445,9 +408,6 @@ class findjobes extends ConsumerWidget {
     );
   }
 
-  // ============================================================
-  // JOB CARD
-  // ============================================================
 
   Widget _jobCard({
     required BuildContext context,
@@ -497,7 +457,6 @@ class findjobes extends ConsumerWidget {
 
             const SizedBox(width: 14),
 
-            // JOB INFORMATION
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

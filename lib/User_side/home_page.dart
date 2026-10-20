@@ -15,20 +15,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  // ============================================================
-  // SELECTED BOTTOM NAVIGATION INDEX
-  // ============================================================
 
   int selectedIndex = 0;
 
-  // ============================================================
-  // COLORS
-  // ============================================================
 
 
-  // ============================================================
-  // BOTTOM NAVIGATION
-  // ============================================================
 
   void _onBottomItemTap(int index) {
     setState(() {
@@ -36,9 +27,6 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  // ============================================================
-  // APPLY JOB
-  // ============================================================
 
   void _goToAppliedPage() {
     setState(() {
@@ -46,63 +34,38 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  // ============================================================
-  // BUILD
-  // ============================================================
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
 
-      // ========================================================
-      // BODY
-      // ========================================================
 
       body: IndexedStack(
         index: selectedIndex,
 
         children: [
 
-          // ======================================================
-          // HOME
-          // ======================================================
 
           _buildHomePage(),
 
-          // ======================================================
-          // FIND JOBS
-          // ======================================================
 
           findjobes(
             onApply: _goToAppliedPage,
           ),
 
-          // ======================================================
-          // APPLIED
-          // ======================================================
-
           const AppliedPages(),
 
-          // ======================================================
-          // SAVED
-          // ======================================================
 
           SavedPage(
             onApply: _goToAppliedPage,
           ),
 
-          // ======================================================
-          // PROFILE
-          // ======================================================
 
           const ProfilePage(),
         ],
       ),
 
-      // ========================================================
-      // BOTTOM NAVIGATION BAR
-      // ========================================================
 
       bottomNavigationBar: Container(
         height: 72,
@@ -123,9 +86,6 @@ class _HomePageState extends State<HomePage> {
         child: Row(
           children: [
 
-            // ==================================================
-            // HOME
-            // ==================================================
 
             Expanded(
               child: _bottomItem(
@@ -135,9 +95,6 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
 
-            // ==================================================
-            // FIND JOBS
-            // ==================================================
 
             Expanded(
               child: _bottomItem(
@@ -147,9 +104,6 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
 
-            // ==================================================
-            // APPLIED
-            // ==================================================
 
             Expanded(
               child: _bottomItem(
@@ -159,9 +113,6 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
 
-            // ==================================================
-            // SAVED
-            // ==================================================
 
             Expanded(
               child: _bottomItem(
@@ -171,9 +122,6 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
 
-            // ==================================================
-            // PROFILE
-            // ==================================================
 
             Expanded(
               child: _bottomItem(
@@ -187,10 +135,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
-  // ============================================================
-  // HOME PAGE
-  // ============================================================
 
   Widget _buildHomePage() {
     return SafeArea(
@@ -213,16 +157,10 @@ class _HomePageState extends State<HomePage> {
 
                 children: [
 
-                  // ==================================================
-                  // HEADER
-                  // ==================================================
 
                   Row(
                     children: [
 
-                      // ==================================================
-                      // HIREHUB
-                      // ==================================================
 
                       Text(
                         "HireHub",
@@ -235,16 +173,11 @@ class _HomePageState extends State<HomePage> {
 
                       const Spacer(),
 
-                      // ==================================================
-                      // PROFILE ICON
-                      // ==================================================
+
 
                       GestureDetector(
                         onTap: () {
 
-                          // IMPORTANT:
-                          // ProfilePage is already inside IndexedStack.
-                          // So don't use Navigator.push() here.
 
                           setState(() {
                             selectedIndex = 4;
@@ -277,9 +210,6 @@ class _HomePageState extends State<HomePage> {
 
                   const SizedBox(height: 22),
 
-                  // ==================================================
-                  // WELCOME
-                  // ==================================================
 
                   Text(
                     "Welcome back, Rahul!",
@@ -304,14 +234,12 @@ class _HomePageState extends State<HomePage> {
 
                   const SizedBox(height: 18),
 
-                  // ==================================================
-                  // STATISTICS
-                  // ==================================================
+
 
                   Row(
                     children: [
 
-                      // SENT
+
                       Expanded(
                         child: _statCard(
                           icon: Icons.description_outlined,
@@ -324,7 +252,7 @@ class _HomePageState extends State<HomePage> {
 
                       const SizedBox(width: 8),
 
-                      // INTERVIEWS
+
                       Expanded(
                         child: _statCard(
                           icon: Icons.calendar_month_outlined,
@@ -337,7 +265,7 @@ class _HomePageState extends State<HomePage> {
 
                       const SizedBox(width: 8),
 
-                      // JOB ALERTS
+
                       Expanded(
                         child: _statCard(
                           icon: Icons.notifications_active_outlined,
@@ -352,10 +280,6 @@ class _HomePageState extends State<HomePage> {
 
                   const SizedBox(height: 22),
 
-                  // ==================================================
-                  // RECOMMENDED JOBS
-                  // ==================================================
-
                   Text(
                     "Recommended Jobs",
                     style: TextStyle(
@@ -367,9 +291,6 @@ class _HomePageState extends State<HomePage> {
 
                   const SizedBox(height: 12),
 
-                  // ==================================================
-                  // TCS
-                  // ==================================================
 
                   _jobCard(
                     companyShortName: "TCS",
@@ -386,9 +307,6 @@ class _HomePageState extends State<HomePage> {
 
                   const SizedBox(height: 10),
 
-                  // ==================================================
-                  // INFOSYS
-                  // ==================================================
 
                   _jobCard(
                     companyShortName: "INF",
@@ -405,9 +323,6 @@ class _HomePageState extends State<HomePage> {
 
                   const SizedBox(height: 10),
 
-                  // ==================================================
-                  // WIPRO
-                  // ==================================================
 
                   _jobCard(
                     companyShortName: "WIP",
@@ -424,9 +339,6 @@ class _HomePageState extends State<HomePage> {
 
                   const SizedBox(height: 22),
 
-                  // ==================================================
-                  // RECENT ACTIVITY
-                  // ==================================================
 
                   Container(
                     width: double.infinity,
@@ -459,7 +371,7 @@ class _HomePageState extends State<HomePage> {
 
                         const SizedBox(height: 15),
 
-                        // ACTIVITY 1
+
                         _activityItem(
                           color: const Color(0xFF00B889),
                           title: "Interview scheduled at Infosys",
@@ -468,7 +380,7 @@ class _HomePageState extends State<HomePage> {
 
                         const SizedBox(height: 12),
 
-                        // ACTIVITY 2
+
                         _activityItem(
                           color: const Color(0xFF2864E8),
                           title:
@@ -478,7 +390,7 @@ class _HomePageState extends State<HomePage> {
 
                         const SizedBox(height: 12),
 
-                        // ACTIVITY 3
+
                         _activityItem(
                           color: const Color(0xFFFF9800),
                           title:
@@ -499,9 +411,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // ============================================================
-  // BOTTOM NAVIGATION ITEM
-  // ============================================================
 
   Widget _bottomItem({
     required IconData icon,
@@ -523,9 +432,6 @@ class _HomePageState extends State<HomePage> {
 
         children: [
 
-          // ==================================================
-          // ICON BACKGROUND
-          // ==================================================
 
           Container(
             width: 60,
@@ -549,9 +455,6 @@ class _HomePageState extends State<HomePage> {
 
           const SizedBox(height: 2),
 
-          // ==================================================
-          // TITLE
-          // ==================================================
 
           Text(
             title,
@@ -573,9 +476,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // ============================================================
-  // STAT CARD
-  // ============================================================
 
   Widget _statCard({
     required IconData icon,
@@ -606,9 +506,6 @@ class _HomePageState extends State<HomePage> {
       child: Row(
         children: [
 
-          // ==================================================
-          // ICON
-          // ==================================================
 
           Container(
             width: 30,
@@ -628,9 +525,6 @@ class _HomePageState extends State<HomePage> {
 
           const SizedBox(width: 7),
 
-          // ==================================================
-          // TEXT
-          // ==================================================
 
           Expanded(
             child: Column(
@@ -671,9 +565,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // ============================================================
-  // JOB CARD
-  // ============================================================
 
   Widget _jobCard({
     required String companyShortName,
@@ -711,9 +602,6 @@ class _HomePageState extends State<HomePage> {
 
             children: [
 
-              // ==================================================
-              // COMPANY ICON
-              // ==================================================
 
               Container(
                 width: 52,
@@ -739,9 +627,6 @@ class _HomePageState extends State<HomePage> {
 
               const SizedBox(width: 12),
 
-              // ==================================================
-              // JOB INFORMATION
-              // ==================================================
 
               Expanded(
                 child: Column(
@@ -778,9 +663,6 @@ class _HomePageState extends State<HomePage> {
 
               const SizedBox(width: 6),
 
-              // ==================================================
-              // JOB TYPE
-              // ==================================================
 
               Container(
                 padding: const EdgeInsets.symmetric(
@@ -808,9 +690,6 @@ class _HomePageState extends State<HomePage> {
 
           const SizedBox(height: 13),
 
-          // ==================================================
-          // SALARY
-          // ==================================================
 
           Align(
             alignment: Alignment.centerLeft,
@@ -830,9 +709,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // ============================================================
-  // ACTIVITY ITEM
-  // ============================================================
 
   Widget _activityItem({
     required Color color,
@@ -845,9 +721,6 @@ class _HomePageState extends State<HomePage> {
 
       children: [
 
-        // ==================================================
-        // DOT
-        // ==================================================
 
         Container(
           margin: const EdgeInsets.only(top: 5),
@@ -863,9 +736,6 @@ class _HomePageState extends State<HomePage> {
 
         const SizedBox(width: 11),
 
-        // ==================================================
-        // TEXT
-        // ==================================================
 
         Expanded(
           child: Column(

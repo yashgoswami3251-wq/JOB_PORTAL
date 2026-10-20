@@ -16,14 +16,6 @@ class SavedPage extends StatefulWidget {
 }
 
 class _SavedPageState extends State<SavedPage> {
-  // ============================================================
-  // COLORS
-  // ============================================================
-
-
-  // ============================================================
-  // SAVED JOBS
-  // ============================================================
 
   final List<Map<String, dynamic>> savedJobs = [
     {
@@ -146,9 +138,6 @@ class _SavedPageState extends State<SavedPage> {
     },
   ];
 
-  // ============================================================
-  // OPEN JOB DETAILS
-  // ============================================================
 
   void openJobDetails(Map<String, dynamic> job) {
     Navigator.push(
@@ -159,18 +148,13 @@ class _SavedPageState extends State<SavedPage> {
           return JobDetailsPage(
             job: job,
 
-            // When Apply Now is clicked,
-            // JobDetailsPage will call this function.
+
             onApply: widget.onApply,
           );
         },
       ),
     );
   }
-
-  // ============================================================
-  // REMOVE SAVED JOB
-  // ============================================================
 
   void removeSavedJob(int index) {
     setState(() {
@@ -185,9 +169,6 @@ class _SavedPageState extends State<SavedPage> {
     );
   }
 
-  // ============================================================
-  // BUILD
-  // ============================================================
 
   @override
   Widget build(BuildContext context) {
@@ -197,9 +178,6 @@ class _SavedPageState extends State<SavedPage> {
       body: SafeArea(
         child: Column(
           children: [
-            // ====================================================
-            // HEADER
-            // ====================================================
 
             Container(
               width: double.infinity,
@@ -222,9 +200,6 @@ class _SavedPageState extends State<SavedPage> {
               child: Row(
                 children: [
 
-                  // ==================================================
-                  // HIREHUB
-                  // ==================================================
 
                   Text(
                     "Saved Jobs",
@@ -237,9 +212,6 @@ class _SavedPageState extends State<SavedPage> {
 
                   const Spacer(),
 
-                  // ==================================================
-                  // PROFILE ICON
-                  // ==================================================
 
                   GestureDetector(
                     onTap: () {
@@ -271,9 +243,6 @@ class _SavedPageState extends State<SavedPage> {
               ),
             ),
 
-            // ====================================================
-            // CONTENT
-            // ====================================================
 
             Expanded(
               child: SingleChildScrollView(
@@ -339,9 +308,6 @@ class _SavedPageState extends State<SavedPage> {
     );
   }
 
-  // ============================================================
-  // SAVED JOB CARD
-  // ============================================================
 
   Widget _savedJobCard({
     required Map<String, dynamic> job,
@@ -377,9 +343,6 @@ class _SavedPageState extends State<SavedPage> {
 
       child: Column(
         children: [
-          // ======================================================
-          // TOP
-          // ======================================================
 
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -444,10 +407,6 @@ class _SavedPageState extends State<SavedPage> {
                 ),
               ),
 
-              // ==================================================
-              // REMOVE
-              // ==================================================
-
               GestureDetector(
                 onTap: () {
                   removeSavedJob(index);
@@ -474,10 +433,6 @@ class _SavedPageState extends State<SavedPage> {
           ),
 
           const SizedBox(height: 10),
-
-          // ======================================================
-          // BOTTOM
-          // ======================================================
 
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -512,9 +467,6 @@ class _SavedPageState extends State<SavedPage> {
                 ),
               ),
 
-              // ==================================================
-              // VIEW JOB
-              // ==================================================
 
               SizedBox(
                 height: 38,
@@ -555,9 +507,6 @@ class _SavedPageState extends State<SavedPage> {
     );
   }
 
-  // ============================================================
-  // EMPTY
-  // ============================================================
 
   Widget _emptySavedJobs() {
     return Container(

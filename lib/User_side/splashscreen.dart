@@ -60,7 +60,7 @@ class _SplashScreenState extends State<SplashScreen> {
             children: [
               const Spacer(flex: 3),
 
-              // Logo with subtle glow
+
               Container(
                 width: double.infinity,
                 margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -101,7 +101,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
               const SizedBox(height: 35),
 
-              // Tagline
+
               const Text(
                 'YOUR CAREER. YOUR FUTURE.',
                 textAlign: TextAlign.center,

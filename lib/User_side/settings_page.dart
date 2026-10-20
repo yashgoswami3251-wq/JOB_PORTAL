@@ -14,10 +14,6 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
 
 
-  // ============================================================
-  // BUILD
-  // ============================================================
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,9 +23,6 @@ class _SettingsPageState extends State<SettingsPage> {
         child: Column(
           children: [
 
-            // ======================================================
-            // HEADER
-            // ======================================================
 
             Container(
               height: 58,
@@ -54,24 +47,20 @@ class _SettingsPageState extends State<SettingsPage> {
                 child: Row(
                   children: [
 
-                    // ==================================================
-                    // HIREHUB
-                    // ==================================================
-
                     InkWell(
                         onTap: (){
                           Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
                         },
-                        child: Icon(Icons.exit_to_app)
+                        child: Icon(Icons.chevron_left,size: 30,)
                     ),
 
-                    SizedBox(width: 10,),
+                    SizedBox(width: 5,),
 
                      Text(
                       "HireHub",
                       style: TextStyle(
-                        fontSize: 21,
-                        fontWeight: FontWeight.w700,
+                        fontSize: fontSize,
+                        fontWeight: fontweight,
                         color: textColor,
                         letterSpacing: -0.3,
                       ),
@@ -79,13 +68,10 @@ class _SettingsPageState extends State<SettingsPage> {
 
                     const Spacer(),
 
-                    // ==================================================
-                    // PROFILE CIRCLE
-                    // ==================================================
 
                     Container(
-                      width: 30,
-                      height: 30,
+                      width: 40,
+                      height: 40,
 
                       decoration: const BoxDecoration(
                         color: Color(0xFF397184),
@@ -108,9 +94,6 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
             ),
 
-            // ======================================================
-            // SCROLLABLE CONTENT
-            // ======================================================
 
             Expanded(
               child: SingleChildScrollView(
@@ -128,9 +111,6 @@ class _SettingsPageState extends State<SettingsPage> {
 
                   children: [
 
-                    // ==================================================
-                    // SETTINGS TITLE
-                    // ==================================================
 
                      Text(
                       "Settings",
@@ -144,9 +124,6 @@ class _SettingsPageState extends State<SettingsPage> {
 
                     const SizedBox(height: 12),
 
-                    // ==================================================
-                    // ACCOUNT SETTINGS
-                    // ==================================================
 
                     SettingsSection(
                       title: "Account Settings",
@@ -205,10 +182,6 @@ class _SettingsPageState extends State<SettingsPage> {
 
                     const SizedBox(height: 14),
 
-                    // ==================================================
-                    // SUPPORT & INFORMATION
-                    // ==================================================
-
                     SettingsSection(
                       title: "Support & Information",
 
@@ -248,10 +221,6 @@ class _SettingsPageState extends State<SettingsPage> {
 
                     const SizedBox(height: 14),
 
-                    // ==================================================
-                    // LEGAL
-                    // ==================================================
-
                     SettingsSection(
                       title: "Legal",
 
@@ -281,10 +250,6 @@ class _SettingsPageState extends State<SettingsPage> {
 
                     const SizedBox(height: 14),
 
-                    // ==================================================
-                    // ACCOUNT ACTIONS
-                    // ==================================================
-
                     Container(
                       width: double.infinity,
 
@@ -312,9 +277,6 @@ class _SettingsPageState extends State<SettingsPage> {
 
                         children: [
 
-                          // ==================================================
-                          // TITLE
-                          // ==================================================
 
                            Text(
                             "Account Actions",
@@ -327,9 +289,6 @@ class _SettingsPageState extends State<SettingsPage> {
 
                           const SizedBox(height: 13),
 
-                          // ==================================================
-                          // LOGOUT
-                          // ==================================================
 
                           SizedBox(
                             width: double.infinity,
@@ -368,9 +327,6 @@ class _SettingsPageState extends State<SettingsPage> {
 
                           const SizedBox(height: 10),
 
-                          // ==================================================
-                          // DELETE ACCOUNT
-                          // ==================================================
 
                           SizedBox(
                             width: double.infinity,
@@ -419,9 +375,6 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  // ============================================================
-  // LOGOUT DIALOG
-  // ============================================================
 
   void _showLogoutDialog(BuildContext context) {
 
@@ -477,9 +430,6 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  // ============================================================
-  // DELETE ACCOUNT DIALOG
-  // ============================================================
 
   void _showDeleteDialog(BuildContext context) {
 
@@ -521,7 +471,7 @@ class _SettingsPageState extends State<SettingsPage> {
               onPressed: () {
                 Navigator.pop(context);
 
-                // Add your delete account logic here
+
               },
 
               child: const Text(
@@ -540,9 +490,6 @@ class _SettingsPageState extends State<SettingsPage> {
 }
 
 
-// ==================================================================
-// SETTINGS SECTION
-// ==================================================================
 
 class SettingsSection extends StatelessWidget {
 
@@ -585,9 +532,6 @@ class SettingsSection extends StatelessWidget {
 
           children: [
 
-            // ========================================================
-            // SECTION TITLE
-            // ========================================================
 
             Text(
               title,
@@ -601,9 +545,6 @@ class SettingsSection extends StatelessWidget {
 
             const SizedBox(height: 5),
 
-            // ========================================================
-            // ITEMS
-            // ========================================================
 
             ...children,
           ],
@@ -614,9 +555,6 @@ class SettingsSection extends StatelessWidget {
 }
 
 
-// ==================================================================
-// SETTINGS ITEM
-// ==================================================================
 
 class SettingsItem extends StatefulWidget {
 
@@ -647,15 +585,10 @@ class _SettingsItemState extends State<SettingsItem> {
     return Column(
       children: [
 
-        // ============================================================
-        // MAIN ROW
-        // ============================================================
 
         InkWell(
           onTap: () {
 
-            // If Edit Profile has navigation,
-            // navigate instead of expanding.
 
             if (widget.onTap != null) {
               widget.onTap!();
@@ -675,10 +608,6 @@ class _SettingsItemState extends State<SettingsItem> {
             child: Row(
               children: [
 
-                // ==================================================
-                // ICON CIRCLE
-                // ==================================================
-
                 Container(
                   width: 22,
                   height: 22,
@@ -697,9 +626,6 @@ class _SettingsItemState extends State<SettingsItem> {
 
                 const SizedBox(width: 10),
 
-                // ==================================================
-                // TITLE
-                // ==================================================
 
                 Expanded(
                   child: Text(
@@ -713,9 +639,6 @@ class _SettingsItemState extends State<SettingsItem> {
                   ),
                 ),
 
-                // ==================================================
-                // ARROW
-                // ==================================================
 
                 AnimatedRotation(
                   turns: isExpanded ? 0.5 : 0,
@@ -734,9 +657,6 @@ class _SettingsItemState extends State<SettingsItem> {
           ),
         ),
 
-        // ============================================================
-        // EXPANDED INFORMATION
-        // ============================================================
 
         AnimatedCrossFade(
           firstChild: const SizedBox(
@@ -779,9 +699,6 @@ class _SettingsItemState extends State<SettingsItem> {
           const Duration(milliseconds: 200),
         ),
 
-        // ============================================================
-        // DIVIDER
-        // ============================================================
 
         if (!isExpanded)
           const Divider(

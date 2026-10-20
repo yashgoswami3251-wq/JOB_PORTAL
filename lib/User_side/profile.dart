@@ -24,10 +24,6 @@ class ProfilePage extends ConsumerWidget {
         child: Column(
           children: [
 
-            // ======================================================
-            // HEADER
-            // ======================================================
-
             Container(
               height: 58,
               width: double.infinity,
@@ -51,9 +47,6 @@ class ProfilePage extends ConsumerWidget {
                 child: Row(
                   children: [
 
-                    // ==================================================
-                    // HIREHUB
-                    // ==================================================
 
                     InkWell(
                       onTap: () {
@@ -82,9 +75,6 @@ class ProfilePage extends ConsumerWidget {
 
                     const Spacer(),
 
-                    // ==================================================
-                    // PROFILE ICON
-                    // ==================================================
 
                     GestureDetector(
                       onTap: () {
@@ -115,9 +105,6 @@ class ProfilePage extends ConsumerWidget {
               ),
             ),
 
-            // ======================================================
-            // PAGE CONTENT
-            // ======================================================
 
             Expanded(
               child: SingleChildScrollView(
@@ -139,9 +126,6 @@ class ProfilePage extends ConsumerWidget {
 
                       const SizedBox(height: 15),
 
-                      // ==================================================
-                      // PROFILE CARD
-                      // ==================================================
 
                       Container(
                         width: double.infinity,
@@ -171,9 +155,6 @@ class ProfilePage extends ConsumerWidget {
 
                           children: [
 
-                            // ==========================================
-                            // AVATAR
-                            // ==========================================
 
                             Container(
                               width: 75,
@@ -200,9 +181,6 @@ class ProfilePage extends ConsumerWidget {
 
                             const SizedBox(height: 12),
 
-                            // ==========================================
-                            // NAME
-                            // ==========================================
 
                              Text(
                               profile.fullName,
@@ -215,10 +193,6 @@ class ProfilePage extends ConsumerWidget {
                             ),
 
                             const SizedBox(height: 3),
-
-                            // ==========================================
-                            // SUBTITLE
-                            // ==========================================
 
                              Text(
                               profile.aboutMe,
@@ -233,9 +207,6 @@ class ProfilePage extends ConsumerWidget {
 
                             const SizedBox(height: 12),
 
-                            // ==========================================
-                            // EDIT BUTTON
-                            // ==========================================
 
                             SizedBox(
                               width: 104,
@@ -282,9 +253,6 @@ class ProfilePage extends ConsumerWidget {
 
                             const SizedBox(height: 16),
 
-                            // ==========================================
-                            // DIVIDER
-                            // ==========================================
 
                             const Divider(
                               height: 1,
@@ -293,10 +261,6 @@ class ProfilePage extends ConsumerWidget {
                             ),
 
                             const SizedBox(height: 17),
-
-                            // ==========================================
-                            // PROFILE INFORMATION
-                            // ==========================================
 
                              Align(
                               alignment:
@@ -315,7 +279,7 @@ class ProfilePage extends ConsumerWidget {
 
                             const SizedBox(height: 13),
 
-                            // EMAIL
+
 
                              ProfileDetail(
                               title: "Email Address",
@@ -324,7 +288,7 @@ class ProfilePage extends ConsumerWidget {
 
                             const SizedBox(height: 10),
 
-                            // PHONE
+
 
                              ProfileDetail(
                               title: "Phone Number",
@@ -333,8 +297,6 @@ class ProfilePage extends ConsumerWidget {
 
                             const SizedBox(height: 10),
 
-                            // LOCATION
-
                              ProfileDetail(
                               title: "Location",
                               value: profile.location,
@@ -342,7 +304,7 @@ class ProfilePage extends ConsumerWidget {
 
                             const SizedBox(height: 10),
 
-                            // EXPERIENCE
+
 
                              ProfileDetail(
                               title: "Total Experience",
@@ -351,9 +313,6 @@ class ProfilePage extends ConsumerWidget {
 
                             const SizedBox(height: 16),
 
-                            // ==========================================
-                            // SECOND DIVIDER
-                            // ==========================================
 
                             const Divider(
                               height: 1,
@@ -363,9 +322,6 @@ class ProfilePage extends ConsumerWidget {
 
                             const SizedBox(height: 16),
 
-                            // ==========================================
-                            // TECHNICAL SKILLS
-                            // ==========================================
 
                              Align(
                               alignment:
@@ -384,12 +340,6 @@ class ProfilePage extends ConsumerWidget {
 
                             const SizedBox(height: 10),
 
-                            // ==========================================
-                            // FIXED SKILLS
-                            //
-                            // Changed Row -> Wrap.
-                            // This prevents horizontal overflow.
-                            // ==========================================
 
                              Align(
                               alignment: Alignment.centerLeft,
@@ -428,9 +378,6 @@ class ProfilePage extends ConsumerWidget {
 
                       const SizedBox(height: 18),
 
-                      // ==================================================
-                      // MY RESUME SECTION
-                      // ==================================================
 
                        Text(
                         "My Resume",
@@ -443,9 +390,6 @@ class ProfilePage extends ConsumerWidget {
 
                       const SizedBox(height: 10),
 
-                      // ==================================================
-                      // RESUME CARD
-                      // ==================================================
 
                       InkWell(
                         borderRadius:
@@ -485,7 +429,7 @@ class ProfilePage extends ConsumerWidget {
                           child: Row(
                             children: [
 
-                              // PDF ICON
+
                               Container(
                                 width: 44,
                                 height: 44,
@@ -513,7 +457,7 @@ class ProfilePage extends ConsumerWidget {
 
                               const SizedBox(width: 12),
 
-                              // TEXT
+
                                Expanded(
                                 child: Column(
                                   crossAxisAlignment:
@@ -573,9 +517,6 @@ class ProfilePage extends ConsumerWidget {
 }
 
 
-// ==================================================================
-// PROFILE DETAIL
-// ==================================================================
 
 class ProfileDetail extends StatelessWidget {
   final String title;
@@ -624,9 +565,6 @@ class ProfileDetail extends StatelessWidget {
 }
 
 
-// ==================================================================
-// SKILL CHIP
-// ==================================================================
 
 class SkillChip extends StatelessWidget {
   final String text;

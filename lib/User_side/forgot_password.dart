@@ -1,634 +1,395 @@
-import 'package:flutter/material.dart';
 
-import 'login.dart';
+import 'package:flutter/material.dart';
+import '../references/reference.dart';
 
 class ChangePasswordPage extends StatefulWidget {
   const ChangePasswordPage({super.key});
 
   @override
-  State<ChangePasswordPage> createState() => _ChangePasswordPageState();
+  State<ChangePasswordPage> createState() =>
+      _ChangePasswordPageState();
 }
 
 class _ChangePasswordPageState extends State<ChangePasswordPage> {
+  final _formKey = GlobalKey<FormState>();
 
+  final emailController = TextEditingController();
+  final otpController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
-  final TextEditingController newPasswordController =
-  TextEditingController();
+  int currentStep = 0;
 
-  final TextEditingController confirmPasswordController =
-  TextEditingController();
-
-
-  final Color backgroundColor = const Color(0xFFFFFCF7);
-  final Color navyColor = const Color(0xFF17233B);
-  final Color blueColor = const Color(0xFF2864E8);
-  final Color bottomColor = const Color(0xFF17445B);
-  final Color borderColor = const Color(0xFFE1E5EB);
-
-
-  bool hideNewPassword = true;
+  bool isLoading = false;
+  bool hidePassword = true;
   bool hideConfirmPassword = true;
+
+  // Demo OTP only. No real email is sent.
+  final String demoOtp = '123456';
 
   @override
   void dispose() {
-    newPasswordController.dispose();
+    emailController.dispose();
+    otpController.dispose();
+    passwordController.dispose();
     confirmPasswordController.dispose();
     super.dispose();
   }
 
-
-  void changePassword() {
-
-    FocusScope.of(context).unfocus();
-
-    String newPassword =
-    newPasswordController.text.trim();
-
-    String confirmPassword =
-    confirmPasswordController.text.trim();
-
-    // Empty validation
-    if (newPassword.isEmpty ||
-        confirmPassword.isEmpty) {
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            "Please fill all fields",
-          ),
-        ),
-      );
-
-      return;
-    }
-
-    // Password length
-    if (newPassword.length < 6) {
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            "Password must contain at least 6 characters",
-          ),
-        ),
-      );
-
-      return;
-    }
-
-    // Password matching
-    if (newPassword != confirmPassword) {
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            "Passwords do not match",
-          ),
-        ),
-      );
-
-      return;
-    }
-
-    // Success
+  void showMessage(String message, {bool error = false}) {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text(
-          "Password changed successfully",
-        ),
+      SnackBar(
+        content: Text(message),
+        backgroundColor: error ? Colors.red : navyColor,
+        behavior: SnackBarBehavior.floating,
       ),
-    );
-
-    // Go back to login
-    Future.delayed(
-      const Duration(milliseconds: 800),
-          () {
-
-        if (!mounted) return;
-
-        Navigator.pop(context);
-      },
     );
   }
 
-
-  Widget passwordField({
-    required TextEditingController controller,
-    required String hintText,
-    required bool obscureText,
-    required VoidCallback onVisibilityPressed,
-  }) {
-
-    return TextField(
-      controller: controller,
-
-      obscureText: obscureText,
-
-      style: const TextStyle(
-        fontSize: 12,
-        color: Color(0xFF17233B),
+  InputDecoration inputDecoration(
+      String hint,
+      IconData icon, {
+        Widget? suffixIcon,
+      }) {
+    return InputDecoration(
+      hintText: hint,
+      prefixIcon: Icon(icon, color: Colors.blueGrey, size: 20),
+      suffixIcon: suffixIcon,
+      filled: true,
+      fillColor: Colors.white,
+      contentPadding: const EdgeInsets.symmetric(
+        horizontal: 14,
+        vertical: 14,
       ),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(9),
+        borderSide: BorderSide(color: borderColor),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(9),
+        borderSide: BorderSide(color: borderColor),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(9),
+        borderSide: BorderSide(color: blueColor, width: 1.5),
+      ),
+    );
+  }
 
-      decoration: InputDecoration(
-
-        hintText: hintText,
-
-        hintStyle: const TextStyle(
-          fontSize: 11,
-          color: Color(0xFF9AA0AA),
+  Widget fieldLabel(String label) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 7),
+      child: Text(
+        label,
+        style: TextStyle(
+          color: navyColor,
+          fontSize: 14,
+          fontWeight: FontWeight.w600,
         ),
+      ),
+    );
+  }
 
-        prefixIcon: const Icon(
-          Icons.lock_outline,
-          size: 19,
-          color: Color(0xFF7B808A),
+  Widget primaryButton(String title, VoidCallback onPressed) {
+    return SizedBox(
+      width: double.infinity,
+      height: 48,
+      child: ElevatedButton(
+        onPressed: isLoading ? null : onPressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: blueColor,
+          foregroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(9),
+          ),
         ),
+        child: isLoading
+            ? const SizedBox(
+          width: 22,
+          height: 22,
+          child: CircularProgressIndicator(
+            strokeWidth: 2,
+            color: Colors.white,
+          ),
+        )
+            : Text(
+          title,
+          style: const TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
+  }
 
-        suffixIcon: IconButton(
-          onPressed: onVisibilityPressed,
+  Future<void> sendOtp() async {
+    FocusScope.of(context).unfocus();
 
-          icon: Icon(
-            obscureText
-                ? Icons.visibility_off_outlined
-                : Icons.visibility_outlined,
+    if (!_formKey.currentState!.validate()) return;
 
-            size: 19,
+    setState(() => isLoading = true);
+    await Future.delayed(const Duration(milliseconds: 500));
 
-            color: const Color(
-              0xFF7B808A,
+    if (!mounted) return;
+
+    setState(() {
+      isLoading = false;
+      currentStep = 1;
+    });
+
+    showMessage('Demo OTP: $demoOtp. No email was sent.');
+  }
+
+  void verifyOtp() {
+    FocusScope.of(context).unfocus();
+
+    if (otpController.text.trim() != demoOtp) {
+      showMessage('Please enter the correct 6-digit OTP.',
+          error: true);
+      return;
+    }
+
+    setState(() => currentStep = 2);
+    showMessage('OTP verified successfully.');
+  }
+
+  Future<void> resetPassword() async {
+    FocusScope.of(context).unfocus();
+
+    if (!_formKey.currentState!.validate()) return;
+
+    setState(() => isLoading = true);
+    await Future.delayed(const Duration(milliseconds: 500));
+
+    if (!mounted) return;
+
+    setState(() => isLoading = false);
+
+    showMessage(
+      'Demo completed. Connect a backend to save your password.',
+    );
+
+    Navigator.pop(context);
+  }
+
+  Widget buildCurrentStep() {
+    if (currentStep == 0) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          fieldLabel('Email Address'),
+          TextFormField(
+            controller: emailController,
+            keyboardType: TextInputType.emailAddress,
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return 'Please enter your email';
+              }
+              if (!RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$')
+                  .hasMatch(value.trim())) {
+                return 'Enter a valid email address';
+              }
+              return null;
+            },
+            decoration: inputDecoration(
+              'Enter your registered email',
+              Icons.email_outlined,
+            ),
+          ),
+          const SizedBox(height: 22),
+          primaryButton('Send OTP', sendOtp),
+        ],
+      );
+    }
+
+    if (currentStep == 1) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          fieldLabel('Enter OTP'),
+          TextFormField(
+            controller: otpController,
+            keyboardType: TextInputType.number,
+            maxLength: 6,
+            decoration: inputDecoration(
+              'Enter 6-digit OTP',
+              Icons.verified_user_outlined,
+            ).copyWith(counterText: ''),
+          ),
+          const SizedBox(height: 8),
+          const Text(
+            'Demo OTP: 123456',
+            style: TextStyle(color: Colors.grey, fontSize: 12),
+          ),
+          const SizedBox(height: 18),
+          primaryButton('Verify OTP', verifyOtp),
+          const SizedBox(height: 10),
+          Center(
+            child: TextButton(
+              onPressed: () {
+                setState(() {
+                  currentStep = 0;
+                  otpController.clear();
+                });
+              },
+              child: Text(
+                'Change Email',
+                style: TextStyle(color: blueColor),
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        fieldLabel('New Password'),
+        TextFormField(
+          controller: passwordController,
+          obscureText: hidePassword,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter a new password';
+            }
+            if (value.length < 6) {
+              return 'Password must be at least 6 characters';
+            }
+            return null;
+          },
+          decoration: inputDecoration(
+            'Enter new password',
+            Icons.lock_outline,
+            suffixIcon: IconButton(
+              onPressed: () {
+                setState(() => hidePassword = !hidePassword);
+              },
+              icon: Icon(
+                hidePassword
+                    ? Icons.visibility_off_outlined
+                    : Icons.visibility_outlined,
+              ),
             ),
           ),
         ),
-
-        filled: true,
-
-        fillColor: const Color(
-          0xFFF8F9FB,
-        ),
-
-        contentPadding:
-        const EdgeInsets.symmetric(
-          horizontal: 12,
-          vertical: 13,
-        ),
-
-        border: OutlineInputBorder(
-          borderRadius:
-          BorderRadius.circular(9),
-
-          borderSide: BorderSide(
-            color: borderColor,
+        const SizedBox(height: 18),
+        fieldLabel('Confirm Password'),
+        TextFormField(
+          controller: confirmPasswordController,
+          obscureText: hideConfirmPassword,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please confirm your password';
+            }
+            if (value != passwordController.text) {
+              return 'Passwords do not match';
+            }
+            return null;
+          },
+          decoration: inputDecoration(
+            'Re-enter new password',
+            Icons.lock_outline,
+            suffixIcon: IconButton(
+              onPressed: () {
+                setState(() {
+                  hideConfirmPassword = !hideConfirmPassword;
+                });
+              },
+              icon: Icon(
+                hideConfirmPassword
+                    ? Icons.visibility_off_outlined
+                    : Icons.visibility_outlined,
+              ),
+            ),
           ),
         ),
-
-        enabledBorder:
-        OutlineInputBorder(
-          borderRadius:
-          BorderRadius.circular(9),
-
-          borderSide: BorderSide(
-            color: borderColor,
-          ),
-        ),
-
-        focusedBorder:
-        OutlineInputBorder(
-          borderRadius:
-          BorderRadius.circular(9),
-
-          borderSide: const BorderSide(
-            color: Color(0xFF2864E8),
-            width: 1.3,
-          ),
-        ),
-      ),
+        const SizedBox(height: 22),
+        primaryButton('Reset Password', resetPassword),
+      ],
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: backgroundColor,
-
+      appBar: AppBar(
+        backgroundColor: navyColor,
+        foregroundColor: Colors.white,
+        elevation: 0,
+        title: const Text(
+          'Forgot Password',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
       body: SafeArea(
-        bottom: false,
-
-        child: Column(
-          children: [
-
-
-            Container(
-              height: 60,
-              width: double.infinity,
-
-              padding:
-              const EdgeInsets.symmetric(
-                horizontal: 15,
-              ),
-
-              child: Row(
-                children: [
-                  // Back button
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-
-                    child: Container(
-                      width: 38,
-                      height: 38,
-
-                      decoration:
-                      BoxDecoration(
-                        color: Colors.white,
-
-                        border: Border.all(
-                          color: borderColor,
-                        ),
-
-                        borderRadius:
-                        BorderRadius.circular(10),
-                      ),
-
-                      child: const Icon(
-                        Icons.arrow_back,
-                        size: 19,
-                        color: Color(
-                          0xFF17233B,
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(width: 12),
-
-                  const Text(
-                    "Change Password",
-
-                    style: TextStyle(
-                      fontSize: 19,
-                      fontWeight:
-                      FontWeight.bold,
-                      color: Color(
-                        0xFF17233B,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-
-            Expanded(
-              child: SingleChildScrollView(
-
-                padding:
-                const EdgeInsets.fromLTRB(
-                  20,
-                  25,
-                  20,
-                  25,
+        child: Center(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(20),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 430),
+              child: Container(
+                padding: const EdgeInsets.all(22),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(color: borderColor),
                 ),
-
-                child: Column(
-                  crossAxisAlignment:
-                  CrossAxisAlignment.start,
-
-                  children: [
-
-
-                    const Text(
-                      "Create a new password",
-
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight:
-                        FontWeight.bold,
-                        color: Color(
-                          0xFF17233B,
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: Icon(
+                          Icons.lock_reset,
+                          color: blueColor,
+                          size: 42,
                         ),
                       ),
-                    ),
-
-                    const SizedBox(height: 7),
-
-                    const Text(
-                      "Your new password must be different "
-                          "from your previous password.",
-
-                      style: TextStyle(
-                        fontSize: 12,
-                        height: 1.5,
-                        color: Color(
-                          0xFF7B808A,
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(height: 25),
-
-                    Container(
-                      width: double.infinity,
-
-                      padding:
-                      const EdgeInsets.all(16),
-
-                      decoration:
-                      BoxDecoration(
-                        color: Colors.white,
-
-                        border: Border.all(
-                          color: borderColor,
-                        ),
-
-                        borderRadius:
-                        BorderRadius.circular(
-                          12,
-                        ),
-                      ),
-
-                      child: Column(
-                        crossAxisAlignment:
-                        CrossAxisAlignment.start,
-
-                        children: [
-
-                          const Text(
-                            "New Password",
-
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight:
-                              FontWeight.w600,
-                              color: Color(
-                                0xFF17233B,
-                              ),
-                            ),
-                          ),
-
-                          const SizedBox(height: 8),
-
-                          passwordField(
-                            controller:
-                            newPasswordController,
-
-                            hintText:
-                            "Enter new password",
-
-                            obscureText:
-                            hideNewPassword,
-
-                            onVisibilityPressed:
-                                () {
-                              setState(() {
-                                hideNewPassword =
-                                !hideNewPassword;
-                              });
-                            },
-                          ),
-
-                          const SizedBox(height: 18),
-
-                          const Text(
-                            "Confirm Password",
-
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight:
-                              FontWeight.w600,
-                              color: Color(
-                                0xFF17233B,
-                              ),
-                            ),
-                          ),
-
-                          const SizedBox(height: 8),
-
-                          passwordField(
-                            controller:
-                            confirmPasswordController,
-
-                            hintText:
-                            "Confirm new password",
-
-                            obscureText:
-                            hideConfirmPassword,
-
-                            onVisibilityPressed:
-                                () {
-                              setState(() {
-                                hideConfirmPassword =
-                                !hideConfirmPassword;
-                              });
-                            },
-                          ),
-
-                          const SizedBox(height: 10),
-
-                          // Password requirement
-                          const Row(
-                            children: [
-
-                              Icon(
-                                Icons.info_outline,
-                                size: 14,
-                                color: Color(
-                                  0xFF7B808A,
-                                ),
-                              ),
-
-                              SizedBox(width: 5),
-
-                              Text(
-                                "Use at least 6 characters",
-
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Color(
-                                    0xFF7B808A,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-
-                          const SizedBox(height: 22),
-                          SizedBox(
-                            width: double.infinity,
-                            height: 46,
-
-                            child:
-                            ElevatedButton(
-                              onPressed:(){
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=>MyApp()));
-                              },
-
-                              // changePassword,
-
-                              style:
-                              ElevatedButton.styleFrom(
-                                backgroundColor:
-                                blueColor,
-
-                                elevation: 0,
-
-                                shape:
-                                RoundedRectangleBorder(
-                                  borderRadius:
-                                  BorderRadius
-                                      .circular(
-                                    9,
-                                  ),
-                                ),
-                              ),
-
-                              child:
-                              const Text(
-                                "Change Password",
-
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight:
-                                  FontWeight.w600,
-                                  color:
-                                  Colors.white,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    const SizedBox(height: 20),
-
-
-                    Container(
-                      width: double.infinity,
-
-                      padding:
-                      const EdgeInsets.all(12),
-
-                      decoration:
-                      BoxDecoration(
-                        color:
-                        const Color(
-                          0xFFF3F7FF,
-                        ),
-
-                        borderRadius:
-                        BorderRadius.circular(
-                          10,
-                        ),
-
-                        border: Border.all(
-                          color:
-                          const Color(
-                            0xFFDCE8FF,
+                      const SizedBox(height: 12),
+                      Center(
+                        child: Text(
+                          currentStep == 0
+                              ? 'Reset Your Password'
+                              : currentStep == 1
+                              ? 'Verify Your Email'
+                              : 'Create New Password',
+                          style: TextStyle(
+                            color: navyColor,
+                            fontSize: 21,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
-
-                      child: Row(
-                        crossAxisAlignment:
-                        CrossAxisAlignment.start,
-
-                        children: [
-
-                          const Icon(
-                            Icons.shield_outlined,
-                            size: 18,
-                            color: Color(
-                              0xFF2864E8,
-                            ),
+                      const SizedBox(height: 8),
+                      Center(
+                        child: Text(
+                          currentStep == 0
+                              ? 'Enter your email to receive an OTP.'
+                              : currentStep == 1
+                              ? 'Enter the OTP to continue.'
+                              : 'Choose a new password for your account.',
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 13,
                           ),
-
-                          const SizedBox(width: 9),
-
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment:
-                              CrossAxisAlignment.start,
-
-                              children: [
-
-                                const Text(
-                                  "Keep your account secure",
-
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight:
-                                    FontWeight.w600,
-                                    color: Color(
-                                      0xFF17233B,
-                                    ),
-                                  ),
-                                ),
-
-                                const SizedBox(
-                                  height: 3,
-                                ),
-
-                                const Text(
-                                  "Do not share your password "
-                                      "with anyone.",
-
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    height: 1.4,
-                                    color: Color(
-                                      0xFF7B808A,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
-            Container(
-              height: 55,
-              width: double.infinity,
-
-              decoration: BoxDecoration(
-                color: bottomColor,
-
-                boxShadow: [
-                  BoxShadow(
-                    color:
-                    Colors.black.withOpacity(
-                      0.10,
-                    ),
-
-                    blurRadius: 5,
-
-                    offset:
-                    const Offset(0, -2),
-                  ),
-                ],
-              ),
-
-              child: const Center(
-                child: Text(
-                  "© 2026 HireHub • Find your dream job",
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Color(
-                      0xFFB8D0DC,
-                    ),
+                      const SizedBox(height: 26),
+                      buildCurrentStep(),
+                    ],
                   ),
                 ),
               ),
             ),
-          ],
+          ),
         ),
       ),
     );

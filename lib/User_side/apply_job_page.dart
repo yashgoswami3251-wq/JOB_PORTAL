@@ -1,7 +1,7 @@
+
 import 'package:flutter/material.dart';
 import 'package:job_portal/User_side/home_page.dart';
 
-import '../Admin_side/application_detail.dart';
 import '../references/reference.dart';
 
 class ApplyJobPage extends StatefulWidget {
@@ -17,54 +17,30 @@ class ApplyJobPage extends StatefulWidget {
 }
 
 class _ApplyJobPageState extends State<ApplyJobPage> {
-
   static const Color hintColor = Color(0xFF7A8494);
+  static const Color greenColor = Color(0xFF16845B);
 
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController fullNameController =
+  final fullNameController =
   TextEditingController(text: "Rahul Sharma");
-
-  final TextEditingController emailController =
+  final emailController =
   TextEditingController(text: "rahulsharma@gmail.com");
-
-  final TextEditingController phoneController =
+  final phoneController =
   TextEditingController(text: "+91 98765 43210");
-
-  final TextEditingController salaryController =
-  TextEditingController();
-
-  final TextEditingController dateController =
-  TextEditingController();
-
-  final TextEditingController coverLetterController =
-  TextEditingController();
-
-  // ============================================================
-  // STATIC RESUME
-  // ============================================================
+  final salaryController = TextEditingController();
+  final dateController = TextEditingController();
+  final coverLetterController = TextEditingController();
 
   final String staticResumeName = "Rahul_Sharma_Resume.pdf";
 
-  // ============================================================
-  // JOB DATA
-  // ============================================================
+  String get jobTitle =>
+      widget.job?['title'] ?? "Senior React Developer";
 
-  String get jobTitle {
-    return widget.job?['title'] ?? "Senior React Developer";
-  }
+  String get companyName => widget.job?['company'] ?? "TCS";
 
-  String get companyName {
-    return widget.job?['company'] ?? "TCS";
-  }
-
-  String get location {
-    return widget.job?['location'] ?? "Mumbai, Maharashtra";
-  }
-
-  // ============================================================
-  // DISPOSE
-  // ============================================================
+  String get location =>
+      widget.job?['location'] ?? "Mumbai, Maharashtra";
 
   @override
   void dispose() {
@@ -74,19 +50,16 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
     salaryController.dispose();
     dateController.dispose();
     coverLetterController.dispose();
-
     super.dispose();
   }
 
-  // ============================================================
-  // DATE PICKER
-  // ============================================================
-
   Future<void> selectDate() async {
-    final DateTime? pickedDate = await showDatePicker(
+    final now = DateTime.now();
+
+    final pickedDate = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime.now(),
+      initialDate: now,
+      firstDate: DateTime(now.year, now.month, now.day),
       lastDate: DateTime(2100),
       builder: (context, child) {
         return Theme(
@@ -113,68 +86,42 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
     }
   }
 
-  // ============================================================
-  // SUBMIT APPLICATION
-  // ============================================================
-
   void submitApplication() {
-    // Validate only the normal form fields.
-    // Resume has NO validation.
+    FocusScope.of(context).unfocus();
+
     if (!_formKey.currentState!.validate()) {
       return;
     }
 
+    final application = <String, dynamic>{
+      'title': jobTitle,
+      'company': companyName,
+      'location': location,
+      'status': 'Applied',
+      'fullName': fullNameController.text.trim(),
+      'email': emailController.text.trim(),
+      'phone': phoneController.text.trim(),
+      'salary': salaryController.text.trim(),
+      'startDate': dateController.text,
+      'coverLetter': coverLetterController.text.trim(),
+      'resume': staticResumeName,
+    };
+
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text(
-          "Application submitted successfully!",
-        ),
+        content: Text("Application submitted successfully!"),
+        behavior: SnackBarBehavior.floating,
       ),
     );
 
-    // Return application data to previous page.
-    Navigator.pop(
-      context,
-      {
-        'title': jobTitle,
-        'company': companyName,
-        'location': location,
-        'status': 'Applied',
-        'fullName': fullNameController.text,
-        'email': emailController.text,
-        'phone': phoneController.text,
-        'salary': salaryController.text,
-        'startDate': dateController.text,
-        'coverLetter': coverLetterController.text,
-
-        // Static resume
-        'resume': staticResumeName,
-      },
-    );
+    Navigator.pop(context, application);
   }
 
-  // ============================================================
-  // TEXT STYLE
-  // ============================================================
-
-  TextStyle get labelStyle {
-    return  TextStyle(
-      fontSize: 14,
-      fontWeight: FontWeight.w600,
-      color: navyColor,
-    );
-  }
-
-  TextStyle get inputTextStyle {
-    return  TextStyle(
-      fontSize: 14,
-      color: navyColor,
-    );
-  }
-
-  // ============================================================
-  // INPUT DECORATION
-  // ============================================================
+  TextStyle get labelStyle => TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    color: navyColor,
+  );
 
   InputDecoration inputDecoration({
     String? hintText,
@@ -182,49 +129,38 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
   }) {
     return InputDecoration(
       hintText: hintText,
-      hintStyle:  TextStyle(
+      hintStyle: const TextStyle(
         color: hintColor,
         fontSize: 14,
       ),
       suffixIcon: suffixIcon,
-      contentPadding: const EdgeInsets.symmetric(
-        horizontal: 14,
-        vertical: 15,
-      ),
       filled: true,
-      fillColor: Colors.white,
-
+      fillColor: const Color(0xFFFAFBFD),
+      contentPadding: const EdgeInsets.symmetric(
+        horizontal: 15,
+        vertical: 16,
+      ),
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(6),
-        borderSide:  BorderSide(
-          color: borderColor,
-        ),
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(color: borderColor),
       ),
-
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(6),
-        borderSide:  BorderSide(
-          color: borderColor,
-        ),
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(color: borderColor),
       ),
-
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(6),
-        borderSide:  BorderSide(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(
           color: blueColor,
           width: 1.5,
         ),
       ),
-
       errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(6),
-        borderSide: const BorderSide(
-          color: Colors.red,
-        ),
+        borderRadius: BorderRadius.circular(10),
+        borderSide: const BorderSide(color: Colors.red),
       ),
-
       focusedErrorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(6),
+        borderRadius: BorderRadius.circular(10),
         borderSide: const BorderSide(
           color: Colors.red,
           width: 1.5,
@@ -232,10 +168,6 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
       ),
     );
   }
-
-  // ============================================================
-  // FIELD
-  // ============================================================
 
   Widget buildField({
     required String label,
@@ -251,13 +183,8 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          label,
-          style: labelStyle,
-        ),
-
+        Text(label, style: labelStyle),
         const SizedBox(height: 8),
-
         TextFormField(
           controller: controller,
           keyboardType: keyboardType,
@@ -265,7 +192,10 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
           validator: validator,
           readOnly: readOnly,
           onTap: onTap,
-          style: inputTextStyle,
+          style: TextStyle(
+            fontSize: 14,
+            color: navyColor,
+          ),
           decoration: inputDecoration(
             hintText: hintText,
             suffixIcon: suffixIcon,
@@ -275,61 +205,52 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
     );
   }
 
-  // ============================================================
-  // STATIC RESUME
-  // ============================================================
-
-  Widget buildResumeUpload() {
-    return Column(
+  Widget buildSectionTitle({
+    required String number,
+    required String title,
+    required String subtitle,
+  }) {
+    return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          "Resume",
-          style: labelStyle,
-        ),
-
-        const SizedBox(height: 8),
-
         Container(
-          width: double.infinity,
-          height: 125,
+          width: 34,
+          height: 34,
           decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(6),
-            border: Border.all(
-              color: borderColor,
+            color: blueColor.withOpacity(0.09),
+            borderRadius: BorderRadius.circular(9),
+          ),
+          child: Center(
+            child: Text(
+              number,
+              style: TextStyle(
+                color: blueColor,
+                fontWeight: FontWeight.w700,
+                fontSize: 14,
+              ),
             ),
           ),
-
+        ),
+        const SizedBox(width: 12),
+        Expanded(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-               Icon(
-                Icons.picture_as_pdf_outlined,
-                size: 30,
-                color: blueColor,
-              ),
-
-              const SizedBox(height: 8),
-
               Text(
-                staticResumeName,
-                textAlign: TextAlign.center,
-                style:  TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
+                title,
+                style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.w700,
                   color: navyColor,
                 ),
               ),
-
-              const SizedBox(height: 5),
-
-               Text(
-                "Resume attached",
-                textAlign: TextAlign.center,
-                style: TextStyle(
+              const SizedBox(height: 4),
+              Text(
+                subtitle,
+                style: const TextStyle(
                   fontSize: 12,
                   color: hintColor,
+                  height: 1.4,
                 ),
               ),
             ],
@@ -339,91 +260,160 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
     );
   }
 
-  // ============================================================
-  // BACK BUTTON
-  // ============================================================
+  Widget buildResponsiveRow({
+    required Widget first,
+    required Widget second,
+    required bool isWide,
+  }) {
+    if (!isWide) {
+      return Column(
+        children: [
+          first,
+          const SizedBox(height: 20),
+          second,
+        ],
+      );
+    }
 
-  Widget buildBackButton() {
-    return InkWell(
-      onTap: () {
-        Navigator.pop(context);
-      },
-      borderRadius: BorderRadius.circular(5),
-      child:  Padding(
-        padding: EdgeInsets.symmetric(
-          vertical: 4,
-          horizontal: 2,
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(child: first),
+        const SizedBox(width: 22),
+        Expanded(child: second),
+      ],
+    );
+  }
+
+  Widget buildResumeCard() {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF8FAFF),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: const Color(0xFFDCE6FA),
         ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              Icons.arrow_back,
-              size: 18,
-              color: blueColor,
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 48,
+            height: 52,
+            decoration: BoxDecoration(
+              color: const Color(0xFFFFEEEE),
+              borderRadius: BorderRadius.circular(9),
             ),
-
-            SizedBox(width: 5),
-
-            Text(
-              "Back to Job Details",
-              style: TextStyle(
-                color: blueColor,
-                fontSize: 13,
-                fontWeight: FontWeight.w600,
-              ),
+            child: const Icon(
+              Icons.picture_as_pdf_rounded,
+              color: Color(0xFFE34D4D),
+              size: 27,
             ),
-          ],
-        ),
+          ),
+          const SizedBox(width: 13),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  staticResumeName,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: navyColor,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                const Text(
+                  "Resume attached",
+                  style: TextStyle(
+                    color: hintColor,
+                    fontSize: 12,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 8),
+          const Icon(
+            Icons.check_circle,
+            color: greenColor,
+            size: 22,
+          ),
+        ],
       ),
     );
   }
 
-  // ============================================================
-  // BUTTONS
-  // ============================================================
-
-  Widget buildButtons() {
-    return Row(
+  Widget buildButtons({required bool isWide}) {
+    return Flex(
+      direction: isWide ? Axis.horizontal : Axis.vertical,
+      crossAxisAlignment:
+      isWide ? CrossAxisAlignment.center : CrossAxisAlignment.stretch,
       children: [
         SizedBox(
-          height: 42,
-          child: ElevatedButton(
+          height: 49,
+          width: isWide ? null : double.infinity,
+          child: ElevatedButton.icon(
             onPressed: submitApplication,
+            icon: const Icon(
+              Icons.send_rounded,
+              size: 18,
+            ),
+            label: const Text(
+              "Submit Application",
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
             style: ElevatedButton.styleFrom(
               backgroundColor: blueColor,
               foregroundColor: Colors.white,
               elevation: 0,
               padding: const EdgeInsets.symmetric(
-                horizontal: 20,
+                horizontal: 22,
               ),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5),
-              ),
-            ),
-            child: const Text(
-              "Submit Application",
-              style: TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.w600,
+                borderRadius: BorderRadius.circular(10),
               ),
             ),
           ),
         ),
-
-        const SizedBox(width: 25),
-
-        TextButton(
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
-          },
-          style: TextButton.styleFrom(
-            foregroundColor: hintColor,
-          ),
-          child: const Text(
-            "Cancel",
-            style: TextStyle(
-              fontSize: 13,
+        SizedBox(
+          width: isWide ? 12 : 0,
+          height: isWide ? 0 : 10,
+        ),
+        SizedBox(
+          height: 49,
+          width: isWide ? null : double.infinity,
+          child: OutlinedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomePage(),
+                ),
+              );
+            },
+            style: OutlinedButton.styleFrom(
+              foregroundColor: navyColor,
+              side: BorderSide(color: borderColor),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 24,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            child: const Text(
+              "Cancel",
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         ),
@@ -431,357 +421,357 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
     );
   }
 
-  // ============================================================
-  // BUILD
-  // ============================================================
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-
       body: SafeArea(
-        child: Form(
-          key: _formKey,
+        child: LayoutBuilder(
+          builder: (context, viewport) {
+            final isWide = viewport.maxWidth >= 700;
+            final pagePadding = isWide ? 32.0 : 18.0;
 
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.fromLTRB(
-              32,
-              18,
-              32,
-              35,
-            ),
-
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // ==================================================
-                // BACK
-                // ==================================================
-
-                buildBackButton(),
-
-                const SizedBox(height: 18),
-
-                // ==================================================
-                // TITLE
-                // ==================================================
-
-                Text(
-                  "Apply for $jobTitle",
-                  style: const TextStyle(
-                    fontSize: 21,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black,
-                    height: 1.2,
+            return SingleChildScrollView(
+              padding: EdgeInsets.symmetric(
+                horizontal: pagePadding,
+                vertical: 22,
+              ),
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(
+                    maxWidth: 900,
                   ),
-                ),
-
-                const SizedBox(height: 4),
-
-                Text(
-                  "$companyName • $location",
-                  style: const TextStyle(
-                    fontSize: 13,
-                    color: Color(0xFF596273),
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-
-                const SizedBox(height: 20),
-
-                // ==================================================
-                // FORM CONTAINER
-                // ==================================================
-
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.fromLTRB(
-                    20,
-                    20,
-                    20,
-                    25,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(6),
-                    border: Border.all(
-                      color: borderColor,
-                    ),
-                  ),
-
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // ============================================
-                      // ROW 1
-                      // ============================================
-
-                      LayoutBuilder(
-                        builder: (context, constraints) {
-                          if (constraints.maxWidth >= 650) {
-                            return Row(
-                              crossAxisAlignment:
-                              CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  child: buildField(
-                                    label: "Full Name",
-                                    controller:
-                                    fullNameController,
-                                    validator: (value) {
-                                      if (value == null ||
-                                          value.trim().isEmpty) {
-                                        return "Please enter your name";
-                                      }
-
-                                      return null;
-                                    },
-                                  ),
-                                ),
-
-                                const SizedBox(width: 25),
-
-                                Expanded(
-                                  child: buildField(
-                                    label: "Email Address",
-                                    controller:
-                                    emailController,
-                                    keyboardType:
-                                    TextInputType.emailAddress,
-                                    validator: (value) {
-                                      if (value == null ||
-                                          value.trim().isEmpty) {
-                                        return "Please enter email";
-                                      }
-
-                                      if (!RegExp(
-                                        r'^[^@]+@[^@]+\.[^@]+',
-                                      ).hasMatch(value)) {
-                                        return "Enter a valid email";
-                                      }
-
-                                      return null;
-                                    },
-                                  ),
-                                ),
-                              ],
-                            );
-                          }
-
-                          return Column(
+                      InkWell(
+                        onTap: () => Navigator.pop(context),
+                        borderRadius: BorderRadius.circular(8),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 8,
+                            horizontal: 3,
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
                             children: [
-                              buildField(
-                                label: "Full Name",
-                                controller:
-                                fullNameController,
-                                validator: (value) {
-                                  if (value == null ||
-                                      value.trim().isEmpty) {
-                                    return "Please enter your name";
-                                  }
-
-                                  return null;
-                                },
+                              Icon(
+                                Icons.arrow_back_rounded,
+                                size: 19,
+                                color: blueColor,
                               ),
-
-                              const SizedBox(height: 18),
-
-                              buildField(
-                                label: "Email Address",
-                                controller:
-                                emailController,
-                                keyboardType:
-                                TextInputType.emailAddress,
-                                validator: (value) {
-                                  if (value == null ||
-                                      value.trim().isEmpty) {
-                                    return "Please enter email";
-                                  }
-
-                                  if (!RegExp(
-                                    r'^[^@]+@[^@]+\.[^@]+',
-                                  ).hasMatch(value)) {
-                                    return "Enter a valid email";
-                                  }
-
-                                  return null;
-                                },
+                              const SizedBox(width: 8),
+                              Text(
+                                "Back to Job Details",
+                                style: TextStyle(
+                                  color: blueColor,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 13,
+                                ),
                               ),
                             ],
-                          );
-                        },
-                      ),
-
-                      const SizedBox(height: 18),
-
-                      // ============================================
-                      // ROW 2
-                      // ============================================
-
-                      LayoutBuilder(
-                        builder: (context, constraints) {
-                          if (constraints.maxWidth >= 650) {
-                            return Row(
-                              crossAxisAlignment:
-                              CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  child: buildField(
-                                    label: "Phone Number",
-                                    controller:
-                                    phoneController,
-                                    keyboardType:
-                                    TextInputType.phone,
-                                    validator: (value) {
-                                      if (value == null ||
-                                          value.trim().isEmpty) {
-                                        return "Please enter phone number";
-                                      }
-
-                                      return null;
-                                    },
-                                  ),
-                                ),
-
-                                const SizedBox(width: 25),
-
-                                Expanded(
-                                  child: buildField(
-                                    label:
-                                    "Expected Salary (LPA)",
-                                    controller:
-                                    salaryController,
-                                    hintText: "e.g. 15 LPA",
-                                    keyboardType:
-                                    TextInputType.number,
-                                    validator: (value) {
-                                      if (value == null ||
-                                          value.trim().isEmpty) {
-                                        return "Please enter expected salary";
-                                      }
-
-                                      return null;
-                                    },
-                                  ),
-                                ),
-                              ],
-                            );
-                          }
-
-                          return Column(
-                            children: [
-                              buildField(
-                                label: "Phone Number",
-                                controller:
-                                phoneController,
-                                keyboardType:
-                                TextInputType.phone,
-                                validator: (value) {
-                                  if (value == null ||
-                                      value.trim().isEmpty) {
-                                    return "Please enter phone number";
-                                  }
-
-                                  return null;
-                                },
-                              ),
-
-                              const SizedBox(height: 18),
-
-                              buildField(
-                                label:
-                                "Expected Salary (LPA)",
-                                controller:
-                                salaryController,
-                                hintText: "e.g. 15 LPA",
-                                keyboardType:
-                                TextInputType.number,
-                                validator: (value) {
-                                  if (value == null ||
-                                      value.trim().isEmpty) {
-                                    return "Please enter expected salary";
-                                  }
-
-                                  return null;
-                                },
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-
-                      const SizedBox(height: 18),
-
-                      // ============================================
-                      // AVAILABLE START DATE
-                      // ============================================
-
-                      buildField(
-                        label: "Available Start Date",
-                        controller: dateController,
-                        hintText: "DD/MM/YYYY",
-                        readOnly: true,
-                        onTap: selectDate,
-                        suffixIcon:  Icon(
-                          Icons.calendar_today_outlined,
-                          size: 19,
-                          color: hintColor,
+                          ),
                         ),
-                        validator: (value) {
-                          if (value == null ||
-                              value.trim().isEmpty) {
-                            return "Please select start date";
-                          }
-
-                          return null;
-                        },
                       ),
-
-                      const SizedBox(height: 18),
-
-                      // ============================================
-                      // COVER LETTER
-                      // ============================================
-
-                      buildField(
-                        label: "Cover Letter",
-                        controller:
-                        coverLetterController,
-                        hintText:
-                        "Write your cover letter here to introduce yourself to the hiring team...",
-                        maxLines: 6,
-                        validator: (value) {
-                          if (value == null ||
-                              value.trim().isEmpty) {
-                            return "Please write a cover letter";
-                          }
-
-                          return null;
-                        },
+                      const SizedBox(height: 22),
+                      Container(
+                        width: double.infinity,
+                        padding: EdgeInsets.all(isWide ? 28 : 20),
+                        decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                            colors: [
+                              Color(0xFFF0F5FF),
+                              Color(0xFFFFFCF7),
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          borderRadius: BorderRadius.circular(18),
+                          border: Border.all(
+                            color: const Color(0xFFE0E8F7),
+                          ),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 11,
+                                vertical: 7,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(
+                                  color: const Color(0xFFDCE6FA),
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.work_outline_rounded,
+                                    color: blueColor,
+                                    size: 16,
+                                  ),
+                                  const SizedBox(width: 7),
+                                  Text(
+                                    "JOB APPLICATION",
+                                    style: TextStyle(
+                                      color: blueColor,
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.w700,
+                                      letterSpacing: 0.8,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 17),
+                            Text(
+                              "Apply for $jobTitle",
+                              style: TextStyle(
+                                fontSize: isWide ? 27 : 23,
+                                height: 1.25,
+                                fontWeight: FontWeight.w800,
+                                color: navyColor,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              "$companyName • $location",
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: hintColor,
+                              ),
+                            ),
+                            const SizedBox(height: 15),
+                            const Text(
+                              "Complete your details below to apply for this position.",
+                              style: TextStyle(
+                                fontSize: 13,
+                                height: 1.6,
+                                color: Color(0xFF596273),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
+                      const SizedBox(height: 24),
+                      Container(
+                        width: double.infinity,
+                        padding: EdgeInsets.all(isWide ? 30 : 20),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(color: borderColor),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.025),
+                              blurRadius: 18,
+                              offset: const Offset(0, 5),
+                            ),
+                          ],
+                        ),
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              buildSectionTitle(
+                                number: "01",
+                                title: "Personal Information",
+                                subtitle:
+                                "Share your contact details with the hiring team.",
+                              ),
+                              const SizedBox(height: 24),
+                              buildResponsiveRow(
+                                isWide: isWide,
+                                first: buildField(
+                                  label: "Full Name",
+                                  controller: fullNameController,
+                                  hintText: "Enter your full name",
+                                  validator: (value) {
+                                    if (value == null ||
+                                        value.trim().isEmpty) {
+                                      return "Please enter your name";
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                second: buildField(
+                                  label: "Email Address",
+                                  controller: emailController,
+                                  hintText: "you@example.com",
+                                  keyboardType:
+                                  TextInputType.emailAddress,
+                                  validator: (value) {
+                                    if (value == null ||
+                                        value.trim().isEmpty) {
+                                      return "Please enter email";
+                                    }
 
-                      const SizedBox(height: 20),
+                                    if (!RegExp(
+                                      r'^[^@\s]+@[^@\s]+\.[^@\s]+$',
+                                    ).hasMatch(value.trim())) {
+                                      return "Enter a valid email";
+                                    }
 
-                      // ============================================
-                      // STATIC RESUME
-                      // ============================================
+                                    return null;
+                                  },
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              buildResponsiveRow(
+                                isWide: isWide,
+                                first: buildField(
+                                  label: "Phone Number",
+                                  controller: phoneController,
+                                  hintText: "Enter phone number",
+                                  keyboardType: TextInputType.phone,
+                                  validator: (value) {
+                                    if (value == null ||
+                                        value.trim().isEmpty) {
+                                      return "Please enter phone number";
+                                    }
 
-                      buildResumeUpload(),
+                                    final digits = value.replaceAll(
+                                      RegExp(r'\D'),
+                                      '',
+                                    );
 
+                                    if (digits.length < 10 ||
+                                        digits.length > 15) {
+                                      return "Enter a valid phone number";
+                                    }
+
+                                    return null;
+                                  },
+                                ),
+                                second: buildField(
+                                  label: "Expected Salary (LPA)",
+                                  controller: salaryController,
+                                  hintText: "e.g. 8 or 8.5",
+                                  keyboardType:
+                                  const TextInputType.numberWithOptions(
+                                    decimal: true,
+                                  ),
+                                  validator: (value) {
+                                    if (value == null ||
+                                        value.trim().isEmpty) {
+                                      return "Please enter expected salary";
+                                    }
+
+                                    final salary =
+                                    double.tryParse(value.trim());
+
+                                    if (salary == null || salary <= 0) {
+                                      return "Enter a valid salary";
+                                    }
+
+                                    return null;
+                                  },
+                                ),
+                              ),
+                              const SizedBox(height: 30),
+                              Divider(color: borderColor),
+                              const SizedBox(height: 24),
+                              buildSectionTitle(
+                                number: "02",
+                                title: "Availability & Documents",
+                                subtitle:
+                                "Tell the employer when you can start and review your resume.",
+                              ),
+                              const SizedBox(height: 24),
+                              buildField(
+                                label: "Available Start Date",
+                                controller: dateController,
+                                hintText: "Select your start date",
+                                readOnly: true,
+                                onTap: selectDate,
+                                suffixIcon: Icon(
+                                  Icons.calendar_month_rounded,
+                                  color: blueColor,
+                                ),
+                                validator: (value) {
+                                  if (value == null ||
+                                      value.trim().isEmpty) {
+                                    return "Please select start date";
+                                  }
+                                  return null;
+                                },
+                              ),
+                              const SizedBox(height: 22),
+                              Text(
+                                "Resume",
+                                style: labelStyle,
+                              ),
+                              const SizedBox(height: 9),
+                              buildResumeCard(),
+                              const SizedBox(height: 30),
+                              Divider(color: borderColor),
+                              const SizedBox(height: 24),
+                              buildSectionTitle(
+                                number: "03",
+                                title: "Cover Letter",
+                                subtitle:
+                                "Introduce yourself and explain why you're a good fit.",
+                              ),
+                              const SizedBox(height: 24),
+                              buildField(
+                                label: "Your Message",
+                                controller: coverLetterController,
+                                hintText:
+                                "Write a short introduction about your skills, experience, and interest in this role...",
+                                maxLines: 5,
+                                validator: (value) {
+                                  if (value == null ||
+                                      value.trim().isEmpty) {
+                                    return "Please write a cover letter";
+                                  }
+
+                                  if (value.trim().length < 20) {
+                                    return "Please write at least 20 characters";
+                                  }
+
+                                  return null;
+                                },
+                              ),
+                              const SizedBox(height: 30),
+                              buildButtons(isWide: isWide),
+                              const SizedBox(height: 15),
+                              const Center(
+                                child: Text(
+                                  "Please review your information before submitting.",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: hintColor,
+                                    fontSize: 12,
+                                    height: 1.5,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                       const SizedBox(height: 25),
-
-                      // ============================================
-                      // BUTTONS
-                      // ============================================
-
-                      buildButtons(),
+                      Center(
+                        child: Text(
+                          "HireHub • Connect Talent With Opportunity",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: greyColor,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         ),
       ),
     );

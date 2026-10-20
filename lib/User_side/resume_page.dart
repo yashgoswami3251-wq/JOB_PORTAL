@@ -5,9 +5,7 @@ import '../references/reference.dart';
 class ResumePage extends StatelessWidget {
   const ResumePage({super.key});
 
-  // ============================================================
-  // COLORS
-  // ============================================================
+
 
   static const Color bgColor = Color(0xFFFFFCF7);
   static const Color textColor = Color(0xFF17233B);
@@ -24,9 +22,7 @@ class ResumePage extends StatelessWidget {
         child: Column(
           children: [
 
-            // ======================================================
-            // HEADER
-            // ======================================================
+
 
             Container(
               height: 58,
@@ -51,7 +47,7 @@ class ResumePage extends StatelessWidget {
                 child: Row(
                   children: [
 
-                    // BACK BUTTON
+
                     InkWell(
                       borderRadius: BorderRadius.circular(20),
 
@@ -86,9 +82,7 @@ class ResumePage extends StatelessWidget {
               ),
             ),
 
-            // ======================================================
-            // CONTENT
-            // ======================================================
+
 
             Expanded(
               child: SingleChildScrollView(
@@ -107,9 +101,7 @@ class ResumePage extends StatelessWidget {
 
                     children: [
 
-                      // ==================================================
-                      // TITLE
-                      // ==================================================
+
 
                       const Text(
                         "My Resume",
@@ -123,9 +115,7 @@ class ResumePage extends StatelessWidget {
 
                       const SizedBox(height: 15),
 
-                      // ==================================================
-                      // CURRENT RESUME
-                      // ==================================================
+
 
                       Container(
                         width: double.infinity,
@@ -149,7 +139,7 @@ class ResumePage extends StatelessWidget {
                         child: Row(
                           children: [
 
-                            // PDF ICON
+
 
                             Container(
                               width: 40,
@@ -170,7 +160,7 @@ class ResumePage extends StatelessWidget {
 
                             const SizedBox(width: 10),
 
-                            // FILE INFORMATION
+
 
                             const Expanded(
                               child: Column(
@@ -204,7 +194,7 @@ class ResumePage extends StatelessWidget {
                               ),
                             ),
 
-                            // FILE PREVIEW BOX
+
 
                             Container(
                               width: 28,
@@ -222,9 +212,7 @@ class ResumePage extends StatelessWidget {
 
                       const SizedBox(height: 17),
 
-                      // ==================================================
-                      // UPLOAD NEW RESUME
-                      // ==================================================
+
 
                       Container(
                         width: double.infinity,
@@ -247,9 +235,7 @@ class ResumePage extends StatelessWidget {
 
                           children: [
 
-                            // ==================================================
-                            // UPLOAD ICON
-                            // ==================================================
+
 
                             SizedBox(
                               width: 40,
@@ -292,9 +278,7 @@ class ResumePage extends StatelessWidget {
 
                             const SizedBox(height: 10),
 
-                            // ==================================================
-                            // TITLE
-                            // ==================================================
+
 
                             const Text(
                               "Upload New Resume",
@@ -307,9 +291,7 @@ class ResumePage extends StatelessWidget {
 
                             const SizedBox(height: 4),
 
-                            // ==================================================
-                            // DESCRIPTION
-                            // ==================================================
+
 
                             const Padding(
                               padding: EdgeInsets.symmetric(
@@ -330,9 +312,6 @@ class ResumePage extends StatelessWidget {
 
                             const SizedBox(height: 11),
 
-                            // ==================================================
-                            // CHOOSE FILE BUTTON
-                            // ==================================================
 
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -343,7 +322,7 @@ class ResumePage extends StatelessWidget {
 
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      // Add file picker here
+
                                     },
 
                                     style: ElevatedButton.styleFrom(
@@ -376,7 +355,7 @@ class ResumePage extends StatelessWidget {
 
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      // Add file picker here
+
                                     },
 
                                     style: ElevatedButton.styleFrom(
@@ -404,9 +383,7 @@ class ResumePage extends StatelessWidget {
 
                             const SizedBox(height: 10),
 
-                            // ==================================================
-                            // SUPPORTED FORMATS
-                            // ==================================================
+
 
                             const Text(
                               "Supported formats: PDF, DOC, DOCX (Max 5MB)",

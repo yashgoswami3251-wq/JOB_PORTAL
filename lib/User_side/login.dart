@@ -11,9 +11,6 @@ import 'forgot_password.dart';
 import 'home_page.dart';
 
 
-// ============================================================
-// MAIN
-// ============================================================
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,9 +27,6 @@ void main() {
       home: const SplashScreen())));
 }
 
-// ============================================================
-// MY APP
-// ============================================================
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -51,9 +45,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// ============================================================
-// LOGIN PAGE
-// ============================================================
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -63,34 +54,21 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  // ==========================================================
-  // SELECTED ROLE
-  // ==========================================================
 
   String selectedRole = "User";
 
-  // ==========================================================
-  // CONTROLLERS
-  // ==========================================================
 
   final TextEditingController emailController = TextEditingController();
 
   final TextEditingController passwordController =
   TextEditingController();
 
-  // ==========================================================
-  // VARIABLES
-  // ==========================================================
 
   bool hidePassword = true;
 
   bool keepSignedIn = false;
 
   bool isLoading = false;
-
-  // ==========================================================
-  // CHANGE ROLE
-  // ==========================================================
 
   void changeRole(String role) {
     setState(() {
@@ -101,16 +79,10 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  // ==========================================================
-  // LOGIN
-  // ==========================================================
 
   void login() {
     FocusScope.of(context).unfocus();
 
-    // --------------------------------------------------------
-    // EMAIL VALIDATION
-    // --------------------------------------------------------
 
     if (emailController.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -122,9 +94,6 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
-    // --------------------------------------------------------
-    // PASSWORD VALIDATION
-    // --------------------------------------------------------
 
     if (passwordController.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -136,15 +105,10 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
-    // --------------------------------------------------------
-    // SHOW LOADING
-    // --------------------------------------------------------
-
     setState(() {
       isLoading = true;
     });
 
-    // Small delay to simulate login process
     Future.delayed(const Duration(milliseconds: 700), () {
       if (!mounted) return;
 
@@ -155,9 +119,6 @@ class _LoginPageState extends State<LoginPage> {
       String email = emailController.text.trim();
       String password = passwordController.text.trim();
 
-      // ======================================================
-      // USER LOGIN
-      // ======================================================
 
       if (selectedRole == "User") {
         if (email == "marmik@gmail.com" &&
@@ -175,9 +136,6 @@ class _LoginPageState extends State<LoginPage> {
         }
       }
 
-      // ======================================================
-      // EMPLOYEE LOGIN
-      // ======================================================
 
       else if (selectedRole == "Employee") {
         if (email == "yash@gmail.com" &&
@@ -195,9 +153,6 @@ class _LoginPageState extends State<LoginPage> {
         }
       }
 
-      // ======================================================
-      // ADMIN LOGIN
-      // ======================================================
 
       else if (selectedRole == "Admin") {
         if (email == "pritesh@gmail.com" &&
@@ -217,10 +172,6 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  // ==========================================================
-  // LOGIN ERROR
-  // ==========================================================
-
   void _showLoginError(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -230,9 +181,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  // ==========================================================
-  // DISPOSE
-  // ==========================================================
 
   @override
   void dispose() {
@@ -242,9 +190,6 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  // ==========================================================
-  // BUILD
-  // ==========================================================
 
   @override
   Widget build(BuildContext context) {
@@ -258,9 +203,6 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           children: [
 
-            // ==================================================
-            // HEADER
-            // ==================================================
 
 
             Container(
@@ -304,10 +246,6 @@ class _LoginPageState extends State<LoginPage> {
             ),
 
 
-            // ==================================================
-            // CONTENT
-            // ==================================================
-
             Expanded(
               child: Container(
                 width: double.infinity,
@@ -328,9 +266,6 @@ class _LoginPageState extends State<LoginPage> {
 
                     children: [
 
-                      // ==================================================
-                      // WELCOME
-                      // ==================================================
 
                       const Text(
                         "Welcome back",
@@ -355,9 +290,6 @@ class _LoginPageState extends State<LoginPage> {
 
                       const SizedBox(height: 18),
 
-                      // ==================================================
-                      // ROLE SELECTOR
-                      // ==================================================
 
                       Container(
                         width: double.infinity,
@@ -380,7 +312,7 @@ class _LoginPageState extends State<LoginPage> {
                         child: Row(
                           children: [
 
-                            // ADMIN
+
                             _roleButton(
                               title: "Admin",
                               selected:
@@ -390,8 +322,6 @@ class _LoginPageState extends State<LoginPage> {
                                 changeRole("Admin");
                               },
                             ),
-
-                            // EMPLOYEE
                             _roleButton(
                               title: "Employee",
                               selected:
@@ -402,7 +332,6 @@ class _LoginPageState extends State<LoginPage> {
                               },
                             ),
 
-                            // USER
                             _roleButton(
                               title: "User",
                               selected:
@@ -417,10 +346,6 @@ class _LoginPageState extends State<LoginPage> {
                       ),
 
                       const SizedBox(height: 25),
-
-                      // ==================================================
-                      // EMAIL
-                      // ==================================================
 
                       const Text(
                         "Email Address",
@@ -519,9 +444,6 @@ class _LoginPageState extends State<LoginPage> {
 
                       const SizedBox(height: 17),
 
-                      // ==================================================
-                      // PASSWORD
-                      // ==================================================
 
                       const Text(
                         "Password",
@@ -622,9 +544,6 @@ class _LoginPageState extends State<LoginPage> {
 
                       const SizedBox(height: 7),
 
-                      // ==================================================
-                      // REMEMBER + FORGOT
-                      // ==================================================
 
                       Row(
                         children: [
@@ -661,9 +580,6 @@ class _LoginPageState extends State<LoginPage> {
 
                       const SizedBox(height: 17),
 
-                      // ==================================================
-                      // LOGIN BUTTON
-                      // ==================================================
 
                       SizedBox(
                         width: double.infinity,
@@ -717,9 +633,6 @@ class _LoginPageState extends State<LoginPage> {
 
                       const SizedBox(height: 18),
 
-                      // ==================================================
-                      // REGISTER
-                      // ==================================================
 
                       Center(
                         child: Row(
@@ -793,9 +706,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  // ============================================================
-  // ROLE BUTTON
-  // ============================================================
 
   Widget _roleButton({
     required String title,
@@ -842,9 +752,6 @@ class _LoginPageState extends State<LoginPage> {
 
 
 
-  // ============================================================
-  // EMAIL HINT
-  // ============================================================
 
   String _getEmailHint() {
     if (selectedRole == "Admin") {
@@ -860,9 +767,6 @@ class _LoginPageState extends State<LoginPage> {
 }
 
 
-// ============================================================
-// ADMIN CARD
-// ============================================================
 
 Widget _adminCard({
   required IconData icon,
@@ -917,9 +821,6 @@ Widget _adminCard({
   );
 }
 
-// ============================================================
-// EMPLOYEE CARD
-// ============================================================
 
 Widget _employeeCard({
   required IconData icon,
@@ -973,10 +874,6 @@ Widget _employeeCard({
     ),
   );
 }
-
-// ============================================================
-// PANEL OPTION
-// ============================================================
 
 Widget _panelOption({
   required IconData icon,
@@ -1067,9 +964,6 @@ Widget _panelOption({
   );
 }
 
-// ============================================================
-// LOGOUT
-// ============================================================
 
 void _logout(BuildContext context) {
   Navigator.pushAndRemoveUntil(

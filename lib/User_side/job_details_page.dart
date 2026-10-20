@@ -20,15 +20,9 @@ class JobDetailsPage extends StatefulWidget {
 
 class _JobDetailsPageState extends State<JobDetailsPage> {
 
-  // ============================================================
-  // SAVED JOB
-  // ============================================================
 
   bool isSaved = false;
 
-  // ============================================================
-  // OPEN APPLY JOB PAGE
-  // ============================================================
 
   Future<void> _openApplyPage() async {
 
@@ -42,35 +36,19 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
       ),
     );
 
-    // ==========================================================
-    // IMPORTANT
-    // ==========================================================
-    //
-    // ApplyJobPage returns TRUE after Submit Application.
-    //
-    // Then this page calls _applyJob().
-    //
+
 
     if (applicationSubmitted == true && mounted) {
       _applyJob();
     }
   }
 
-  // ============================================================
-  // APPLY JOB
-  // ============================================================
-
   void _applyJob() {
 
-    // Close JobDetailsPage
-    // and return TRUE to Find Jobs page.
 
     Navigator.pop(context, true);
   }
 
-  // ============================================================
-  // BUILD
-  // ============================================================
 
   @override
   Widget build(BuildContext context) {
@@ -84,9 +62,6 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
         child: Column(
           children: [
 
-            // =====================================================
-            // TOP BAR
-            // =====================================================
 
             Container(
               height: 68,
@@ -110,31 +85,27 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
               child: Row(
                 children: [
 
-                  // =================================================
-                  // BACK BUTTON
-                  // =================================================
-
                   GestureDetector(
                     onTap: () {
                       Navigator.pop(context);
                     },
 
-                    child: const Row(
+                    child: Row(
                       children: [
 
                         Icon(
                           Icons.arrow_back,
-                          color: Color(0xFF2864E8),
+                          color: blueColor,
                           size: 22,
                         ),
 
-                        SizedBox(width: 7),
+                        const SizedBox(width: 7),
 
-                        Text(
+                         Text(
                           "Back",
 
                           style: TextStyle(
-                            color: Color(0xFF2864E8),
+                            color: blueColor,
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                           ),
@@ -144,10 +115,6 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
                   ),
 
                   const Spacer(),
-
-                  // =================================================
-                  // PROFILE
-                  // =================================================
 
                   Container(
                     width: 36,
@@ -175,9 +142,6 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
               ),
             ),
 
-            // =====================================================
-            // CONTENT
-            // =====================================================
 
             Expanded(
               child: SingleChildScrollView(
@@ -216,10 +180,6 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
                     CrossAxisAlignment.start,
 
                     children: [
-
-                      // =================================================
-                      // COMPANY + TITLE
-                      // =================================================
 
                       Row(
                         crossAxisAlignment:
@@ -300,16 +260,10 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
 
                       const SizedBox(height: 24),
 
-                      // =================================================
-                      // APPLY + SAVE
-                      // =================================================
 
                       Row(
                         children: [
 
-                          // =================================================
-                          // APPLY NOW
-                          // =================================================
 
                           Expanded(
                             child: SizedBox(
@@ -353,9 +307,6 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
 
                           const SizedBox(width: 14),
 
-                          // =================================================
-                          // SAVE JOB
-                          // =================================================
 
                           Expanded(
                             child: SizedBox(
@@ -365,8 +316,6 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
                               OutlinedButton(
                                 onPressed: () {
 
-                                  // YOUR SAVED CONCEPT
-                                  // IS NOT CHANGED.
 
                                   setState(() {
                                     isSaved =
@@ -440,9 +389,6 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
 
                       const SizedBox(height: 24),
 
-                      // =================================================
-                      // JOB INFORMATION
-                      // =================================================
 
                       Row(
                         children: [
@@ -493,10 +439,6 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
 
                       const SizedBox(height: 25),
 
-                      // =================================================
-                      // DESCRIPTION
-                      // =================================================
-
                       _sectionTitle(
                         "Job Description",
                       ),
@@ -516,9 +458,6 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
 
                       const SizedBox(height: 25),
 
-                      // =================================================
-                      // RESPONSIBILITIES
-                      // =================================================
 
                       _sectionTitle(
                         "Key Responsibilities",
@@ -553,10 +492,6 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
 
                       const SizedBox(height: 18),
 
-                      // =================================================
-                      // REQUIREMENTS
-                      // =================================================
-
                       _sectionTitle(
                         "Job Requirements",
                       ),
@@ -589,10 +524,6 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
                       ),
 
                       const SizedBox(height: 25),
-
-                      // =================================================
-                      // BOTTOM APPLY BUTTON
-                      // =================================================
 
                       SizedBox(
                         width: double.infinity,
@@ -644,9 +575,6 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
     );
   }
 
-  // ============================================================
-  // INFO ITEM
-  // ============================================================
 
   Widget _infoItem({
     required String title,
@@ -686,9 +614,6 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
     );
   }
 
-  // ============================================================
-  // SECTION TITLE
-  // ============================================================
 
   Widget _sectionTitle(String title) {
 
