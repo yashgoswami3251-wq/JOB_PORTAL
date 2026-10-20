@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import '../references/reference.dart';
 
@@ -32,7 +31,8 @@ class EditJobPage extends StatefulWidget {
     '3+ years building production Node.js or C# backend services.\n'
         'In-depth knowledge of database schemas (SQL / NoSQL).\n'
         'Familiarity with cloud infrastructure (AWS or Azure preferred).',
-    this.qualifications = 'B.Tech / B.E in Computer Science or equivalent',
+    this.qualifications =
+    'B.Tech / B.E in Computer Science or equivalent',
     this.deadline = '',
     this.status = 'Active',
   });
@@ -75,9 +75,8 @@ class _EditJobPageState extends State<EditJobPage> {
         TextEditingController(text: widget.qualifications);
     deadlineController = TextEditingController(text: widget.deadline);
 
-    selectedStatus = statuses.contains(widget.status)
-        ? widget.status
-        : 'Active';
+    selectedStatus =
+    statuses.contains(widget.status) ? widget.status : 'Active';
   }
 
   @override
@@ -235,7 +234,6 @@ class _EditJobPageState extends State<EditJobPage> {
     final today = DateTime(now.year, now.month, now.day);
 
     DateTime initialDate = today;
-
     final parts = deadlineController.text.split('/');
 
     if (parts.length == 3) {
@@ -262,7 +260,7 @@ class _EditJobPageState extends State<EditJobPage> {
       lastDate: DateTime(2100),
     );
 
-    if (picked != null) {
+    if (picked != null && mounted) {
       setState(() {
         deadlineController.text =
         '${picked.day.toString().padLeft(2, '0')}/'
@@ -295,15 +293,13 @@ class _EditJobPageState extends State<EditJobPage> {
       'status': selectedStatus,
     };
 
-    // Save updatedJob to your existing database or API here.
+    debugPrint('Updated job: $updatedJob');
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Job details updated successfully!'),
       ),
     );
-
-    debugPrint('Updated job: $updatedJob');
   }
 
   Widget buildHeader() {
@@ -433,7 +429,7 @@ class _EditJobPageState extends State<EditJobPage> {
                           Text('Job Status', style: labelStyle),
                           const SizedBox(height: 5),
                           DropdownButtonFormField<String>(
-                            initialValue: selectedStatus,
+                            value: selectedStatus,
                             isExpanded: true,
                             style: inputStyle,
                             decoration: inputDecoration(),
@@ -454,7 +450,6 @@ class _EditJobPageState extends State<EditJobPage> {
                         ],
                       ),
                       const SizedBox(height: 12),
-
                       buildSection(
                         title: 'Salary Package',
                         children: [
@@ -491,7 +486,6 @@ class _EditJobPageState extends State<EditJobPage> {
                         ],
                       ),
                       const SizedBox(height: 12),
-
                       buildSection(
                         title: 'Job Description',
                         children: [
@@ -505,7 +499,6 @@ class _EditJobPageState extends State<EditJobPage> {
                         ],
                       ),
                       const SizedBox(height: 12),
-
                       buildSection(
                         title: 'Requirements & Qualifications',
                         children: [
@@ -527,7 +520,6 @@ class _EditJobPageState extends State<EditJobPage> {
                         ],
                       ),
                       const SizedBox(height: 12),
-
                       buildSection(
                         title: 'Application Deadline',
                         children: [
@@ -547,7 +539,6 @@ class _EditJobPageState extends State<EditJobPage> {
                         ],
                       ),
                       const SizedBox(height: 20),
-
                       Row(
                         children: [
                           Expanded(

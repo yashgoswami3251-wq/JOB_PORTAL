@@ -14,25 +14,13 @@ class EditUserPage extends StatefulWidget {
 }
 
 class _EditUserPageState extends State<EditUserPage> {
-  // ============================================================
-  // FORM KEY
-  // ============================================================
-
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
-  // ============================================================
-  // CONTROLLERS
-  // ============================================================
 
   late TextEditingController nameController;
   late TextEditingController emailController;
   late TextEditingController phoneController;
   late TextEditingController locationController;
   late TextEditingController bioController;
-
-  // ============================================================
-  // DROPDOWN VALUES
-  // ============================================================
 
   late String selectedRole;
   late String selectedStatus;
@@ -51,10 +39,6 @@ class _EditUserPageState extends State<EditUserPage> {
   @override
   void initState() {
     super.initState();
-
-    // ==========================================================
-    // SET EXISTING USER DATA
-    // ==========================================================
 
     nameController = TextEditingController(
       text: widget.user['name']?.toString() ?? '',
@@ -76,13 +60,9 @@ class _EditUserPageState extends State<EditUserPage> {
       text: widget.user['bio']?.toString() ?? '',
     );
 
-    selectedRole =
-        widget.user['role']?.toString() ?? 'User';
+    selectedRole = widget.user['role']?.toString() ?? 'User';
+    selectedStatus = widget.user['status']?.toString() ?? 'Active';
 
-    selectedStatus =
-        widget.user['status']?.toString() ?? 'Active';
-
-    // Safety check
     if (!roles.contains(selectedRole)) {
       selectedRole = 'User';
     }
@@ -99,24 +79,16 @@ class _EditUserPageState extends State<EditUserPage> {
     phoneController.dispose();
     locationController.dispose();
     bioController.dispose();
-
     super.dispose();
   }
 
-  // ============================================================
-  // SAVE USER
-  // ============================================================
-
   void saveUser() {
-    // Validate all TextFormFields
     if (!formKey.currentState!.validate()) {
       return;
     }
 
-    // Create updated user
     final Map<String, dynamic> updatedUser = {
       ...widget.user,
-
       'name': nameController.text.trim(),
       'email': emailController.text.trim(),
       'phone': phoneController.text.trim(),
@@ -124,23 +96,16 @@ class _EditUserPageState extends State<EditUserPage> {
       'role': selectedRole,
       'status': selectedStatus,
       'bio': bioController.text.trim(),
-
-      // Generate initials again
       'initials': getInitials(
         nameController.text.trim(),
       ),
     };
 
-    // Return updated data
     Navigator.pop(
       context,
       updatedUser,
     );
   }
-
-  // ============================================================
-  // GET INITIALS
-  // ============================================================
 
   String getInitials(String name) {
     if (name.trim().isEmpty) {
@@ -154,14 +119,9 @@ class _EditUserPageState extends State<EditUserPage> {
     }
 
     return (
-        words[0][0] +
-            words[1][0]
+        words[0][0] + words[1][0]
     ).toUpperCase();
   }
-
-  // ============================================================
-  // VALIDATE NAME
-  // ============================================================
 
   String? validateName(String? value) {
     if (value == null || value.trim().isEmpty) {
@@ -187,10 +147,6 @@ class _EditUserPageState extends State<EditUserPage> {
     return null;
   }
 
-  // ============================================================
-  // VALIDATE EMAIL
-  // ============================================================
-
   String? validateEmail(String? value) {
     if (value == null || value.trim().isEmpty) {
       return 'Please enter email';
@@ -207,18 +163,13 @@ class _EditUserPageState extends State<EditUserPage> {
     return null;
   }
 
-  // ============================================================
-  // VALIDATE PHONE
-  // ============================================================
-
   String? validatePhone(String? value) {
     if (value == null || value.trim().isEmpty) {
       return 'Please enter phone number';
     }
 
     final phone = value.trim();
-
-    final phoneRegex = RegExp(r'^[0-9]{10}$',);
+    final phoneRegex = RegExp(r'^[0-9]{10}$');
 
     if (!phoneRegex.hasMatch(phone)) {
       return 'Phone number must contain 10 digits';
@@ -226,10 +177,6 @@ class _EditUserPageState extends State<EditUserPage> {
 
     return null;
   }
-
-  // ============================================================
-  // VALIDATE LOCATION
-  // ============================================================
 
   String? validateLocation(String? value) {
     if (value == null || value.trim().isEmpty) {
@@ -247,10 +194,6 @@ class _EditUserPageState extends State<EditUserPage> {
     return null;
   }
 
-  // ============================================================
-  // VALIDATE BIO
-  // ============================================================
-
   String? validateBio(String? value) {
     if (value == null || value.trim().isEmpty) {
       return 'Please enter bio';
@@ -267,10 +210,6 @@ class _EditUserPageState extends State<EditUserPage> {
     return null;
   }
 
-  // ============================================================
-  // TEXT FORM FIELD
-  // ============================================================
-
   Widget buildTextField({
     required String label,
     required String hint,
@@ -283,7 +222,6 @@ class _EditUserPageState extends State<EditUserPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-
         Text(
           label,
           style: TextStyle(
@@ -292,31 +230,22 @@ class _EditUserPageState extends State<EditUserPage> {
             fontWeight: FontWeight.w600,
           ),
         ),
-
         const SizedBox(height: 6),
-
         TextFormField(
           controller: controller,
-
           keyboardType: keyboardType,
-
           maxLines: maxLines,
-
           validator: validator,
-
           style: TextStyle(
             color: textColor,
             fontSize: 11,
           ),
-
           decoration: InputDecoration(
             hintText: hint,
-
             hintStyle: TextStyle(
               color: greyColor,
               fontSize: 11,
             ),
-
             prefixIcon: prefixIcon == null
                 ? null
                 : Icon(
@@ -324,59 +253,39 @@ class _EditUserPageState extends State<EditUserPage> {
               color: greyColor,
               size: 18,
             ),
-
             filled: true,
-
             fillColor: Colors.white,
-
-            contentPadding:
-            const EdgeInsets.symmetric(
+            contentPadding: const EdgeInsets.symmetric(
               horizontal: 12,
               vertical: 11,
             ),
-
             border: OutlineInputBorder(
-              borderRadius:
-              BorderRadius.circular(6),
-
+              borderRadius: BorderRadius.circular(6),
               borderSide: BorderSide(
                 color: borderColor,
               ),
             ),
-
             enabledBorder: OutlineInputBorder(
-              borderRadius:
-              BorderRadius.circular(6),
-
+              borderRadius: BorderRadius.circular(6),
               borderSide: BorderSide(
                 color: borderColor,
               ),
             ),
-
             focusedBorder: OutlineInputBorder(
-              borderRadius:
-              BorderRadius.circular(6),
-
+              borderRadius: BorderRadius.circular(6),
               borderSide: BorderSide(
                 color: blueColor,
                 width: 1.2,
               ),
             ),
-
             errorBorder: OutlineInputBorder(
-              borderRadius:
-              BorderRadius.circular(6),
-
+              borderRadius: BorderRadius.circular(6),
               borderSide: const BorderSide(
                 color: Colors.red,
               ),
             ),
-
-            focusedErrorBorder:
-            OutlineInputBorder(
-              borderRadius:
-              BorderRadius.circular(6),
-
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(6),
               borderSide: const BorderSide(
                 color: Colors.red,
                 width: 1.2,
@@ -387,10 +296,6 @@ class _EditUserPageState extends State<EditUserPage> {
       ],
     );
   }
-
-  // ============================================================
-  // DROPDOWN
-  // ============================================================
 
   Widget buildDropdown({
     required String label,
@@ -401,7 +306,6 @@ class _EditUserPageState extends State<EditUserPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-
         Text(
           label,
           style: TextStyle(
@@ -410,62 +314,43 @@ class _EditUserPageState extends State<EditUserPage> {
             fontWeight: FontWeight.w600,
           ),
         ),
-
         const SizedBox(height: 6),
-
         DropdownButtonFormField<String>(
           initialValue: value,
-
-          items: items.map(
-                (String item) {
-              return DropdownMenuItem<String>(
-                value: item,
-                child: Text(
-                  item,
-                  style: TextStyle(
-                    color: textColor,
-                    fontSize: 11,
-                  ),
+          items: items.map((String item) {
+            return DropdownMenuItem<String>(
+              value: item,
+              child: Text(
+                item,
+                style: TextStyle(
+                  color: textColor,
+                  fontSize: 11,
                 ),
-              );
-            },
-          ).toList(),
-
+              ),
+            );
+          }).toList(),
           onChanged: onChanged,
-
           decoration: InputDecoration(
             filled: true,
-
             fillColor: Colors.white,
-
-            contentPadding:
-            const EdgeInsets.symmetric(
+            contentPadding: const EdgeInsets.symmetric(
               horizontal: 12,
               vertical: 11,
             ),
-
             border: OutlineInputBorder(
-              borderRadius:
-              BorderRadius.circular(6),
-
+              borderRadius: BorderRadius.circular(6),
               borderSide: BorderSide(
                 color: borderColor,
               ),
             ),
-
             enabledBorder: OutlineInputBorder(
-              borderRadius:
-              BorderRadius.circular(6),
-
+              borderRadius: BorderRadius.circular(6),
               borderSide: BorderSide(
                 color: borderColor,
               ),
             ),
-
             focusedBorder: OutlineInputBorder(
-              borderRadius:
-              BorderRadius.circular(6),
-
+              borderRadius: BorderRadius.circular(6),
               borderSide: BorderSide(
                 color: blueColor,
                 width: 1.2,
@@ -477,38 +362,23 @@ class _EditUserPageState extends State<EditUserPage> {
     );
   }
 
-  // ============================================================
-  // BUILD
-  // ============================================================
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-
-      // ========================================================
-      // APP BAR
-      // ========================================================
-
       appBar: AppBar(
         backgroundColor: backgroundColor,
-
         elevation: 0,
-
-        surfaceTintColor:
-        Colors.transparent,
-
+        surfaceTintColor: Colors.transparent,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
           },
-
           icon: Icon(
             Icons.arrow_back,
             color: primaryBlue,
           ),
         ),
-
         title: Text(
           'Edit User',
           style: TextStyle(
@@ -518,14 +388,8 @@ class _EditUserPageState extends State<EditUserPage> {
           ),
         ),
       ),
-
-      // ========================================================
-      // BODY
-      // ========================================================
-
       body: Form(
         key: formKey,
-
         child: SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(
             14,
@@ -533,72 +397,45 @@ class _EditUserPageState extends State<EditUserPage> {
             14,
             20,
           ),
-
           child: Column(
-            crossAxisAlignment:
-            CrossAxisAlignment.start,
-
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
-              // ==================================================
-              // USER ID
-              // ==================================================
-
               Container(
                 width: double.infinity,
-
                 padding: const EdgeInsets.all(12),
-
                 decoration: BoxDecoration(
                   color: chipColor,
-
-                  borderRadius:
-                  BorderRadius.circular(7),
-
+                  borderRadius: BorderRadius.circular(7),
                   border: Border.all(
                     color: borderColor,
                   ),
                 ),
-
                 child: Row(
                   children: [
-
                     Icon(
                       Icons.badge_outlined,
                       color: blueColor,
                       size: 20,
                     ),
-
                     const SizedBox(width: 9),
-
                     Column(
-                      crossAxisAlignment:
-                      CrossAxisAlignment.start,
-
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-
                         Text(
                           'USER ID',
                           style: TextStyle(
                             color: greyColor,
                             fontSize: 8,
-                            fontWeight:
-                            FontWeight.w600,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
-
                         const SizedBox(height: 2),
-
                         Text(
-                          widget.user['userId']
-                              ?.toString() ??
-                              'N/A',
-
+                          widget.user['userId']?.toString() ?? 'N/A',
                           style: TextStyle(
                             color: textColor,
                             fontSize: 11,
-                            fontWeight:
-                            FontWeight.bold,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ],
@@ -606,13 +443,7 @@ class _EditUserPageState extends State<EditUserPage> {
                   ],
                 ),
               ),
-
               const SizedBox(height: 15),
-
-              // ==================================================
-              // PERSONAL INFORMATION
-              // ==================================================
-
               Text(
                 'Personal Information',
                 style: TextStyle(
@@ -621,65 +452,41 @@ class _EditUserPageState extends State<EditUserPage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-
               const SizedBox(height: 10),
-
-              // Name
               buildTextField(
                 label: 'Full Name',
                 hint: 'Enter full name',
                 controller: nameController,
                 validator: validateName,
-                prefixIcon:
-                Icons.person_outline,
+                prefixIcon: Icons.person_outline,
               ),
-
               const SizedBox(height: 12),
-
-              // Email
               buildTextField(
                 label: 'Email Address',
                 hint: 'Enter email address',
                 controller: emailController,
                 validator: validateEmail,
-                keyboardType:
-                TextInputType.emailAddress,
-                prefixIcon:
-                Icons.email_outlined,
+                keyboardType: TextInputType.emailAddress,
+                prefixIcon: Icons.email_outlined,
               ),
-
               const SizedBox(height: 12),
-
-              // Phone
               buildTextField(
                 label: 'Phone Number',
                 hint: 'Enter 10 digit phone number',
                 controller: phoneController,
                 validator: validatePhone,
-                keyboardType:
-                TextInputType.phone,
-                prefixIcon:
-                Icons.phone_outlined,
+                keyboardType: TextInputType.phone,
+                prefixIcon: Icons.phone_outlined,
               ),
-
               const SizedBox(height: 12),
-
-              // Location
               buildTextField(
                 label: 'Location',
                 hint: 'Enter location',
                 controller: locationController,
                 validator: validateLocation,
-                prefixIcon:
-                Icons.location_on_outlined,
+                prefixIcon: Icons.location_on_outlined,
               ),
-
               const SizedBox(height: 15),
-
-              // ==================================================
-              // ACCOUNT INFORMATION
-              // ==================================================
-
               Text(
                 'Account Information',
                 style: TextStyle(
@@ -688,13 +495,9 @@ class _EditUserPageState extends State<EditUserPage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-
               const SizedBox(height: 10),
-
               Row(
                 children: [
-
-                  // Role
                   Expanded(
                     child: buildDropdown(
                       label: 'Role',
@@ -703,17 +506,13 @@ class _EditUserPageState extends State<EditUserPage> {
                       onChanged: (value) {
                         if (value != null) {
                           setState(() {
-                            selectedRole =
-                                value;
+                            selectedRole = value;
                           });
                         }
                       },
                     ),
                   ),
-
                   const SizedBox(width: 10),
-
-                  // Status
                   Expanded(
                     child: buildDropdown(
                       label: 'Status',
@@ -722,8 +521,7 @@ class _EditUserPageState extends State<EditUserPage> {
                       onChanged: (value) {
                         if (value != null) {
                           setState(() {
-                            selectedStatus =
-                                value;
+                            selectedStatus = value;
                           });
                         }
                       },
@@ -731,13 +529,7 @@ class _EditUserPageState extends State<EditUserPage> {
                   ),
                 ],
               ),
-
               const SizedBox(height: 15),
-
-              // ==================================================
-              // BIO
-              // ==================================================
-
               Text(
                 'About User',
                 style: TextStyle(
@@ -746,9 +538,7 @@ class _EditUserPageState extends State<EditUserPage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-
               const SizedBox(height: 10),
-
               buildTextField(
                 label: 'Personal Bio',
                 hint: 'Enter user bio',
@@ -756,89 +546,54 @@ class _EditUserPageState extends State<EditUserPage> {
                 validator: validateBio,
                 maxLines: 5,
               ),
-
               const SizedBox(height: 20),
-
-              // ==================================================
-              // BUTTONS
-              // ==================================================
-
               Row(
                 children: [
-
-                  // Cancel
                   Expanded(
                     child: SizedBox(
                       height: 42,
-
                       child: OutlinedButton(
                         onPressed: () {
                           Navigator.pop(context);
                         },
-
-                        style:
-                        OutlinedButton.styleFrom(
-                          foregroundColor:
-                          textColor,
-
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: textColor,
                           side: BorderSide(
                             color: borderColor,
                           ),
-
-                          shape:
-                          RoundedRectangleBorder(
-                            borderRadius:
-                            BorderRadius
-                                .circular(6),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(6),
                           ),
                         ),
-
                         child: const Text(
                           'Cancel',
                           style: TextStyle(
                             fontSize: 11,
-                            fontWeight:
-                            FontWeight.w600,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
                     ),
                   ),
-
                   const SizedBox(width: 10),
-
-                  // Save
                   Expanded(
                     child: SizedBox(
                       height: 42,
-
                       child: ElevatedButton(
                         onPressed: saveUser,
-
-                        style:
-                        ElevatedButton.styleFrom(
-                          backgroundColor:
-                          blueColor,
-
-                          foregroundColor:
-                          Colors.white,
-
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: blueColor,
+                          foregroundColor: Colors.white,
                           elevation: 0,
-
-                          shape:
-                          RoundedRectangleBorder(
-                            borderRadius:
-                            BorderRadius
-                                .circular(6),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(6),
                           ),
                         ),
-
                         child: const Text(
                           'Save Changes',
                           style: TextStyle(
                             fontSize: 11,
-                            fontWeight:
-                            FontWeight.w600,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),

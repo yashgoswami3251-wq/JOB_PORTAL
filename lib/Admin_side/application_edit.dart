@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import '../references/reference.dart';
 
@@ -103,10 +102,9 @@ class _EditApplicationPageState extends State<EditApplicationPage> {
       'dec': 12,
     };
 
-    final month = months[parts[0].substring(
-      0,
-      3,
-    ).toLowerCase()];
+    final month = months[
+    parts[0].substring(0, 3).toLowerCase()
+    ];
 
     final day = int.tryParse(parts[1]);
     final year = int.tryParse(parts[2]);
@@ -154,7 +152,7 @@ class _EditApplicationPageState extends State<EditApplicationPage> {
     });
 
     ScaffoldMessenger.of(context).showSnackBar(
-       SnackBar(
+      SnackBar(
         content: Text('Application updated successfully!'),
         backgroundColor: avatarColor,
       ),
@@ -200,7 +198,7 @@ class _EditApplicationPageState extends State<EditApplicationPage> {
   Widget _buildLabel(String text) {
     return Text(
       text.toUpperCase(),
-      style:  TextStyle(
+      style: TextStyle(
         fontSize: 11,
         fontWeight: FontWeight.bold,
         color: greyColor,
@@ -220,7 +218,7 @@ class _EditApplicationPageState extends State<EditApplicationPage> {
         size: 20,
       ),
       hintText: hint,
-      hintStyle:  TextStyle(
+      hintStyle: TextStyle(
         fontSize: 14,
         color: greyColor,
       ),
@@ -232,15 +230,15 @@ class _EditApplicationPageState extends State<EditApplicationPage> {
       ),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide:  BorderSide(color: borderColor),
+        borderSide: BorderSide(color: borderColor),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide:  BorderSide(color: borderColor),
+        borderSide: BorderSide(color: borderColor),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide:  BorderSide(
+        borderSide: BorderSide(
           color: blueColor,
           width: 1.5,
         ),
@@ -256,13 +254,13 @@ class _EditApplicationPageState extends State<EditApplicationPage> {
         backgroundColor: backgroundColor,
         elevation: 0,
         leading: IconButton(
-          icon:  Icon(
+          icon: Icon(
             Icons.arrow_back,
             color: textColor,
           ),
           onPressed: () => Navigator.pop(context),
         ),
-        title:  Text(
+        title: Text(
           'Edit Application',
           style: TextStyle(
             color: textColor,
@@ -292,7 +290,6 @@ class _EditApplicationPageState extends State<EditApplicationPage> {
           key: _formKey,
           child: Column(
             children: [
-              // Applicant preview card
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -328,7 +325,7 @@ class _EditApplicationPageState extends State<EditApplicationPage> {
                         children: [
                           Text(
                             applicantName,
-                            style:  TextStyle(
+                            style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                               color: textColor,
@@ -337,7 +334,7 @@ class _EditApplicationPageState extends State<EditApplicationPage> {
                           const SizedBox(height: 4),
                           Text(
                             role,
-                            style:  TextStyle(
+                            style: TextStyle(
                               fontSize: 14,
                               color: greyColor,
                             ),
@@ -348,10 +345,7 @@ class _EditApplicationPageState extends State<EditApplicationPage> {
                   ],
                 ),
               ),
-
               const SizedBox(height: 16),
-
-              // Application form card
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -380,9 +374,7 @@ class _EditApplicationPageState extends State<EditApplicationPage> {
                         Icons.person_outline,
                       ),
                     ),
-
                     const SizedBox(height: 16),
-
                     _buildLabel('Job Title / Role'),
                     const SizedBox(height: 6),
                     TextFormField(
@@ -393,9 +385,7 @@ class _EditApplicationPageState extends State<EditApplicationPage> {
                         Icons.work_outline,
                       ),
                     ),
-
                     const SizedBox(height: 16),
-
                     _buildLabel('Applied Date'),
                     const SizedBox(height: 6),
                     TextFormField(
@@ -406,12 +396,9 @@ class _EditApplicationPageState extends State<EditApplicationPage> {
                         Icons.calendar_today_outlined,
                       ),
                     ),
-
                     const SizedBox(height: 16),
-
                     _buildLabel('Application Status'),
                     const SizedBox(height: 8),
-
                     Wrap(
                       spacing: 8,
                       runSpacing: 8,
@@ -440,9 +427,7 @@ class _EditApplicationPageState extends State<EditApplicationPage> {
                         );
                       }).toList(),
                     ),
-
                     const SizedBox(height: 16),
-
                     _buildLabel('Internal Notes'),
                     const SizedBox(height: 6),
                     TextFormField(
@@ -451,7 +436,7 @@ class _EditApplicationPageState extends State<EditApplicationPage> {
                       maxLines: 3,
                       decoration: InputDecoration(
                         hintText: 'Add notes about candidate...',
-                        hintStyle:  TextStyle(
+                        hintStyle: TextStyle(
                           fontSize: 14,
                           color: greyColor,
                         ),
@@ -459,13 +444,13 @@ class _EditApplicationPageState extends State<EditApplicationPage> {
                         fillColor: const Color(0xFFF8FAFC),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
-                          borderSide:  BorderSide(
+                          borderSide: BorderSide(
                             color: borderColor,
                           ),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
-                          borderSide:  BorderSide(
+                          borderSide: BorderSide(
                             color: borderColor,
                           ),
                         ),
@@ -481,10 +466,7 @@ class _EditApplicationPageState extends State<EditApplicationPage> {
                   ],
                 ),
               ),
-
               const SizedBox(height: 24),
-
-              // Action buttons
               Row(
                 children: [
                   Expanded(

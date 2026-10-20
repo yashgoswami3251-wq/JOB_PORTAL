@@ -96,14 +96,17 @@ class _JobsPageState extends State<JobsPage> {
 
   List<Map<String, dynamic>> get _filteredJobs {
     final query = _searchController.text.trim().toLowerCase();
+
     return _jobs.where((job) {
       final matchesQuery = query.isEmpty ||
           job['title'].toString().toLowerCase().contains(query) ||
           job['company'].toString().toLowerCase().contains(query) ||
           job['location'].toString().toLowerCase().contains(query);
+
       final matchesFilter = _selectedFilter == 'All' ||
           job['status'].toString().toLowerCase() ==
               _selectedFilter.toLowerCase();
+
       return matchesQuery && matchesFilter;
     }).toList();
   }
@@ -139,8 +142,14 @@ class _JobsPageState extends State<JobsPage> {
   void _openDetails(Map<String, dynamic> job) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (_) => JobDetailPage(job: job)),
-    ).then((_) => setState(() {}));
+      MaterialPageRoute(
+        builder: (_) => JobDetailPage(job: job),
+      ),
+    ).then((_) {
+      if (mounted) {
+        setState(() {});
+      }
+    });
   }
 
   @override
@@ -169,12 +178,20 @@ class _JobsPageState extends State<JobsPage> {
               children: [
                 IconButton(
                   onPressed: () {},
-                  icon: Icon(Icons.notifications_none_rounded,
-                      color: greyColor, size: 22),
+                  icon: Icon(
+                    Icons.notifications_none_rounded,
+                    color: greyColor,
+                    size: 22,
+                  ),
                 ),
                 InkWell(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>MyProfilePage()));
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MyProfilePage(),
+                      ),
+                    );
                   },
                   child: Container(
                     width: profileSize,
@@ -195,9 +212,9 @@ class _JobsPageState extends State<JobsPage> {
                   ),
                 ),
               ],
-            )
+            ),
           ],
-        )
+        ),
       ),
       body: Column(
         children: [
@@ -206,26 +223,40 @@ class _JobsPageState extends State<JobsPage> {
             child: TextField(
               controller: _searchController,
               onChanged: (_) => setState(() {}),
-              style: TextStyle(color: textColor, fontSize: 12),
+              style: TextStyle(
+                color: textColor,
+                fontSize: 12,
+              ),
               decoration: InputDecoration(
                 hintText: 'Search jobs...',
-                hintStyle: TextStyle(color: greyColor, fontSize: 12),
-                prefixIcon: Icon(Icons.search_rounded,
-                    color: greyColor, size: 18),
+                hintStyle: TextStyle(
+                  color: greyColor,
+                  fontSize: 12,
+                ),
+                prefixIcon: Icon(
+                  Icons.search_rounded,
+                  color: greyColor,
+                  size: 18,
+                ),
                 filled: true,
                 fillColor: Colors.white,
-                contentPadding:
-                const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+                contentPadding: const EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: 12,
+                ),
                 isDense: true,
                 border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(7),
-                    borderSide: BorderSide(color: borderColor)),
+                  borderRadius: BorderRadius.circular(7),
+                  borderSide: BorderSide(color: borderColor),
+                ),
                 enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(7),
-                    borderSide: BorderSide(color: borderColor)),
+                  borderRadius: BorderRadius.circular(7),
+                  borderSide: BorderSide(color: borderColor),
+                ),
                 focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(7),
-                    borderSide: BorderSide(color: blueColor)),
+                  borderRadius: BorderRadius.circular(7),
+                  borderSide: BorderSide(color: blueColor),
+                ),
               ),
             ),
           ),
@@ -239,20 +270,29 @@ class _JobsPageState extends State<JobsPage> {
               itemBuilder: (context, index) {
                 final filter = filters[index];
                 final selected = _selectedFilter == filter;
+
                 return ChoiceChip(
                   label: Text(filter),
                   selected: selected,
-                  onSelected: (_) => setState(() => _selectedFilter = filter),
+                  onSelected: (_) {
+                    setState(() {
+                      _selectedFilter = filter;
+                    });
+                  },
                   labelStyle: TextStyle(
                     color: selected ? Colors.white : textColor,
                     fontSize: 10,
-                    fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
+                    fontWeight:
+                    selected ? FontWeight.w600 : FontWeight.w400,
                   ),
                   backgroundColor: Colors.white,
                   selectedColor: blueColor,
-                  side: BorderSide(color: selected ? blueColor : borderColor),
+                  side: BorderSide(
+                    color: selected ? blueColor : borderColor,
+                  ),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18)),
+                    borderRadius: BorderRadius.circular(18),
+                  ),
                   padding: const EdgeInsets.symmetric(horizontal: 2),
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   visualDensity: VisualDensity.compact,
@@ -264,22 +304,38 @@ class _JobsPageState extends State<JobsPage> {
           Expanded(
             child: _filteredJobs.isEmpty
                 ? Center(
-              child: Text('No jobs found',
-                  style: TextStyle(color: greyColor, fontSize: 13)),
+              child: Text(
+                'No jobs found',
+                style: TextStyle(
+                  color: greyColor,
+                  fontSize: 13,
+                ),
+              ),
             )
                 : ListView.separated(
               padding: const EdgeInsets.fromLTRB(14, 0, 14, 16),
               itemCount: _filteredJobs.length,
-              separatorBuilder: (_, __) => const SizedBox(height: 9),
+              separatorBuilder: (_, __) =>
+              const SizedBox(height: 9),
               itemBuilder: (context, index) {
                 final job = _filteredJobs[index];
+
                 return _JobCard(
                   job: job,
-                  statusBackground: _statusBackground(job['status']),
-                  statusForeground: _statusForeground(job['status']),
+                  statusBackground:
+                  _statusBackground(job['status']),
+                  statusForeground:
+                  _statusForeground(job['status']),
                   onTap: () => _openDetails(job),
                   onDelete: () => _confirmDelete(job),
-                  onEdit: () {  },
+                  onEdit: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EditJobPage(),
+                      ),
+                    );
+                  },
                 );
               },
             ),
@@ -294,21 +350,34 @@ class _JobsPageState extends State<JobsPage> {
       context: context,
       builder: (dialogContext) => AlertDialog(
         title: const Text('Delete job?'),
-        content: Text('Are you sure you want to remove "${job['title']}"?'),
+        content: Text(
+          'Are you sure you want to remove "${job['title']}"?',
+        ),
         actions: [
           TextButton(
-              onPressed: () => Navigator.pop(dialogContext, false),
-              child: const Text('Cancel')),
+            onPressed: () => Navigator.pop(dialogContext, false),
+            child: const Text('Cancel'),
+          ),
           TextButton(
-              onPressed: () => Navigator.pop(dialogContext, true),
-              child: const Text('Delete', style: TextStyle(color: Colors.red))),
+            onPressed: () => Navigator.pop(dialogContext, true),
+            child: const Text(
+              'Delete',
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
         ],
       ),
     );
+
     if (confirm == true && mounted) {
-      setState(() => _jobs.remove(job));
+      setState(() {
+        _jobs.remove(job);
+      });
+
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Job removed from this demo list')),
+        const SnackBar(
+          content: Text('Job removed from this demo list'),
+        ),
       );
     }
   }
@@ -348,73 +417,142 @@ class _JobCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Expanded(
-                  child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(job['title'], maxLines: 1,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          job['title'].toString(),
+                          maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(color: textColor, fontSize: 12,
-                              fontWeight: FontWeight.bold)),
-                      const SizedBox(height: 2),
-                      Text(job['company'], maxLines: 1,
+                          style: TextStyle(
+                            color: textColor,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          job['company'].toString(),
+                          maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(color: greyColor, fontSize: 10)),
-                    ],
+                          style: TextStyle(
+                            color: greyColor,
+                            fontSize: 10,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(width: 6),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
-                  decoration: BoxDecoration(color: statusBackground,
-                      borderRadius: BorderRadius.circular(3)),
-                  child: Text(job['status'], style: TextStyle(
-                      color: statusForeground, fontSize: 9,
-                      fontWeight: FontWeight.w600)),
-                ),
-              ]),
+                  const SizedBox(width: 6),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 7,
+                      vertical: 3,
+                    ),
+                    decoration: BoxDecoration(
+                      color: statusBackground,
+                      borderRadius: BorderRadius.circular(3),
+                    ),
+                    child: Text(
+                      job['status'].toString(),
+                      style: TextStyle(
+                        color: statusForeground,
+                        fontSize: 9,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
               const SizedBox(height: 10),
               Divider(height: 1, color: borderColor),
               const SizedBox(height: 7),
-              Row(children: [
-                Expanded(child: _InfoText(label: 'Location: ', value: job['location'])),
-                _InfoText(label: 'Salary: ', value: job['salary'], alignEnd: true),
-              ]),
+              Row(
+                children: [
+                  Expanded(
+                    child: _InfoText(
+                      label: 'Location: ',
+                      value: job['location'].toString(),
+                    ),
+                  ),
+                  _InfoText(
+                    label: 'Salary: ',
+                    value: job['salary'].toString(),
+                    alignEnd: true,
+                  ),
+                ],
+              ),
               const SizedBox(height: 4),
-              Row(children: [
-                Expanded(child: _InfoText(label: 'Posted: ', value: job['posted'])),
-                Text('${job['applicants']} apps', style: TextStyle(
-                    color: blueColor, fontSize: 9, fontWeight: FontWeight.w600)),
-              ]),
+              Row(
+                children: [
+                  Expanded(
+                    child: _InfoText(
+                      label: 'Posted: ',
+                      value: job['posted'].toString(),
+                    ),
+                  ),
+                  Text(
+                    '${job['applicants']} apps',
+                    style: TextStyle(
+                      color: blueColor,
+                      fontSize: 9,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
               const SizedBox(height: 7),
               Divider(height: 1, color: borderColor),
               const SizedBox(height: 5),
-              Row(children: [
-                Expanded(
-                  child: GestureDetector(
-                    onTap: onTap,
-                    child: Text('View Details', style: TextStyle(
-                        color: blueColor, fontSize: 10,
-                        fontWeight: FontWeight.w500)),
+              Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: onTap,
+                      child: Text(
+                        'View Details',
+                        style: TextStyle(
+                          color: blueColor,
+                          fontSize: 10,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-                IconButton(
-                  onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>EditJobPage()));
-                  },
-                  visualDensity: VisualDensity.compact,
-                  constraints: const BoxConstraints(minWidth: 30, minHeight: 28),
-                  padding: EdgeInsets.zero,
-                  icon: Icon(Icons.edit_outlined, size: 16, color: blueColor),
-                ),
-                IconButton(
-                  onPressed: onDelete,
-                  visualDensity: VisualDensity.compact,
-                  constraints: const BoxConstraints(minWidth: 26, minHeight: 28),
-                  padding: EdgeInsets.zero,
-                  icon: Icon(Icons.delete_outline_rounded, size: 17, color: redColor),
-                ),
-              ]),
+                  IconButton(
+                    onPressed: onEdit,
+                    visualDensity: VisualDensity.compact,
+                    constraints: const BoxConstraints(
+                      minWidth: 30,
+                      minHeight: 28,
+                    ),
+                    padding: EdgeInsets.zero,
+                    icon: Icon(
+                      Icons.edit_outlined,
+                      size: 16,
+                      color: blueColor,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: onDelete,
+                    visualDensity: VisualDensity.compact,
+                    constraints: const BoxConstraints(
+                      minWidth: 26,
+                      minHeight: 28,
+                    ),
+                    padding: EdgeInsets.zero,
+                    icon: Icon(
+                      Icons.delete_outline_rounded,
+                      size: 17,
+                      color: redColor,
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
@@ -428,16 +566,34 @@ class _InfoText extends StatelessWidget {
   final String value;
   final bool alignEnd;
 
-  const _InfoText({required this.label, required this.value, this.alignEnd = false});
+  const _InfoText({
+    required this.label,
+    required this.value,
+    this.alignEnd = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Text.rich(
-      TextSpan(children: [
-        TextSpan(text: label, style: TextStyle(color: greyColor, fontSize: 9)),
-        TextSpan(text: value, style: TextStyle(color: textColor, fontSize: 9,
-            fontWeight: FontWeight.w500)),
-      ]),
+      TextSpan(
+        children: [
+          TextSpan(
+            text: label,
+            style: TextStyle(
+              color: greyColor,
+              fontSize: 9,
+            ),
+          ),
+          TextSpan(
+            text: value,
+            style: TextStyle(
+              color: textColor,
+              fontSize: 9,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
       textAlign: alignEnd ? TextAlign.end : TextAlign.start,

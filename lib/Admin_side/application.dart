@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-
 import '../references/reference.dart';
 import 'admin_profile.dart';
 import 'application_detail.dart';
 import 'application_edit.dart';
-
 
 class AppsPage extends StatefulWidget {
   const AppsPage({Key? key}) : super(key: key);
@@ -78,12 +76,20 @@ class _AppsPageState extends State<AppsPage> {
               children: [
                 IconButton(
                   onPressed: () {},
-                  icon: Icon(Icons.notifications_none_rounded,
-                      color: greyColor, size: 22),
+                  icon: Icon(
+                    Icons.notifications_none_rounded,
+                    color: greyColor,
+                    size: 22,
+                  ),
                 ),
                 InkWell(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>MyProfilePage()));
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MyProfilePage(),
+                      ),
+                    );
                   },
                   child: Container(
                     width: profileSize,
@@ -104,16 +110,15 @@ class _AppsPageState extends State<AppsPage> {
                   ),
                 ),
               ],
-            )
+            ),
           ],
-        )
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Search Bar
             Container(
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -126,12 +131,14 @@ class _AppsPageState extends State<AppsPage> {
                   hintStyle: TextStyle(color: greyColor),
                   prefixIcon: Icon(Icons.search, color: greyColor),
                   border: InputBorder.none,
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 14,
+                  ),
                 ),
               ),
             ),
             const SizedBox(height: 16),
-            // Filter Chips
             Row(
               children: [
                 _buildFilterChip('All'),
@@ -142,18 +149,20 @@ class _AppsPageState extends State<AppsPage> {
               ],
             ),
             const SizedBox(height: 16),
-            // Applications List
             Expanded(
               child: ListView.builder(
                 itemCount: filteredApps.length,
                 itemBuilder: (context, index) {
                   final app = filteredApps[index];
+
                   return GestureDetector(
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ApplicationDetail(appData: app),
+                          builder: (context) => ApplicationDetail(
+                            appData: app,
+                          ),
                         ),
                       );
                     },
@@ -209,8 +218,13 @@ class _AppsPageState extends State<AppsPage> {
                             ],
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 12.0),
-                            child: Divider(color: borderColor, height: 1),
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 12.0,
+                            ),
+                            child: Divider(
+                              color: borderColor,
+                              height: 1,
+                            ),
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -225,16 +239,30 @@ class _AppsPageState extends State<AppsPage> {
                               Row(
                                 children: [
                                   IconButton(
-                                    icon: Icon(Icons.edit_outlined, size: 20, color: blueColor),
+                                    icon: Icon(
+                                      Icons.edit_outlined,
+                                      size: 20,
+                                      color: blueColor,
+                                    ),
                                     onPressed: () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>EditApplicationPage()));
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              EditApplicationPage(),
+                                        ),
+                                      );
                                     },
                                     constraints: const BoxConstraints(),
                                     padding: const EdgeInsets.all(8),
                                   ),
                                   const SizedBox(width: 8),
                                   IconButton(
-                                    icon: Icon(Icons.delete_outline, size: 20, color: redColor),
+                                    icon: Icon(
+                                      Icons.delete_outline,
+                                      size: 20,
+                                      color: redColor,
+                                    ),
                                     onPressed: () {},
                                     constraints: const BoxConstraints(),
                                     padding: const EdgeInsets.all(8),
@@ -258,6 +286,7 @@ class _AppsPageState extends State<AppsPage> {
 
   Widget _buildFilterChip(String label) {
     final isSelected = selectedFilter == label;
+
     return ChoiceChip(
       label: Text(label),
       selected: isSelected,
@@ -297,7 +326,10 @@ class _AppsPageState extends State<AppsPage> {
     }
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 10,
+        vertical: 4,
+      ),
       decoration: BoxDecoration(
         color: bgColor,
         borderRadius: BorderRadius.circular(6),

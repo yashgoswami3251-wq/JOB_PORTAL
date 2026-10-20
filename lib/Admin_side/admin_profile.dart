@@ -41,7 +41,7 @@ class MyProfilePage extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => const LoginPage(),
                 ),
-                (route) => false,
+                    (route) => false,
               );
             },
             style: ElevatedButton.styleFrom(
@@ -62,7 +62,6 @@ class MyProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -103,12 +102,10 @@ class MyProfilePage extends StatelessWidget {
           ),
         ],
       ),
-
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            // Profile Identity Card
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(24),
@@ -131,9 +128,7 @@ class MyProfilePage extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 16),
-
                   Text(
                     'Suresh Kumar',
                     style: TextStyle(
@@ -142,9 +137,7 @@ class MyProfilePage extends StatelessWidget {
                       color: textColor,
                     ),
                   ),
-
                   const SizedBox(height: 6),
-
                   Text(
                     'Super Admin • HireHub HQ',
                     style: TextStyle(
@@ -155,10 +148,7 @@ class MyProfilePage extends StatelessWidget {
                 ],
               ),
             ),
-
             const SizedBox(height: 16),
-
-            // Personal Details Card
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(20),
@@ -178,34 +168,26 @@ class MyProfilePage extends StatelessWidget {
                       color: textColor,
                     ),
                   ),
-
                   Divider(
                     height: 24,
                     thickness: 1,
                     color: borderColor,
                   ),
-
                   _buildDetailItem(
                     'EMAIL ADDRESS',
                     'suresh.kumar@hirehub.com',
                   ),
-
                   const SizedBox(height: 16),
-
                   _buildDetailItem(
                     'PHONE NUMBER',
                     '+91 98765 43210',
                   ),
-
                   const SizedBox(height: 16),
-
                   _buildDetailItem(
                     'ROLE TIER',
                     'Super Administrator',
                   ),
-
                   const SizedBox(height: 16),
-
                   _buildDetailItem(
                     'JOINED ON',
                     'January 15, 2023',
@@ -213,10 +195,7 @@ class MyProfilePage extends StatelessWidget {
                 ],
               ),
             ),
-
             const SizedBox(height: 24),
-
-            // Edit Profile Button
             SizedBox(
               width: double.infinity,
               height: 50,
@@ -246,10 +225,7 @@ class MyProfilePage extends StatelessWidget {
                 ),
               ),
             ),
-
             const SizedBox(height: 12),
-
-            // Logout Button
             SizedBox(
               width: double.infinity,
               height: 50,
@@ -277,7 +253,6 @@ class MyProfilePage extends StatelessWidget {
                 ),
               ),
             ),
-
             const SizedBox(height: 16),
           ],
         ),
@@ -298,9 +273,7 @@ class MyProfilePage extends StatelessWidget {
             letterSpacing: 0.5,
           ),
         ),
-
         const SizedBox(height: 4),
-
         Text(
           value,
           style: TextStyle(
