@@ -252,27 +252,6 @@ class _UsersPageState extends State<UsersPage> {
                     ),
                   ),
                 ),
-
-                const SizedBox(width: 8),
-
-                // Add Button
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: primaryBlue,
-                    borderRadius: BorderRadius.circular(7),
-                  ),
-                  child: IconButton(
-                    onPressed: () {
-                      // Add user functionality
-                    },
-                    icon: const Icon(
-                      Icons.add,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
               ],
             ),
           ),

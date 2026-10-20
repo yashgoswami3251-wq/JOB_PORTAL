@@ -174,7 +174,6 @@ class _EmployerDetailPageState extends State<EmployerDetailPage> {
           ],
         ),
       ),
-      bottomNavigationBar: _buildBottomNavigation(),
     );
   }
 
@@ -507,42 +506,6 @@ class _EmployerDetailPageState extends State<EmployerDetailPage> {
     );
   }
 
-  // ------------------------------------------------------------
-  // BOTTOM NAVIGATION
-  // ------------------------------------------------------------
-
-  Widget _buildBottomNavigation() {
-    return Container(
-      height: 58,
-      decoration:  BoxDecoration(
-        color: bottomColor,
-      ),
-      child: Row(
-        children: [
-          _bottomItem(
-            icon: Icons.dashboard_outlined,
-            title: 'Dashboard',
-            selected: false,
-          ),
-          _bottomItem(
-            icon: Icons.person_outline,
-            title: 'Users',
-            selected: false,
-          ),
-          _bottomItem(
-            icon: Icons.business_center_outlined,
-            title: 'Employers',
-            selected: true,
-          ),
-          _bottomItem(
-            icon: Icons.business_outlined,
-            title: 'Companies',
-            selected: false,
-          ),
-        ],
-      ),
-    );
-  }
 
   Widget _bottomItem({
     required IconData icon,

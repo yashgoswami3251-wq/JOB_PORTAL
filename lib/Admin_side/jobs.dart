@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:job_portal/Admin_side/jobs_edit.dart';
 import '../references/reference.dart';
 import 'admin_profile.dart';
 import 'job_detail.dart';
@@ -277,8 +278,8 @@ class _JobsPageState extends State<JobsPage> {
                   statusBackground: _statusBackground(job['status']),
                   statusForeground: _statusForeground(job['status']),
                   onTap: () => _openDetails(job),
-                  onEdit: () => _openDetails(job),
                   onDelete: () => _confirmDelete(job),
+                  onEdit: () {  },
                 );
               },
             ),
@@ -326,8 +327,8 @@ class _JobCard extends StatelessWidget {
     required this.statusBackground,
     required this.statusForeground,
     required this.onTap,
-    required this.onEdit,
     required this.onDelete,
+    required this.onEdit,
   });
 
   @override
@@ -398,7 +399,9 @@ class _JobCard extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  onPressed: onEdit,
+                  onPressed: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>EditJobPage()));
+                  },
                   visualDensity: VisualDensity.compact,
                   constraints: const BoxConstraints(minWidth: 30, minHeight: 28),
                   padding: EdgeInsets.zero,

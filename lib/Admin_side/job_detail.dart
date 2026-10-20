@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:job_portal/Admin_side/jobs_edit.dart';
 import '../references/reference.dart';
 
 class JobDetailPage extends StatefulWidget {
@@ -64,92 +65,6 @@ class _JobDetailPageState extends State<JobDetailPage> {
         ),
       );
     }
-  }
-
-  Future<void> _editJob() async {
-    final titleController = TextEditingController(
-      text: widget.job['title']?.toString() ?? '',
-    );
-
-    final companyController = TextEditingController(
-      text: widget.job['company']?.toString() ?? '',
-    );
-
-    final descriptionController = TextEditingController(
-      text: widget.job['description']?.toString() ?? '',
-    );
-
-    final saved = await showDialog<bool>(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: const Text('Edit Job Details'),
-        content: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: titleController,
-                decoration: const InputDecoration(
-                  labelText: 'Job title',
-                ),
-              ),
-              TextField(
-                controller: companyController,
-                decoration: const InputDecoration(
-                  labelText: 'Company',
-                ),
-              ),
-              TextField(
-                controller: descriptionController,
-                maxLines: 4,
-                decoration: const InputDecoration(
-                  labelText: 'Description',
-                ),
-              ),
-            ],
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () =>
-                Navigator.pop(dialogContext, false),
-            child: const Text('Cancel'),
-          ),
-          FilledButton(
-            onPressed: () =>
-                Navigator.pop(dialogContext, true),
-            child: const Text('Save'),
-          ),
-        ],
-      ),
-    );
-
-    if (saved == true && mounted) {
-      setState(() {
-        if (titleController.text.trim().isNotEmpty) {
-          widget.job['title'] = titleController.text.trim();
-        }
-
-        if (companyController.text.trim().isNotEmpty) {
-          widget.job['company'] = companyController.text.trim();
-        }
-
-        if (descriptionController.text.trim().isNotEmpty) {
-          widget.job['description'] =
-              descriptionController.text.trim();
-        }
-      });
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Job details updated for this session'),
-        ),
-      );
-    }
-
-    titleController.dispose();
-    companyController.dispose();
-    descriptionController.dispose();
   }
 
   Color get _statusColor {
@@ -408,7 +323,9 @@ class _JobDetailPageState extends State<JobDetailPage> {
                   child: SizedBox(
                     height: 42,
                     child: ElevatedButton(
-                      onPressed: _editJob,
+                      onPressed: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>EditJobPage()));
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: blueColor,
                         foregroundColor: Colors.white,
@@ -456,11 +373,6 @@ class _JobDetailPageState extends State<JobDetailPage> {
             ),
           ],
         ),
-      ),
-
-      // BOTTOM NAVIGATION
-      bottomNavigationBar: _DetailBottomBar(
-        onJobsTap: () => Navigator.pop(context),
       ),
     );
   }

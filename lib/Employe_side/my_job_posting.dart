@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:job_portal/Employe_side/profile.dart';
 import '../references/reference.dart';
+import 'edit_job.dart';
 import 'homepage.dart';
 
 class MyJobPostingsPage extends StatefulWidget {
@@ -453,7 +454,7 @@ class _MyJobPostingsPageState extends State<MyJobPostingsPage> {
                 Expanded(
                   child: InkWell(
                     onTap: () {
-                      editJob(job);
+                      EditJobPage();
                     },
                     child: Row(
                       mainAxisAlignment:

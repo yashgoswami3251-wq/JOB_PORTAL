@@ -221,7 +221,7 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: primaryBlue,
+                    backgroundColor: blueColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),

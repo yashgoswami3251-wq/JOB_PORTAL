@@ -105,7 +105,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                     ),
                   ),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: primaryBlue,
+                    backgroundColor: blueColor,
                     elevation: 0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),

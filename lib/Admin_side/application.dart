@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../references/reference.dart';
 import 'admin_profile.dart';
 import 'application_detail.dart';
+import 'application_edit.dart';
 
 
 class AppsPage extends StatefulWidget {
@@ -225,7 +226,9 @@ class _AppsPageState extends State<AppsPage> {
                                 children: [
                                   IconButton(
                                     icon: Icon(Icons.edit_outlined, size: 20, color: blueColor),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>EditApplicationPage()));
+                                    },
                                     constraints: const BoxConstraints(),
                                     padding: const EdgeInsets.all(8),
                                   ),
