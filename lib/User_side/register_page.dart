@@ -291,7 +291,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               Container(
                 color: navyColor,
                 padding: const EdgeInsets.symmetric(
-                  vertical: 36,
+                  vertical: 15,
                   horizontal: 24,
                 ),
                 child: Column(
@@ -310,12 +310,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       ],
                     ),
                     const Text(
-                      'Explore trusted job opportunities and apply easily.',
+                      "Explore trusted job opportunities and apply easily.",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-
                         color: Colors.white70,
-                        fontSize: 12,
+                        fontSize: 16,
                       ),
                     ),
                   ],

@@ -262,14 +262,14 @@ class _LoginPageState extends State<LoginPage> {
             // HEADER
             // ==================================================
 
+
             Container(
               width: double.infinity,
-
               color: navyColor,
 
               padding: EdgeInsets.only(
-                top: MediaQuery.of(context).padding.top + 25,
-                bottom: 28,
+                top: MediaQuery.of(context).padding.top + 18,
+                bottom: 22,
                 left: 20,
                 right: 20,
               ),
@@ -277,14 +277,8 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 children: [
 
-                  // ==================================================
-                  // LOGO
-                  // ==================================================
-
                   Row(
-                    mainAxisAlignment:
-                    MainAxisAlignment.center,
-
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset(
                         'assets/images/logo.png',
@@ -299,9 +293,7 @@ class _LoginPageState extends State<LoginPage> {
 
                   const Text(
                     "Explore trusted job opportunities and apply easily.",
-
                     textAlign: TextAlign.center,
-
                     style: TextStyle(
                       color: Colors.white70,
                       fontSize: 16,
@@ -310,6 +302,7 @@ class _LoginPageState extends State<LoginPage> {
                 ],
               ),
             ),
+
 
             // ==================================================
             // CONTENT
