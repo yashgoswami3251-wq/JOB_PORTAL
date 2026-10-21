@@ -70,7 +70,6 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Form Card Container
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
@@ -81,7 +80,6 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Category Name Input
                     Text(
                       'Category Name',
                       style: TextStyle(
@@ -122,7 +120,6 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
                     ),
                     const SizedBox(height: 16),
 
-                    // Description Input
                     Text(
                       'Description',
                       style: TextStyle(
@@ -161,7 +158,6 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
                     ),
                     const SizedBox(height: 16),
 
-                    // Status Dropdown Selection
                     Text(
                       'Status',
                       style: TextStyle(
@@ -210,13 +206,11 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
               ),
               const SizedBox(height: 24),
 
-              // Save Category Button
               SizedBox(
                 height: 48,
                 child: ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      // Perform save logic here
                       Navigator.pop(context);
                     }
                   },
@@ -239,7 +233,6 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
               ),
               const SizedBox(height: 12),
 
-              // Cancel Button
               SizedBox(
                 height: 48,
                 child: OutlinedButton(

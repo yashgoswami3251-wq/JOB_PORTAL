@@ -363,8 +363,6 @@ class _EditJobPageState extends State<EditJobPage> {
       'status': selectedStatus,
     };
 
-    // Save updatedJob to your database or API here.
-    // This example currently validates the form and shows a message.
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(

@@ -67,7 +67,6 @@ class _EditCategoryPageState extends State<EditCategoryPage> {
       ),
     );
 
-    // Return the updated values to the previous page.
     Navigator.pop(context, {
       'categoryName': categoryController.text.trim(),
       'jobCount': int.parse(jobCountController.text.trim()),

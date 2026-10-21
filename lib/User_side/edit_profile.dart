@@ -162,7 +162,6 @@ class _EditProfilePageState
       ),
     );
 
-    // Go back to Profile page
     Navigator.pop(context);
   }
 
@@ -719,7 +718,6 @@ class _EditProfilePageState
 
                           const SizedBox(width: 10),
 
-                          // DOWNLOAD
                           Expanded(
                             child: SizedBox(
                               height: 36,

@@ -4,9 +4,6 @@ import 'package:job_portal/Employe_side/profile.dart';
 import '../references/reference.dart';
 import 'homepage.dart';
 
-// ============================================================
-// APPLICANT MODEL
-// ============================================================
 
 class Applicant {
   String name;
@@ -37,10 +34,6 @@ class Applicant {
     required this.coverLetter,
   });
 }
-
-// ============================================================
-// APPLICATION PAGE
-// ============================================================
 
 class ApplicationPage extends StatefulWidget {
   const ApplicationPage({super.key});
@@ -515,10 +508,6 @@ class _ApplicationPageState extends State<ApplicationPage> {
     );
   }
 }
-
-// ============================================================
-// APPLICANT PROFILE PAGE
-// ============================================================
 
 class ApplicantProfilePage extends StatefulWidget {
   final Applicant applicant;
