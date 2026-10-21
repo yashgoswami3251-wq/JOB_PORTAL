@@ -10,23 +10,25 @@ import '../references/reference.dart';
 import 'forgot_password.dart';
 import 'home_page.dart';
 
-
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
   SystemChrome.setSystemUIOverlayStyle(
-     SystemUiOverlayStyle(
+    SystemUiOverlayStyle(
       statusBarColor: navyColor,
       statusBarIconBrightness: Brightness.light,
     ),
   );
 
-  runApp(ProviderScope(child: MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: const SplashScreen())));
+  runApp(
+    ProviderScope(
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: const SplashScreen(),
+      ),
+    ),
+  );
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -45,7 +47,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -54,54 +55,56 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   String selectedRole = "User";
 
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  final TextEditingController emailController = TextEditingController();
+  final TextEditingController emailController =
+  TextEditingController();
 
   final TextEditingController passwordController =
   TextEditingController();
 
-
   bool hidePassword = true;
-
   bool keepSignedIn = false;
-
   bool isLoading = false;
 
   void changeRole(String role) {
     setState(() {
       selectedRole = role;
-
       emailController.clear();
       passwordController.clear();
+      _formKey.currentState?.reset();
     });
   }
 
+  String? validateEmail(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return "Please enter your email";
+    }
+
+    final emailRegex =
+    RegExp(r'^[\w.+-]+@[\w-]+(\.[\w-]+)+$');
+
+    if (!emailRegex.hasMatch(value.trim())) {
+      return "Please enter a valid email address";
+    }
+
+    return null;
+  }
+
+  String? validatePassword(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return "Please enter your password";
+    }
+
+    return null;
+  }
 
   void login() {
     FocusScope.of(context).unfocus();
 
-
-    if (emailController.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Please enter your email"),
-        ),
-      );
-
-      return;
-    }
-
-
-    if (passwordController.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Please enter your password"),
-        ),
-      );
-
+    if (!_formKey.currentState!.validate()) {
       return;
     }
 
@@ -117,8 +120,7 @@ class _LoginPageState extends State<LoginPage> {
       });
 
       String email = emailController.text.trim();
-      String password = passwordController.text.trim();
-
+      String password = passwordController.text;
 
       if (selectedRole == "User") {
         if (email == "marmik@gmail.com" &&
@@ -130,14 +132,9 @@ class _LoginPageState extends State<LoginPage> {
             ),
           );
         } else {
-          _showLoginError(
-            "Invalid User email or password",
-          );
+          _showLoginError("Invalid User email or password");
         }
-      }
-
-
-      else if (selectedRole == "Employee") {
+      } else if (selectedRole == "Employee") {
         if (email == "yash@gmail.com" &&
             password == "123456") {
           Navigator.pushReplacement(
@@ -147,14 +144,9 @@ class _LoginPageState extends State<LoginPage> {
             ),
           );
         } else {
-          _showLoginError(
-            "Invalid Employee email or password",
-          );
+          _showLoginError("Invalid Employee email or password");
         }
-      }
-
-
-      else if (selectedRole == "Admin") {
+      } else if (selectedRole == "Admin") {
         if (email == "pritesh@gmail.com" &&
             password == "123456") {
           Navigator.pushReplacement(
@@ -164,9 +156,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
           );
         } else {
-          _showLoginError(
-            "Invalid Admin email or password",
-          );
+          _showLoginError("Invalid Admin email or password");
         }
       }
     });
@@ -181,44 +171,33 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-
   @override
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
-
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-
       body: SafeArea(
         top: false,
         bottom: false,
-
         child: Column(
           children: [
-
-
-
             Container(
               width: double.infinity,
               color: navyColor,
-
               padding: EdgeInsets.only(
                 top: MediaQuery.of(context).padding.top + 18,
                 bottom: 22,
                 left: 20,
                 right: 20,
               ),
-
               child: Column(
                 children: [
-
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -226,13 +205,11 @@ class _LoginPageState extends State<LoginPage> {
                         'assets/images/logo.png',
                         width: 200,
                         height: 200,
-                        alignment: AlignmentGeometry.topCenter,
-                      )
+                        alignment: Alignment.topCenter,
+                      ),
                     ],
                   ),
-
                   const SizedBox(height: 8),
-
                   const Text(
                     "Explore trusted job opportunities and apply easily.",
                     textAlign: TextAlign.center,
@@ -244,14 +221,10 @@ class _LoginPageState extends State<LoginPage> {
                 ],
               ),
             ),
-
-
             Expanded(
               child: Container(
                 width: double.infinity,
-
                 color: Colors.white,
-
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.fromLTRB(
                     20,
@@ -259,443 +232,281 @@ class _LoginPageState extends State<LoginPage> {
                     20,
                     25,
                   ),
-
-                  child: Column(
-                    crossAxisAlignment:
-                    CrossAxisAlignment.start,
-
-                    children: [
-
-
-                      const Text(
-                        "Welcome back",
-
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87,
-                        ),
-                      ),
-
-                      const SizedBox(height: 5),
-
-                      Text(
-                        "Sign in as a $selectedRole",
-
-                        style: const TextStyle(
-                          fontSize: 17,
-                          color: Colors.grey,
-                        ),
-                      ),
-
-                      const SizedBox(height: 18),
-
-
-                      Container(
-                        width: double.infinity,
-                        height: 50,
-
-                        padding:
-                        const EdgeInsets.all(3),
-
-                        decoration: BoxDecoration(
-                          color: lightGrey,
-
-                          border: Border.all(
-                            color: borderColor,
+                  child: Form(
+                    key: _formKey,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Welcome back",
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87,
                           ),
-
-                          borderRadius:
-                          BorderRadius.circular(8),
                         ),
-
-                        child: Row(
-                          children: [
-
-
-                            _roleButton(
-                              title: "Admin",
-                              selected:
-                              selectedRole == "Admin",
-
-                              onTap: () {
-                                changeRole("Admin");
-                              },
-                            ),
-                            _roleButton(
-                              title: "Employee",
-                              selected:
-                              selectedRole == "Employee",
-
-                              onTap: () {
-                                changeRole("Employee");
-                              },
-                            ),
-
-                            _roleButton(
-                              title: "User",
-                              selected:
-                              selectedRole == "User",
-
-                              onTap: () {
-                                changeRole("User");
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      const SizedBox(height: 25),
-
-                      const Text(
-                        "Email Address",
-
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-
-                      const SizedBox(height: 6),
-
-                      SizedBox(
-                        width: double.infinity,
-                        height: 50,
-
-                        child: TextField(
-                          controller:
-                          emailController,
-
-                          keyboardType:
-                          TextInputType.emailAddress,
-
-                          style:
-                          const TextStyle(
-                            fontSize: 13,
+                        const SizedBox(height: 5),
+                        Text(
+                          "Sign in as a $selectedRole",
+                          style: const TextStyle(
+                            fontSize: 17,
+                            color: Colors.grey,
                           ),
-
-                          decoration:
-                          InputDecoration(
-                            hintText:
-                            _getEmailHint(),
-
-                            hintStyle:
-                            const TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey,
-                            ),
-
-                            prefixIcon:
-                            const Icon(
-                              Icons.email_outlined,
-                              size: 19,
-                              color:
-                              Colors.blueGrey,
-                            ),
-
-                            contentPadding:
-                            const EdgeInsets
-                                .symmetric(
-                              horizontal: 10,
-                            ),
-
-                            border:
-                            OutlineInputBorder(
-                              borderRadius:
-                              BorderRadius
-                                  .circular(8),
-
-                              borderSide:
-                               BorderSide(
-                                color:
-                                borderColor,
+                        ),
+                        const SizedBox(height: 18),
+                        Container(
+                          width: double.infinity,
+                          height: 50,
+                          padding: const EdgeInsets.all(3),
+                          decoration: BoxDecoration(
+                            color: lightGrey,
+                            border: Border.all(color: borderColor),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                            children: [
+                              _roleButton(
+                                title: "Admin",
+                                selected: selectedRole == "Admin",
+                                onTap: () => changeRole("Admin"),
                               ),
-                            ),
-
-                            enabledBorder:
-                            OutlineInputBorder(
-                              borderRadius:
-                              BorderRadius
-                                  .circular(8),
-
-                              borderSide:
-                               BorderSide(
-                                color:
-                                borderColor,
+                              _roleButton(
+                                title: "Employee",
+                                selected: selectedRole == "Employee",
+                                onTap: () => changeRole("Employee"),
                               ),
-                            ),
-
-                            focusedBorder:
-                            OutlineInputBorder(
-                              borderRadius:
-                              BorderRadius
-                                  .circular(8),
-
-                              borderSide:
-                               BorderSide(
-                                color:
-                                blueColor,
-                                width: 1.5,
+                              _roleButton(
+                                title: "User",
+                                selected: selectedRole == "User",
+                                onTap: () => changeRole("User"),
                               ),
-                            ),
+                            ],
                           ),
                         ),
-                      ),
-
-                      const SizedBox(height: 17),
-
-
-                      const Text(
-                        "Password",
-
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-
-                      const SizedBox(height: 6),
-
-                      SizedBox(
-                        width: double.infinity,
-                        height: 50,
-
-                        child: TextField(
-                          controller:
-                          passwordController,
-
-                          obscureText:
-                          hidePassword,
-
-                          obscuringCharacter: "*",
-
-                          style:
-                          const TextStyle(
-                            fontSize: 13,
-                          ),
-
-                          decoration:
-                          InputDecoration(
-                            hintText:
-                            "Enter your password",
-
-                            hintStyle:
-                            const TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey,
-                            ),
-
-                            prefixIcon:
-                            const Icon(
-                              Icons.lock_outline,
-                              size: 19,
-                              color:
-                              Colors.blueGrey,
-                            ),
-
-                            contentPadding:
-                            const EdgeInsets
-                                .symmetric(
-                              horizontal: 10,
-                            ),
-
-                            border:
-                            OutlineInputBorder(
-                              borderRadius:
-                              BorderRadius
-                                  .circular(8),
-
-                              borderSide:
-                               BorderSide(
-                                color:
-                                borderColor,
-                              ),
-                            ),
-
-                            enabledBorder:
-                            OutlineInputBorder(
-                              borderRadius:
-                              BorderRadius
-                                  .circular(8),
-
-                              borderSide:
-                               BorderSide(
-                                color:
-                                borderColor,
-                              ),
-                            ),
-
-                            focusedBorder:
-                            OutlineInputBorder(
-                              borderRadius:
-                              BorderRadius
-                                  .circular(8),
-
-                              borderSide:
-                               BorderSide(
-                                color:
-                                blueColor,
-                                width: 1.5,
-                              ),
-                            ),
+                        const SizedBox(height: 25),
+                        const Text(
+                          "Email Address",
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
-                      ),
-
-                      const SizedBox(height: 7),
-
-
-                      Row(
-                        children: [
-
-
-                          const SizedBox(width: 5),
-
-                          const Spacer(),
-
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                  const ChangePasswordPage(),
-                                ),
-                              );
-                            },
-
-                            child:  Text(
-                              "Forgot Password?",
-
-                              style: TextStyle(
-                                fontSize: 15,
-                                color: blueColor,
-                                fontWeight:
-                                FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(height: 17),
-
-
-                      SizedBox(
-                        width: double.infinity,
-                        height: 50,
-
-                        child: ElevatedButton(
-                          onPressed:
-                          isLoading ? null : login,
-
-                          style:
-                          ElevatedButton.styleFrom(
-                            backgroundColor:
-                            blueColor,
-
-                            foregroundColor:
-                            Colors.white,
-
-                            elevation: 2,
-
-                            shape:
-                            RoundedRectangleBorder(
-                              borderRadius:
-                              BorderRadius
-                                  .circular(8),
-                            ),
-                          ),
-
-                          child: isLoading
-                              ? const SizedBox(
-                            width: 22,
-                            height: 22,
-                            child:
-                            CircularProgressIndicator(
-                              strokeWidth: 2,
-                              color:
-                              Colors.white,
-                            ),
-                          )
-                              : Text(
-                            "Login as $selectedRole",
-
-                            style:
-                            const TextStyle(
-                              fontSize: 13,
-                              fontWeight:
-                              FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(height: 18),
-
-
-                      Center(
-                        child: Row(
-                          mainAxisAlignment:
-                          MainAxisAlignment.center,
-
-                          children: [
-
-                            Text(
-                              selectedRole == "User"
-                                  ? "Don't have an account? "
-                                  : selectedRole ==
-                                  "Employee"
-                                  ? "Don't have an employee account? "
-                                  : "Need admin access? ",
-
-                              style:
-                              const TextStyle(
-                                fontSize: 15,
+                        const SizedBox(height: 6),
+                        SizedBox(
+                          width: double.infinity,
+                          child: TextFormField(
+                            controller: emailController,
+                            keyboardType: TextInputType.emailAddress,
+                            style: const TextStyle(fontSize: 13),
+                            validator: validateEmail,
+                            decoration: InputDecoration(
+                              hintText: _getEmailHint(),
+                              hintStyle: const TextStyle(
+                                fontSize: 12,
                                 color: Colors.grey,
                               ),
+                              prefixIcon: const Icon(
+                                Icons.email_outlined,
+                                size: 19,
+                                color: Colors.blueGrey,
+                              ),
+                              contentPadding:
+                              const EdgeInsets.symmetric(
+                                horizontal: 10,
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(color: borderColor),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(color: borderColor),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
+                                  color: blueColor,
+                                  width: 1.5,
+                                ),
+                              ),
                             ),
-
+                          ),
+                        ),
+                        const SizedBox(height: 17),
+                        const Text(
+                          "Password",
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(height: 6),
+                        SizedBox(
+                          width: double.infinity,
+                          child: TextFormField(
+                            controller: passwordController,
+                            obscureText: hidePassword,
+                            obscuringCharacter: "*",
+                            style: const TextStyle(fontSize: 13),
+                            validator: validatePassword,
+                            decoration: InputDecoration(
+                              hintText: "Enter your password",
+                              hintStyle: const TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey,
+                              ),
+                              prefixIcon: const Icon(
+                                Icons.lock_outline,
+                                size: 19,
+                                color: Colors.blueGrey,
+                              ),
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  hidePassword
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
+                                  size: 19,
+                                  color: Colors.blueGrey,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    hidePassword = !hidePassword;
+                                  });
+                                },
+                              ),
+                              contentPadding:
+                              const EdgeInsets.symmetric(
+                                horizontal: 10,
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(color: borderColor),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(color: borderColor),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
+                                  color: blueColor,
+                                  width: 1.5,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 7),
+                        Row(
+                          children: [
+                            const SizedBox(width: 5),
+                            const Spacer(),
                             GestureDetector(
                               onTap: () {
-                                if (selectedRole ==
-                                    "User") {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder:
-                                          (context) =>
-                                      const RegisterApp(),
-                                    ),
-                                  );
-                                } else {
-                                  ScaffoldMessenger.of(
-                                      context)
-                                      .showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                        "$selectedRole registration is managed by Admin",
-                                      ),
-                                    ),
-                                  );
-                                }
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                    const ChangePasswordPage(),
+                                  ),
+                                );
                               },
-
-                              child:  Text(
-                                "Register",
-
+                              child: Text(
+                                "Forgot Password?",
                                 style: TextStyle(
                                   fontSize: 15,
                                   color: blueColor,
-                                  fontWeight:
-                                  FontWeight.bold,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
                           ],
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 17),
+                        SizedBox(
+                          width: double.infinity,
+                          height: 50,
+                          child: ElevatedButton(
+                            onPressed: isLoading ? null : login,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: blueColor,
+                              foregroundColor: Colors.white,
+                              elevation: 2,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            child: isLoading
+                                ? const SizedBox(
+                              width: 22,
+                              height: 22,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Colors.white,
+                              ),
+                            )
+                                : Text(
+                              "Login as $selectedRole",
+                              style: const TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 18),
+                        Center(
+                          child: Wrap(
+                            alignment: WrapAlignment.center,
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            children: [
+                              Text(
+                                selectedRole == "User"
+                                    ? "Don't have an account? "
+                                    : selectedRole == "Employee"
+                                    ? "Don't have an employee account? "
+                                    : "Need admin access? ",
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  if (selectedRole == "User") {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                        const RegisterApp(),
+                                      ),
+                                    );
+                                  } else {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          "$selectedRole registration is managed by Admin",
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                },
+                                child: Text(
+                                  "Register",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: blueColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -706,7 +517,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-
   Widget _roleButton({
     required String title,
     required bool selected,
@@ -715,33 +525,20 @@ class _LoginPageState extends State<LoginPage> {
     return Expanded(
       child: GestureDetector(
         onTap: onTap,
-
         child: Container(
           margin: const EdgeInsets.all(2),
-
           decoration: BoxDecoration(
-            color: selected
-                ? blueColor
-                : Colors.transparent,
-
-            borderRadius:
-            BorderRadius.circular(6),
+            color: selected ? blueColor : Colors.transparent,
+            borderRadius: BorderRadius.circular(6),
           ),
-
           child: Center(
             child: Text(
               title,
-
               style: TextStyle(
                 fontSize: 11,
-
-                color: selected
-                    ? Colors.white
-                    : Colors.black54,
-
-                fontWeight: selected
-                    ? FontWeight.bold
-                    : FontWeight.normal,
+                color: selected ? Colors.white : Colors.black54,
+                fontWeight:
+                selected ? FontWeight.bold : FontWeight.normal,
               ),
             ),
           ),
@@ -749,9 +546,6 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-
-
-
 
   String _getEmailHint() {
     if (selectedRole == "Admin") {
@@ -766,8 +560,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
-
-
 Widget _adminCard({
   required IconData icon,
   required String title,
@@ -775,52 +567,32 @@ Widget _adminCard({
 }) {
   return Container(
     padding: const EdgeInsets.all(16),
-
     decoration: BoxDecoration(
       color: Colors.white,
-
-      borderRadius:
-      BorderRadius.circular(12),
-
-      border: Border.all(
-        color: borderColor,
-      ),
+      borderRadius: BorderRadius.circular(12),
+      border: Border.all(color: borderColor),
     ),
-
     child: Column(
-      crossAxisAlignment:
-      CrossAxisAlignment.start,
-
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-
-        Icon(
-          icon,
-          color: blueColor,
-          size: 28,
-        ),
-
+        Icon(icon, color: blueColor, size: 28),
         const SizedBox(height: 12),
-
         Text(
           value,
-          style:  TextStyle(
+          style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
             color: navyColor,
           ),
         ),
-
         Text(
           title,
-          style: const TextStyle(
-            color: Colors.grey,
-          ),
+          style: const TextStyle(color: Colors.grey),
         ),
       ],
     ),
   );
 }
-
 
 Widget _employeeCard({
   required IconData icon,
@@ -829,46 +601,27 @@ Widget _employeeCard({
 }) {
   return Container(
     padding: const EdgeInsets.all(16),
-
     decoration: BoxDecoration(
       color: Colors.white,
-
-      borderRadius:
-      BorderRadius.circular(12),
-
-      border: Border.all(
-        color: borderColor,
-      ),
+      borderRadius: BorderRadius.circular(12),
+      border: Border.all(color: borderColor),
     ),
-
     child: Column(
-      crossAxisAlignment:
-      CrossAxisAlignment.start,
-
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-
-        Icon(
-          icon,
-          color: blueColor,
-          size: 28,
-        ),
-
+        Icon(icon, color: blueColor, size: 28),
         const SizedBox(height: 12),
-
         Text(
           value,
-          style:  TextStyle(
+          style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
             color: navyColor,
           ),
         ),
-
         Text(
           title,
-          style: const TextStyle(
-            color: Colors.grey,
-          ),
+          style: const TextStyle(color: Colors.grey),
         ),
       ],
     ),
@@ -882,67 +635,38 @@ Widget _panelOption({
 }) {
   return Container(
     width: double.infinity,
-
-    margin: const EdgeInsets.only(
-      bottom: 12,
-    ),
-
+    margin: const EdgeInsets.only(bottom: 12),
     padding: const EdgeInsets.all(15),
-
     decoration: BoxDecoration(
       color: Colors.white,
-
-      borderRadius:
-      BorderRadius.circular(12),
-
-      border: Border.all(
-        color: borderColor,
-      ),
+      borderRadius: BorderRadius.circular(12),
+      border: Border.all(color: borderColor),
     ),
-
     child: Row(
       children: [
-
         Container(
           width: 45,
           height: 45,
-
           decoration: BoxDecoration(
-            color: const Color(
-              0xFFF3F7FF,
-            ),
-
-            borderRadius:
-            BorderRadius.circular(10),
+            color: const Color(0xFFF3F7FF),
+            borderRadius: BorderRadius.circular(10),
           ),
-
-          child: Icon(
-            icon,
-            color: blueColor,
-          ),
+          child: Icon(icon, color: blueColor),
         ),
-
         const SizedBox(width: 14),
-
         Expanded(
           child: Column(
-            crossAxisAlignment:
-            CrossAxisAlignment.start,
-
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               Text(
                 title,
-                style:  TextStyle(
+                style: TextStyle(
                   fontSize: 15,
-                  fontWeight:
-                  FontWeight.bold,
+                  fontWeight: FontWeight.bold,
                   color: navyColor,
                 ),
               ),
-
               const SizedBox(height: 4),
-
               Text(
                 subtitle,
                 style: const TextStyle(
@@ -953,7 +677,6 @@ Widget _panelOption({
             ],
           ),
         ),
-
         const Icon(
           Icons.arrow_forward_ios,
           size: 16,
@@ -964,16 +687,12 @@ Widget _panelOption({
   );
 }
 
-
 void _logout(BuildContext context) {
   Navigator.pushAndRemoveUntil(
     context,
-
     MaterialPageRoute(
-      builder: (context) =>
-      const LoginPage(),
+      builder: (context) => const LoginPage(),
     ),
-
         (route) => false,
   );
 }
